@@ -30,14 +30,14 @@ export class EmpresaComponent implements OnInit {
                 () => console.log('Finished')
             );
 
-
+/*
             //Obtenemos los archivos
 
             let fileListRutaRut: FileList = RutaRut.target.files;
 
             if(fileListRutaRut.length > 0){
                 alert();
-            }
+    }*/
     }
 
 
