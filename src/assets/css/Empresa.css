@@ -1,0 +1,22 @@
+.Titulo {
+    text-align: center;
+}
+
+#BtnCrearEmpresa {
+
+    margin-top: 4%;
+    margin-bottom: 2%;
+    font-size: 0.9em;
+    background: #002C77;
+
+}
+
+.panel-heading {
+
+    background: #002C77;
+
+}
+
+.container {
+    font-size: 0.9em;
+}
