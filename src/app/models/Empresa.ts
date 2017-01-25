@@ -14,8 +14,8 @@ export class Empresa{
         public RutaRut: any,
         public RutaCamaraComercio: any,
         public Contrato: any,
-        public Observaciones?: string
-
+        public Archivos: any,
+        public Observaciones?: string,
     ) {}
 
 }

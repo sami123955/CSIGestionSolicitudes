@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Headers } from '@angular/http';
+import { RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -35,13 +36,12 @@ export class EmpresaService {
         var headers = new Headers();
 
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-       // headers.append('dataType', 'json');
-        //headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+
+        var options = new RequestOptions({ headers: headers });
 
         return this._http.post(urlService + 'Empresa' + params
-            , '', {
-                headers: headers
-            })
+            , data, options)
             .map(res => res.json());
 
     }

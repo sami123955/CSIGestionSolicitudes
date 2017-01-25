@@ -17,7 +17,8 @@ export class EmpresaComponent implements OnInit {
 
     constructor(private _empresaService: EmpresaService){}
 
-    model = new Empresa('', '', '', '', '', '', '', 0, '', 'ruta-rut', 'ruta-camaraComercio', 'ruta-contrato','notas');
+    model = new Empresa('', '', '', '', '', '', '', 0, '', 'ruta-rut', 'ruta-camaraComercio', 'ruta-contrato', '', 'notas');
+    
 
      //Instanciamos la siguiente clase, para acceder al atributo url, y así dinamicamente se cambiará la ruta del seridor donde consumiremos los servicios
     DatosServidorModel = new DatosServidor();
@@ -63,7 +64,7 @@ export class EmpresaComponent implements OnInit {
 
         if(fileList.length > 0) {
             let file: File = fileList[0];
-            let formData:FormData = new FormData();
+            let formData
             formData.append('uploadFile', file, file.name);
 
             switch(typeFile){
@@ -82,7 +83,8 @@ export class EmpresaComponent implements OnInit {
     }
       
     ngOnInit() {
-        
+        //Preparamos el modelo para los archivos
+        //this.model.Archivos = 
     }
 
 }
