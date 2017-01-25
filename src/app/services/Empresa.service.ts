@@ -30,7 +30,7 @@ export class EmpresaService {
 
          var frmData= empresaObject.Archivos;
         
-        var params = '?Nit='+empresaObject.Nit+'&RazonSocial='+empresaObject.RazonSocial+'&Direccion='+empresaObject.Direccion+'&DireccionRecepcion='+empresaObject.DireccionRecepcion+'&EmailEmpresa='+empresaObject.EmailEmpresa+'&Telefono='+empresaObject.Telefono+'&RutaRut='+empresaObject.RutaRut+'&RutaCamaraComercio='+empresaObject.RutaCamaraComercio+'&Representante='+empresaObject.Representante+'&Observaciones='+empresaObject.Observaciones+'&Estado='+true+'&Contrato='+empresaObject.Contrato+'&Contacto='+empresaObject.Contrato+'&EmailContacto='+empresaObject.EmailContacto;
+        var params = '?Nit='+empresaObject.Nit+'&RazonSocial='+empresaObject.RazonSocial+'&Direccion='+empresaObject.Direccion+'&DireccionRecepcion='+empresaObject.DireccionRecepcion+'&EmailEmpresa='+empresaObject.EmailEmpresa+'&Telefono='+empresaObject.Telefono+'&Representante='+empresaObject.Representante+'&Observaciones='+empresaObject.Observaciones+'&Estado='+true+'&Contacto='+empresaObject.Contrato+'&EmailContacto='+empresaObject.EmailContacto;
 
         var headers = new Headers();
        

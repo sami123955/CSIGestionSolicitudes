@@ -41,13 +41,13 @@ export class EmpresaComponent implements OnInit {
             alertify.error('Debe cargar todos los archivos');
         }
         else {
-            /*this._empresaService.GuardarEmpresa(this.model, this.DatosServidorModel.url)
+            this._empresaService.GuardarEmpresa(this.model, this.DatosServidorModel.url)
             .subscribe(
-                data => alert(JSON.stringify(data)),
+                data => alertify.success('Registrado Correctamente')),
                 error => alert(error),
                 () => console.log('Finished')
-            );*/
-            alertify.success('Registrado Correctamente');
+            );
+            
         }
     }
 
