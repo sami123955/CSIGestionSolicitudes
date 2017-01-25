@@ -16,6 +16,8 @@ export class Empresa{
         public Contrato: any,
         public Archivos: any,
         public Observaciones?: string,
+        public Codigo?: string
+        
     ) {}
 
 }

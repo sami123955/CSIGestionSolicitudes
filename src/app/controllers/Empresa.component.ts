@@ -41,9 +41,10 @@ export class EmpresaComponent implements OnInit {
             alertify.error('Debe cargar todos los archivos');
         }
         else {
+            
             this._empresaService.GuardarEmpresa(this.model, this.DatosServidorModel.url)
             .subscribe(
-                data => alertify.success('Registrado Correctamente')),
+                data => alertify.success('Registrado Correctamente'),
                 error => alert(error),
                 () => console.log('Finished')
             );
@@ -53,11 +54,11 @@ export class EmpresaComponent implements OnInit {
 
     searchCompany(){
         
-        /*this._empresaService.searchCompany().subscribe(
-            data =>  alertify.success(''),
+        this._empresaService.searchCompany(this.DatosServidorModel.url).subscribe(
+            data =>  alert(JSON.stringify(data)),
             error => alertify.error('No funciona'),
             () => console.log('Finished')
-        );*/
+        );
     }
     
 
@@ -91,6 +92,7 @@ export class EmpresaComponent implements OnInit {
     ngOnInit() {
         //Preparamos el modelo para los archivos
         this.model.Archivos = new FormData();
+        this.searchCompany();
     }
 
 }
