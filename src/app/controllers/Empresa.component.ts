@@ -26,7 +26,7 @@ export class EmpresaComponent implements OnInit {
     GuardarEmpresa(RutaRut, RutaCamaraComercio, Contrato) {
         this._empresaService.GuardarEmpresa(this.model, this.DatosServidorModel.url)
             .subscribe(
-                data => alert( JSON.stringify(data)),
+                data => alert(JSON.stringify(data)),
                 error => alert(error),
                 () => console.log('Finished')
             );
@@ -63,19 +63,19 @@ export class EmpresaComponent implements OnInit {
         let fileList: FileList = event.target.files;
 
         if(fileList.length > 0) {
-            let file: File = fileList[0];
-            let formData
-            formData.append('uploadFile', file, file.name);
+            let file: File = fileList[0];   
+            console.log(file);
+            console.log(typeFile);
 
             switch(typeFile){
                 case 'Rut':
-                    this.model.RutaRut = formData;
+                    this.model.Archivos.append('Rut', file, file.name);
                 break;
                 case 'camaraComercio':
-                    this.model.RutaCamaraComercio = formData;
+                    this.model.Archivos.append('camaraComercio', file, file.name);
                 break;
                 case 'Contrato':
-                    this.model.Contrato = formData;
+                    this.model.Archivos.append('Contrato', file, file.name);
                 break;
             }
         }
@@ -84,7 +84,7 @@ export class EmpresaComponent implements OnInit {
       
     ngOnInit() {
         //Preparamos el modelo para los archivos
-        //this.model.Archivos = 
+        this.model.Archivos = new FormData();
     }
 
 }
