@@ -9,14 +9,15 @@ export class Empresa{
         public Representante: string,
         public Contacto: string,
         public EmailContacto: string,
-        public Telefono: number,
+        public Telefono: string,
         public EmailEmpresa: string,
-        public RutaRut: any,
-        public RutaCamaraComercio: any,
-        public Contrato: any,
         public Archivos: any,
         public Observaciones?: string,
-        public Codigo?: string
+        public Codigo?: string,
+        public Estado?: string,
+        public RutaRut?: string,
+        public RutaCamaraComercio?: string,
+        public Contrato?:string
         
     ) {}
 

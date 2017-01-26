@@ -26,9 +26,26 @@ export class EmpresaService {
 
     searchCompany(UrlApi) {
 
-        var params = "Codigo=&Nit=&RazonSocial=&EmailEmpresa=&Telefono=&Representante=&Estado="+true;
+        var params = "Codigo=&Nit=&RazonSocial=&EmailEmpresa=&Telefono=&Representante=&Estado=";
 
         return this._http.get(UrlApi + 'Empresa?' + params).map(res => res.json());
     }
+
+
+    ActualizarEmpresa(empresaObject: any, urlService: string){
+        var frmData= empresaObject.Archivos;
+
+        
+        var params = '?Codigo='+empresaObject.Codigo+'&Nit='+empresaObject.Nit+'&RazonSocial='+empresaObject.RazonSocial+'&Direccion='+empresaObject.Direccion+'&DireccionRecepcion='+empresaObject.DireccionRecepcion+'&EmailEmpresa='+empresaObject.EmailEmpresa+'&Telefono='+empresaObject.Telefono+'&Representante='+empresaObject.Representante+'&Observaciones='+empresaObject.Observaciones+'&Estado='+empresaObject.Estado+'&Contacto='+empresaObject.Contacto+'&EmailContacto='+empresaObject.EmailContacto+'&RutaRut='+encodeURIComponent(empresaObject.RutaRut)+'&RutaCamaraComercio='+encodeURIComponent(empresaObject.RutaCamaraComercio)+'&Contrato='+encodeURIComponent(empresaObject.Contrato);
+
+        var headers = new Headers();
+
+        var options = new RequestOptions({ headers: headers });
+
+        return this._http.put(urlService + 'Empresa' + params
+            , frmData, options).map(res => res.json());
+    }
+
+
 
 }
