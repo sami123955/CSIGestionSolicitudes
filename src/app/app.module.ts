@@ -17,8 +17,6 @@ import { EmpresaComponent } from '../app/controllers/Empresa.component';
 import { EmpleadoComponent } from '../app/controllers/Empleado.component';
 import { SucursalComponent } from '../app/controllers/Sucursal.component';
 
-
-
 @NgModule({
   imports:      [ 
                   BrowserModule, 
