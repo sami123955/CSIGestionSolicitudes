@@ -15,7 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from '../app/controllers/home.component';
 import { EmpresaComponent } from '../app/controllers/Empresa.component';
 import { EmpleadoComponent } from '../app/controllers/Empleado.component';
-
+import { SucursalComponent } from '../app/controllers/Sucursal.component';
 
 
 
@@ -31,7 +31,8 @@ import { EmpleadoComponent } from '../app/controllers/Empleado.component';
                   AppComponent,
                   HomeComponent,
                   EmpresaComponent,
-                  EmpleadoComponent
+                  EmpleadoComponent,
+                  SucursalComponent
                 ],
   providers: [],
   bootstrap:    [ AppComponent ]
