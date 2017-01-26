@@ -16,6 +16,9 @@ import { HomeComponent } from '../app/controllers/home.component';
 import { EmpresaComponent } from '../app/controllers/Empresa.component';
 import { EmpleadoComponent } from '../app/controllers/Empleado.component';
 import { SucursalComponent } from '../app/controllers/Sucursal.component';
+import { TipoNovedadComponent } from '../app/controllers/TipoNovedad.component';
+import { SubclienteComponent } from '../app/controllers/Subcliente.component';
+import { CausanteNovedadComponent } from '../app/controllers/CausanteNovedad.component';
 
 @NgModule({
   imports:      [ 
@@ -30,7 +33,10 @@ import { SucursalComponent } from '../app/controllers/Sucursal.component';
                   HomeComponent,
                   EmpresaComponent,
                   EmpleadoComponent,
-                  SucursalComponent
+                  SucursalComponent,
+                  TipoNovedadComponent,
+                  SubclienteComponent,
+                  CausanteNovedadComponent
                 ],
   providers: [],
   bootstrap:    [ AppComponent ]
