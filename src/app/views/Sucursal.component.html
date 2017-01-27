@@ -79,7 +79,7 @@
 
            <div class="form-group">
                <label for="Representantes">Representantes</label>
-               <input type="text" class="form-control" id="Representantes" required [(ngModel)]="model.Representantes" name="Representantes" placeholder="Representantes">
+               <input type="text" class="form-control" id="Representantes" required [(ngModel)]="model.Representante" name="Representante" placeholder="Representantes">
            </div>
             
 
@@ -87,7 +87,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" [disabled]="!SucursalForm.form.valid">Guardar</button>
+        <button type="button" class="btn btn-primary" [disabled]="!SucursalForm.form.valid" (click)="GuardarSucursal()">Guardar</button>
       </div>
     </div>
   </div>
