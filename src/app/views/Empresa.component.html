@@ -44,7 +44,7 @@
                                     Inactivo
                                 </td>
                                 <td>
-                                    <button class="btn btn-default" (click)="CargarDatosForm(item.Nit, item.RazonSocial, item.Direccion, item.DireccionRecepcion, item.Representante, item.Contacto, item.EmailContacto, item.Telefono, item.EmailEmpresa, item.Observaciones, item.Codigo, item.Estado, item.RutaRut, item.RutaCamaraComercio, item.lstContrato[0].Contrato)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
+                                    <button class="btn btn-default" (click)="CargarDatosForm(item.Nit, item.RazonSocial, item.Direccion, item.DireccionRecepcion, item.Representante, item.lstContacto[0].Contacto, item.lstContacto[0].EmailContacto, item.Telefono, item.EmailEmpresa, item.Observaciones, item.Codigo, item.Estado, item.RutaRut, item.RutaCamaraComercio, item.lstContrato[0].Contrato)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -133,7 +133,7 @@
 
             <div class="form-group">
                 <label for="notes">Observaciones</label>
-                <textarea class="form-control" rows="3" placeholder="Observaciones" id="notes" [(ngModel)]="model.Observaciones" name="Observaciones"></textarea>
+                <textarea class="form-control textarea" rows="3" placeholder="Observaciones" id="notes" [(ngModel)]="model.Observaciones" name="Observaciones"></textarea>
             </div>
 
         </form>
@@ -141,7 +141,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" (click)="GuardarEmpresa(RutaRut, RutaCamaraComercio, Contrato);" [disabled]="!EmpresaForm.form.valid" *ngIf="!loading">Guardar</button>
-        <button type="button" class="btn btn-primary" *ngIf="loading" >Guardando...</button>
+        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
       </div>
     </div>
   </div>
@@ -224,7 +224,7 @@
             </div>
             <div class="form-group">
                 <label for="notes">Observaciones</label>
-                <textarea class="form-control" rows="3" placeholder="Observaciones" id="notes" [(ngModel)]="model.Observaciones" name="Observaciones"></textarea>
+                <textarea class="form-control textarea" rows="3" placeholder="Observaciones" id="notes" [(ngModel)]="model.Observaciones" name="Observaciones"></textarea>
             </div>
 
             <div class="radio">

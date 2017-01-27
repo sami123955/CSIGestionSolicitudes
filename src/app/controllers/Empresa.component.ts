@@ -22,7 +22,7 @@ export class EmpresaComponent implements OnInit {
 
     constructor(private _empresaService: EmpresaService){}
 
-    model = new Empresa('', '', '', '', '', '', '', '', '', '', 'notas');
+    model = new Empresa('', '', '', '', '', '', '', '', '', '');
     
 
     //Variable que almacenara todos los datos de la consulta de empresa.
@@ -48,6 +48,7 @@ export class EmpresaComponent implements OnInit {
                 error => alert(error),
                 () => this.searchCompany()
             );
+
             
         }
     }
@@ -59,6 +60,8 @@ export class EmpresaComponent implements OnInit {
             error => alertify.error('No funciona'),
             () => this.loading = false
         );
+
+
     }
     
 
@@ -71,15 +74,18 @@ export class EmpresaComponent implements OnInit {
 
             switch(typeFile){
                 case 'Rut':
-                    this.model.Archivos.delete('Rut');
+                    this.model.Archivos.has('Rut') ? this.model.Archivos.delete('Rut') : '';
+                    
                     this.model.Archivos.append('Rut', file, file.name);
                 break;
                 case 'camaraComercio':
-                    this.model.Archivos.delete('camaraComercio');
+                    this.model.Archivos.has('camaraComercio') ? this.model.Archivos.delete('camaraComercio') : '';
+
                     this.model.Archivos.append('camaraComercio', file, file.name);
                 break;
                 case 'Contrato':
-                    this.model.Archivos.delete('Contrato');
+                    this.model.Archivos.has('Contrato') ? this.model.Archivos.delete('Contrato') : '';
+                    
                     this.model.Archivos.append('Contrato', file, file.name);
                 break;
             }
@@ -93,7 +99,11 @@ export class EmpresaComponent implements OnInit {
         //Preparamos el modelo para los archivos
         this.model.Archivos = new FormData();
         this.searchCompany();
-        console.log(JSON.stringify(this.DatosConsulta));
+    }
+
+
+    LimpiarForm(){
+        this.model = new Empresa('', '', '', '', '', '', '', '', '', '', '');
     }
 
     CargarDatosForm(Nit, RazonSocial, Direccion, DireccionRecepcion, Representante, Contacto, EmailContacto, Telefono, EmailEmpresa, Observaciones, Codigo, Estado, RutaRut, RutaCamaraComercio, Contrato){

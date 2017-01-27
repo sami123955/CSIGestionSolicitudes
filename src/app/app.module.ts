@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import { HomeComponent } from '../app/controllers/home.component';
 import { EmpresaComponent } from '../app/controllers/Empresa.component';
 import { EmpleadoComponent } from '../app/controllers/Empleado.component';
@@ -20,13 +22,16 @@ import { TipoNovedadComponent } from '../app/controllers/TipoNovedad.component';
 import { SubclienteComponent } from '../app/controllers/Subcliente.component';
 import { CausanteNovedadComponent } from '../app/controllers/CausanteNovedad.component';
 
+
+
 @NgModule({
   imports:      [ 
                   BrowserModule, 
                   AppRoutingModule ,
                   HttpModule,
                   FormsModule,
-                  MultiselectDropdownModule
+                  MultiselectDropdownModule,
+                  NgbModule
                 ],
   declarations: [ 
                   AppComponent,
