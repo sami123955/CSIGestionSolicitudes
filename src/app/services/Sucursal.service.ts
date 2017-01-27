@@ -11,7 +11,7 @@ export class SucursalService {
     GuardarSucursal(SucursalObject: any, urlService: string) {
 
         
-        var params = '?Direccion='+SucursalObject.Direccion+'&Nombre='+SucursalObject.Nombre+'&Email='+SucursalObject.Email+'&Telefono='+SucursalObject.Telefono+'&Representante='+SucursalObject.Representante+'&Estado='+true+'&CodigoEmpresa=';
+        var params = '?Direccion='+SucursalObject.Direccion+'&Nombre='+SucursalObject.Nombre+'&Email='+SucursalObject.Email+'&Telefono='+SucursalObject.Telefono+'&Representante='+SucursalObject.Representante+'&Estado='+true+'&CodigoEmpresa=35';
 
         var headers = new Headers();
         
@@ -25,7 +25,7 @@ export class SucursalService {
 
     BuscarSucursal(UrlApi) {
 
-        var params = 'Direccion=&Nombre=&Email=&Telefono=&Representante=&Estado=&CodigoEmpresa=';
+        var params = 'Direccion=&Nombre=&Email=&Telefono=&Representante=&Estado=&CodigoEmpresa=&Codigo=';
 
         return this._http.get(UrlApi + 'Sucursal?' + params).map(res => res.json());
     }
