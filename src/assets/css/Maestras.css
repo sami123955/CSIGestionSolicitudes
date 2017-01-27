@@ -26,3 +26,7 @@
     font-family: 'Century Gothic';
 
 }
+
+.textarea {
+    resize: none;
+}
