@@ -13,8 +13,8 @@ export class Empresa{
         public EmailEmpresa: string,
         public Archivos: any,
         public Observaciones?: string,
-        public Codigo?: string,
-        public Estado?: string,
+        public Codigo?: number,
+        public Estado?: boolean,
         public RutaRut?: string,
         public RutaCamaraComercio?: string,
         public Contrato?:string
