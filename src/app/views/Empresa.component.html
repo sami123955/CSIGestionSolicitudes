@@ -3,7 +3,7 @@
 <div class="container">
     
     <div class="col-md-11">
-    <button class="btn btn-primary BtnCrear" id="BtnCrearEmpresa" data-toggle="modal" data-target="#myModal">Crear Empresa</button>
+    <button class="btn btn-primary BtnCrear" id="BtnCrearEmpresa" data-toggle="modal" data-target="#EmpresaModal">Crear Empresa</button>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
@@ -12,7 +12,7 @@
                     </div>
                     <div class="panel-body">
                     </div>
-                    <table class="table table-hover" id="companyTable" >
+                    <table class="table table-hover" id="EmpresaTabla" >
                         <thead>
                             <tr>
                                 <th>NIT</th>
@@ -57,7 +57,7 @@
 
 
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade EmpresaModal" id="EmpresaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -151,7 +151,7 @@
 
 <!-- Modal Actualizar -->
 
-<div class="modal fade" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade EmpresaModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -252,10 +252,9 @@
 </div>  
 
 
-<div id="ContentPreloader">
+<div id="ContentPreloader" *ngIf="loading">
     <div id="loader-wrapper">
         <div id="loader"></div>
         <h5 class="loadingText">Cargando...</h5>
-    </div>
-    
+    </div> 
 </div>
