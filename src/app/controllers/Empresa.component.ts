@@ -4,9 +4,12 @@ import { EmpresaService } from '../services/empresa.service';
 import { DatosServidor } from '../models/DatosServidor';
 
 //Importar libreria externas
+declare var jQuery: any;
+declare var $: any;
 declare var alertify:any;
 declare var success:any;
-declare var error:any
+declare var error:any;
+declare var DataTable: any;
 
 
 @Component ({
@@ -58,8 +61,10 @@ export class EmpresaComponent implements OnInit {
         this._empresaService.searchCompany(this.DatosServidorModel.url).subscribe(
             data => this.DatosConsulta = data,
             error => alertify.error('No funciona'),
-            () => this.loading = false
+            () => this.LimpiarForm()
         );
+
+        
 
 
     }
@@ -98,12 +103,28 @@ export class EmpresaComponent implements OnInit {
     ngOnInit() {
         //Preparamos el modelo para los archivos
         this.model.Archivos = new FormData();
+        this.loading = true;
         this.searchCompany();
     }
 
 
     LimpiarForm(){
         this.model = new Empresa('', '', '', '', '', '', '', '', '', '', '');
+        //Seteamos nuevamente el objeto formdata
+        this.model.Archivos = new FormData();
+
+        //Cerramos modal
+        $('.EmpresaModal').modal('hide');
+        this.loading = false;
+
+        //Aplicamos datatable
+        $('#EmpresaTabla').dataTable({
+
+            "bDestroy": true,
+
+        });
+        alert();
+
     }
 
     CargarDatosForm(Nit, RazonSocial, Direccion, DireccionRecepcion, Representante, Contacto, EmailContacto, Telefono, EmailEmpresa, Observaciones, Codigo, Estado, RutaRut, RutaCamaraComercio, Contrato){
