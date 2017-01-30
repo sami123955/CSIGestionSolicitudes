@@ -19,6 +19,8 @@ export class SucursalComponent implements OnInit {
     DatosServidor = new DatosServidor();
 
 
+    DatosSucursal = '';
+
     constructor (private _SucursalService: SucursalService) {}
 
 
@@ -31,7 +33,7 @@ export class SucursalComponent implements OnInit {
 
             this._SucursalService.GuardarSucursal(this.model, this.DatosServidor.url)
             .subscribe(
-                data => alert(JSON.stringify(data)),
+                data => alert('Registra correctamente'),
                 error => alert(error),
                 () => console.log('termina')
             );
@@ -42,7 +44,7 @@ export class SucursalComponent implements OnInit {
     BuscarSucursal(){
         
         this._SucursalService.BuscarSucursal(this.DatosServidor.url).subscribe(
-            data => alert(JSON.stringify(data)),
+            data => this.DatosSucursal = data,
             error => alert(error),
             () => console.log('Termina')
         );

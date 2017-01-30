@@ -23,11 +23,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                <tr *ngFor="let item of DatosSucursal.Data">
+                                    <td>{{item.Nombre}}</td>
+                                    <td>{{item.Telefono}}</td>
+                                    <td>{{item.Direccion}}</td>
+                                    <td>{{item.Email}}</td>
+                                    <td>{{item.Representante}}</td>
                                     
                                     <td>
                                     
