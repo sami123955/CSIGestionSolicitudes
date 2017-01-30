@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { Empresa } from '../models/Empresa';
 import { EmpresaService } from '../services/empresa.service';
 import { DatosServidor } from '../models/DatosServidor';
 
 //Importar libreria externas
-declare var jQuery: any;
 declare var $: any;
 declare var alertify:any;
 declare var success:any;
@@ -37,6 +36,9 @@ export class EmpresaComponent implements OnInit {
      //Instanciamos la siguiente clase, para acceder al atributo url, y así dinamicamente se cambiará la ruta del seridor donde consumiremos los servicios
     DatosServidorModel = new DatosServidor();
 
+    //Variable que usaremos para validar si ya se le aplica data table o No
+    DataTable = false;
+
     GuardarEmpresa(RutaRut, RutaCamaraComercio, Contrato) {
 
 
@@ -52,7 +54,6 @@ export class EmpresaComponent implements OnInit {
                 () => this.searchCompany()
             );
 
-            
         }
     }
 
@@ -117,13 +118,6 @@ export class EmpresaComponent implements OnInit {
         $('.EmpresaModal').modal('hide');
         this.loading = false;
 
-        //Aplicamos datatable
-        $('#EmpresaTabla').dataTable({
-
-            "bDestroy": true,
-
-        });
-        alert();
 
     }
 
@@ -146,6 +140,47 @@ export class EmpresaComponent implements OnInit {
             );
             
     }
+
+   AplicarDataTable(){
+
+       if(this.DataTable == false) {
+
+           alert();
+           
+       $('#EmpresaTabla').dataTable({
+
+            "bDestroy": true,
+            "language": {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+        });
+
+            this.DataTable = true;
+       }
+
+
+   }
 
 }
 
