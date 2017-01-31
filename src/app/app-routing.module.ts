@@ -8,6 +8,7 @@ import { SucursalComponent } from './controllers/Sucursal.component';
 import { TipoNovedadComponent } from './controllers/TipoNovedad.component';
 import { SubclienteComponent } from './controllers/Subcliente.component';
 import { CausanteNovedadComponent } from './controllers/CausanteNovedad.component';
+import { TipoServicioComponent } from './controllers/TipoServicio.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,6 +19,8 @@ const routes: Routes = [
   { path: 'tiponovedad', component: TipoNovedadComponent},
   { path: 'subcliente', component: SubclienteComponent},
   { path: 'causantenovedad', component: CausanteNovedadComponent},
+  { path: 'tipoServicio', component: TipoServicioComponent},
+  
 ];
 
 @NgModule({
