@@ -35,7 +35,7 @@ export class FormatoComponent implements OnInit {
     DataTable = false;
 
     ngOnInit(){
-
+        this.Cargando = true;
         this.model.Archivo = new FormData();
         this.BuscarFormato();
     

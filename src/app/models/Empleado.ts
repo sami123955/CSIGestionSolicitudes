@@ -7,6 +7,8 @@ export class Empleado {
         public Celular: string,
         public Cargo: string,
         public Sucursal: any,
+        public Codigo?:string,
+        public Estado?:string
 
     ) {}
 
