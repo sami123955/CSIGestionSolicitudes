@@ -115,6 +115,7 @@ export class EmpresaComponent implements OnInit {
                         this.model.Archivos.append('Contrato', file, file.name);
                     break;
                 }
+
             }
 
 

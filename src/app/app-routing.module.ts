@@ -9,6 +9,7 @@ import { TipoNovedadComponent } from './controllers/TipoNovedad.component';
 import { SubclienteComponent } from './controllers/Subcliente.component';
 import { CausanteNovedadComponent } from './controllers/CausanteNovedad.component';
 import { TipoServicioComponent } from './controllers/TipoServicio.component';
+import { FormatoComponent } from './controllers/Formato.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,7 +21,7 @@ const routes: Routes = [
   { path: 'subcliente', component: SubclienteComponent},
   { path: 'causantenovedad', component: CausanteNovedadComponent},
   { path: 'tipoServicio', component: TipoServicioComponent},
-  
+  { path: 'formato', component: FormatoComponent},
 ];
 
 @NgModule({
