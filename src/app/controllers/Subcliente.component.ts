@@ -1,8 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@aular/core';
 import { Subcliente } from '../models/Subcliente';
 import { DatosServidor } from '../models/DatosServidor';
 import { SubclienteService } from '../services/Subcliente.service';
 import { SucursalService } from '../services/Sucursal.service';
+
+//Importar libreria externas
+declare var jQuery: any;
+declare var $: any;
+declare var alertify:any;
+declare var success:any;
+declare var error:any;
+declare var DataTable: any;
+
 
 @Component({
     selector: 'Subcliente',
@@ -22,12 +31,14 @@ export class SubclienteComponent implements OnInit {
     DatoSucursal = '';
 
     constructor (private _SubclienteService: SubclienteService, private _SucursalService: SucursalService) {}
-
+    
+    loading=false;
 
     ngOnInit() {
         //alert();
         this.BuscarSucursal();
         this.BuscarSubcliente();
+        this.searchCompany();
     }
     GuardarSubcliente(){
         this._SubclienteService.GuardarSubcliente(this.model, this.DatosServidor.url)
@@ -47,6 +58,37 @@ export class SubclienteComponent implements OnInit {
         );
 
 
+    }
+
+    CargarDatosForm(CodigoSucursal, Nit, RazonSocial, Telefono, Representante, Estado, Codigo){
+        this.model = new Subcliente(CodigoSucursal, Nit, RazonSocial, Telefono, Representante, Estado, Codigo);
+   
+
+    }
+
+    searchCompany(){
+        
+        this._SubclienteService.searchCompany(this.DatosServidor.url).subscribe(
+            data => this.DatosSubcliente = data,
+            error => alertify.error('No funciona'),
+            () => this.LimpiarForm()
+        );
+
+        
+
+
+    }
+
+     ActualizarSubcliente() {
+
+        this.loading = true;
+            this._SubclienteService.ActualizarEmpresa(this.model, this.DatosServidor.url)
+            .subscribe(
+                data => alertify.success('Actualizado Correctamente'),
+                error => alert(error),
+                () => this.searchCompany()
+            );
+            
     }
 
     BuscarSubcliente(){

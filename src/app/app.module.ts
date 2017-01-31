@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { AlertModule } from 'ng2-bootstrap';
 
 import { HomeComponent } from '../app/controllers/home.component';
 import { EmpresaComponent } from '../app/controllers/Empresa.component';
@@ -31,7 +30,6 @@ import { CausanteNovedadComponent } from '../app/controllers/CausanteNovedad.com
                   HttpModule,
                   FormsModule,
                   MultiselectDropdownModule,
-                  AlertModule
                 ],
   declarations: [ 
                   AppComponent,

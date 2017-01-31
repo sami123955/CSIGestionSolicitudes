@@ -38,7 +38,7 @@
                                     <td>
                                     
                                     
-                                        <button class="btn btn-default">Editar</button>
+                                        <button class="btn btn-default" (click)="CargarDatosForm(item.CodigoSucursal, item.Nit, item.RazonSocial, item.Telefono, item.Representante, item.Estado, item.Codigo)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -100,6 +100,56 @@
   </div>
 </div>  
 
+
+<!--Model Actualizar-->
+<!--
+<div class="modal fade SubclienteModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Empresa</h4>
+      </div>
+      <div class="modal-body">
+        <form #SubclienteForm="ngForm">
+
+            <div class="form-group">
+                <label for="Nit">Nit</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.Nit" name="Nit" placeholder="Nit" id="Nit">
+            </div>
+
+            <div class="form-group">
+                <label for="RazonSocial">Raz&oacute;n Social</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.RazonSocial" name="RazonSocial" placeholder="Raz&oacute;n Social" id="RazonSocial">
+            </div>
+
+            <div class="form-group">
+                <label for="Telefono">Tel&eacute;fono</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.Telefono" name="Telefono" placeholder="Tel&eacute;fono" id="Telefono">
+            </div>
+
+            <div class="form-group">
+                <label for="Representante">Representante</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.Representante" name="Representante" placeholder="Representante" id="Representante">
+            </div>
+
+            <div class="form-group">
+                <label for="CodigoSucursal">C&oacute;digo Sucursal</label>
+                <select name="" id=""  class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal">
+                    <option *ngFor="let item of DatoSucursal.Data"  [value]="item.Codigo">{{item.Nombre}}</option>
+                </select>
+            </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="ActualizarEmpresa()" [disabled]="!SubclienteForm.form.valid" *ngIf="!loading">Guardar</button>
+        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
+      </div>
+    </div>
+  </div>
+</div>-->
 
 
 
