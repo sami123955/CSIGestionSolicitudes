@@ -20,7 +20,7 @@ import { SucursalComponent } from '../app/controllers/Sucursal.component';
 import { TipoNovedadComponent } from '../app/controllers/TipoNovedad.component';
 import { SubclienteComponent } from '../app/controllers/Subcliente.component';
 import { CausanteNovedadComponent } from '../app/controllers/CausanteNovedad.component';
-
+import { TipoServicioComponent } from './controllers/TipoServicio.component';
 
 
 @NgModule({
@@ -39,7 +39,8 @@ import { CausanteNovedadComponent } from '../app/controllers/CausanteNovedad.com
                   SucursalComponent,
                   TipoNovedadComponent,
                   SubclienteComponent,
-                  CausanteNovedadComponent
+                  CausanteNovedadComponent,
+                  TipoServicioComponent
                 ],
   providers: [],
   bootstrap:    [ AppComponent ]

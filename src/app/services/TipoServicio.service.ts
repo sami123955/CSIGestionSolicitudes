@@ -5,33 +5,31 @@ import { RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class EmpresaService {
+export class TipoServicioService {
     constructor(private _http: Http) { }
 
-    GuardarEmpresa(empresaObject: any, urlService: string) {
-
-        var frmData= empresaObject.Archivos;
+    GuardarTipoServicio(ObjetoTipoServicio: any, UrlServicio: string) {
         
-        var params = '?Codigo=&Nit='+empresaObject.Nit+'&RazonSocial='+empresaObject.RazonSocial+'&Direccion='+empresaObject.Direccion+'&DireccionRecepcion='+empresaObject.DireccionRecepcion+'&EmailEmpresa='+empresaObject.EmailEmpresa+'&Telefono='+empresaObject.Telefono+'&Representante='+empresaObject.Representante+'&Observaciones='+empresaObject.Observaciones+'&Estado='+true+'&Contacto='+empresaObject.Contacto+'&EmailContacto='+empresaObject.EmailContacto+'&RutaRut='+""+'&RutaCamaraComercio='+""+'&Contrato='+"";
+        var params = '?Codigo=&Nombre='+ObjetoTipoServicio.Nombre+'&Descripcion='+ObjetoTipoServicio.Descripcion+'&Estado='+true;
 
         var headers = new Headers();
         
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(urlService + 'Empresa'+ params
-            , frmData, options)
+        return this._http.post(UrlServicio + 'TipoServicio'+ params
+            , '', options)
             .map(res => res.json());
 
     }
 
-    searchCompany(UrlApi) {
+    BuscarTipoServicio(UrlServicio) {
 
-        var params = "Codigo=&Nit=&RazonSocial=&EmailEmpresa=&Telefono=&Representante=&Estado=";
+        var params = "Codigo=&Nombre=&Descripcion=&Estado=";
 
-        return this._http.get(UrlApi + 'Empresa?' + params).map(res => res.json());
+        return this._http.get(UrlServicio + 'TipoServicio?' + params).map(res => res.json());
     }
 
-
+/*
     ActualizarEmpresa(empresaObject: any, urlService: string){
         var frmData= empresaObject.Archivos;
 
@@ -47,7 +45,7 @@ export class EmpresaService {
             , frmData, options).map(res => res.json());
 
     }
-
+*/
 
 
 
