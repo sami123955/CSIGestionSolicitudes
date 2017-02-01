@@ -23,7 +23,8 @@ import { SubclienteComponent } from '../app/controllers/Subcliente.component';
 import { CausanteNovedadComponent } from '../app/controllers/CausanteNovedad.component';
 import { TipoServicioComponent } from './controllers/TipoServicio.component';
 import { FormatoComponent } from './controllers/Formato.component';
-
+import { PersonaComponent } from './controllers/Persona.component';
+import { ComboServicioComponent } from './controllers/ComboServicio.component';
 
 @NgModule({
   imports:      [ 
@@ -44,7 +45,9 @@ import { FormatoComponent } from './controllers/Formato.component';
                   SubclienteComponent,
                   CausanteNovedadComponent,
                   TipoServicioComponent,
-                  FormatoComponent
+                  FormatoComponent,
+                  PersonaComponent,
+                  ComboServicioComponent
                 ],
   providers: [],
   bootstrap:    [ AppComponent ]

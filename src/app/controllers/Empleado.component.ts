@@ -30,8 +30,9 @@ export class EmpleadoComponent implements OnInit {
 
     SucursalesSelect = [];
 
-    mySettings = {
-        pullRight: false,
+    //Json que usaremos para almacenar las configuraciones del select
+    ConfiguracionSelect = {
+        pullRight: true,
         enableSearch: true,
         checkedStyle: 'checkboxes',
         buttonClasses: 'btn btn-default',
@@ -39,7 +40,8 @@ export class EmpleadoComponent implements OnInit {
         closeOnSelect: false,
         showCheckAll: true,
         showUncheckAll: false,
-        dynamicTitleMaxItems: 0,
+        dynamicTitleMaxItems: 1,
+        width: '400px'
         //maxHeight: '300px',
     };
 
@@ -56,7 +58,7 @@ export class EmpleadoComponent implements OnInit {
 
         this._SucursalService.BuscarSucursal(this.DatosServidorModel.url).subscribe(
         data => DatosSucursal = data,
-        error => alertify.error(),
+        error => alertify.error('No se ha podido procesar la peticion'),
         () => this.FormatearOpcionesSelect(DatosSucursal)
         );
 
@@ -74,8 +76,13 @@ export class EmpleadoComponent implements OnInit {
 
     GuardarEmpleado(){
 
-        alert(this.model.Sucursal);
+        this._EmpleadoService.GuardarEmpleado(this.model, this.DatosServidorModel.url).
+            subscribe(
+                data => alertify.success('Guardado correctamente'),
+                error => alertify.error('No se pudo realizar la accion'),
 
+            );
+        
     }
 
         

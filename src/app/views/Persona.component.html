@@ -1,0 +1,241 @@
+<h4 class="Titulo">Administraci&oacute;n de personas</h4>
+
+<div class="container">
+    
+    <div class="col-md-11">
+    <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#PersonaModal">Crear persona</button>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Registros</h4>
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                    <table class="table table-hover" id="TipoServicioTabla" >
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descrpci&oacute;n</th>
+                                <th>Estado</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>        
+</div>
+
+
+<div class="modal fade PersonaModal" id="PersonaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Persona</h4>
+      </div>
+      <div class="modal-body">
+        <form #TipoServicioForm="ngForm">
+
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Nombre">Nombre</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Cedula">C&eacute;dula</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Cedula" name="Cedula" placeholder="Cedula" id="Cedula">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Direccion">Direcci&oacute;n</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Direccion" name="Direccion" placeholder="Direcci&oacute;n" id="Direccion">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Barrio">Barrio</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Barrio" name="Barrio" placeholder="Barrio" id="Barrio">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Telefono">Tel&eacute;fono</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Telefono" name="Telefono" placeholder="Telefono" id="Telefono">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Telefono2">Segundo tel&eacute;fono</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Telefono2" name="Telefono2" placeholder="Telefono" id="Telefono2">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Celular">Celular</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Celular" name="Celular" placeholder="Celular" id="Celular">
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Email">Correo electr&oacute;nico</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Email" name="Email" placeholder="Email" id="Email">
+                    </div>
+                </div>
+
+            
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Profesion">Profesi&oacute;n</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Profesion" name="Profesion" placeholder="Profesion" id="Profesion">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Cedula">Municipio</label>
+                        <select class="form-control" name="CodigoMunicipio" id="CodigoMunicipio" required [(ngModel)]="model.CodigoMunicipio">
+                            <option value="1">Municipio 1</option>
+                            <option value="2">Municipio 2</option>
+                            <option value="3">Municipio 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="FechaIngreso">Fecha de ingreso</label>
+                        <input type="date" class="form-control" required [(ngModel)]="model.FechaIngreso" name="FechaIngreso" placeholder="Fecha de ingreso" id="FechaIngreso">
+                    </div>
+                </div>
+
+                
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="FechaCumpleanios">Fecha de cumplea&ntilde;os</label>
+                        <input type="date" class="form-control" required [(ngModel)]="model.FechaCumpleanios" name="FechaCumpleanios" placeholder="Fecha de cumplea&ntilde;os" id="FechaCumpleanios">
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Banco">Banco</label>
+                        <select class="form-control" name="Banco" id="Banco" required [(ngModel)]="model.Banco">
+                            <option value="1">Banco 1</option>
+                            <option value="2">Banco 2</option>
+                            <option value="3">Banco 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="TipoCuenta">Tipo de cuenta</label>
+                        <select class="form-control" name="TipoCuenta" id="TipoCuenta" required [(ngModel)]="model.TipoCuenta">
+                            <option value="1">Tipo de cuenta 1</option>
+                            <option value="2">Tipo de cuenta 2</option>
+                            <option value="3">Tipo de cuenta 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="FechaCumpleanios">N&uacute;mero de cuenta</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.NumeroCuenta" name="NumeroCuenta" placeholder="Numero de cuenta" id="NumeroCuenta">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Foto">Foto</label>
+                        <input type="file" class="form-control" id="Foto">
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="GuardarTipoServicio();" [disabled]="!TipoServicioForm.form.valid" *ngIf="!loading">Guardar</button>
+        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<!-- Modal Actualizar -->
+<!--
+<div class="modal fade TipoServicioModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Tipos de servicios</h4>
+      </div>
+      <div class="modal-body">
+        <form #TipoServicioForm="ngForm">
+
+            <div class="form-group">
+                <label for="Nombre">Nombre</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Descripci&oacute;n</label>
+                <textarea class="form-control textarea" rows="3" placeholder="Descripci&oacute;n" id="notes" [(ngModel)]="model.Descripcion" name="Descripcion" required></textarea>
+            </div>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="true">
+                    Activo
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="false">
+                    Inactivo
+                </label>
+            </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="ActualizarTipoEmpresa()" [disabled]="!TipoServicioForm.form.valid" *ngIf="!loading">Guardar</button>
+        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
+      </div>
+    </div>
+  </div>
+</div>-->  
+
+
+<div id="ContentPreloader" *ngIf="Cargando">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <h5 class="loadingText">Cargando...</h5>
+    </div> 
+</div>
