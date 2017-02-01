@@ -1,4 +1,4 @@
-<h4 class="Titulo">Administraci&oacute;n de Empresas</h4>
+<h4 class="Titulo">Administraci&oacute;n de Tipo Novedad</h4>
 
 <div class="container">
     
@@ -15,20 +15,23 @@
                         <table class="table table-hover" id="companyTable" >
                             <thead>
                                 <tr>
-                                    <th>C&oacute;digo</th>
                                     <th>Nombre</th>
+                                    <th>Estado</th>
+                                    <th>Editar</th>
                                    
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    
+                                <tr *ngFor="let item of DatosTipoNovedad.Data">
+                                    <td>{{item.Nombre}}</td>
+
+                                      <td *ngIf="item.estado">Activo</td>
+                                      <td *ngIf="!item.estado">Inactivo</td>
                                     
                                     <td>
                                     
                                     
-                                        <button class="btn btn-default">Editar</button>
+                                        <button class="btn btn-default" (click)="CargarDatosForm(item.Codigo, item.Nombre, item.Estado)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -48,25 +51,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Empresa</h4>
+        <h4 class="modal-title" id="myModalLabel">Tipo Novedad</h4>
       </div>
       <div class="modal-body">
         <form #TipoNovedadForm="ngForm">
-
-            <div class="form-group">
-                <label for="Nombre">C&oacute;digo</label>
-                <input type="text" class="form-control" required [(ngModel)]="model.Codigo" name="Codigo" placeholder="C&oacute;digo" id="Codigo">
-            </div>
 
 
             <div class="form-group">
                 <label for="Nombre">Nombre</label>
                 <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
-            </div>
-
-            <div class="form-group">
-                <label for="Estado">Estado</label>
-                <input type="text" class="form-control" required [(ngModel)]="model.Estado" name="Estado" placeholder="Estado" id="Estado">
             </div>
             
 
@@ -79,4 +72,46 @@
     </div>
   </div>
 </div>  
+
+<!--Model Actualizar-->
+
+<div class="modal fade SubclienteModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Empresa</h4>
+      </div>
+      <div class="modal-body">
+        <form #TipoNovedadForm="ngForm">
+
+            <div class="form-group">
+                <label for="Nombre">Nombre</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+            </div>
+
+             <div class="radio">
+                <label>
+                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="true">
+                    Activo
+                </label>
+            </div>
+
+             <div class="radio">
+                <label>
+                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="false">
+                    Inactivo
+                </label>
+            </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="ActualizarTipoNovedad()" [disabled]="!TipoNovedadForm.form.valid">Guardar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
 

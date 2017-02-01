@@ -28,15 +28,19 @@ export class SubclienteComponent implements OnInit {
 
     DatosServidor = new DatosServidor();
 
+
+//Variable que almacenara todos los datos de la consulta de Subcliente.
     DatosSubcliente = '';
     DatoSucursal = '';
 
    
-    
+ //Variable que usaremos para controlar los preloaders   
     loading=false;
 
+//Instanciamos la siguiente clase, para acceder al atributo url, y así dinamicamente se cambiará la ruta del seridor donde consumiremos los servicios
     DatosServidorModel=new DatosServidor();
 
+ //Variable que usaremos para validar si ya se le aplica data table o No
     DataTable=false;
 
     ngOnInit() {

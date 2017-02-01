@@ -20,4 +20,28 @@ export class TipoNovedadService{
                , '', options)
                .map(res => res.json());
     }
+
+    searchCompany(UrlApi) {
+
+        var params = "Codigo=&Nombre=&Estado";
+
+        return this._http.get(UrlApi + 'TipoNovedad?' + params).map(res => res.json());
+    }
+
+    BuscarTipoNovedad(UrlApi){
+        var params='?Codigo=&Nombre=&Estado=';
+        return this._http.get(UrlApi + 'TipoNovedad' + params).map(res => res.json());
+    }
+
+    ActualizarTipoNovedad(TipoNovedadObject:any, urlService:string){
+
+        var params ='?Codigo='+TipoNovedadObject.Codigo+'&Nombre='+TipoNovedadObject.Nombre+'&Estado='+TipoNovedadObject.Estado;
+
+        var headers = new Headers();
+
+        var options = new RequestOptions({headers: headers});
+
+        return this._http.post(urlService + 'TipoNovedad'+ params
+                    ,'', options).map(res=>res.json());
+    }
 }
