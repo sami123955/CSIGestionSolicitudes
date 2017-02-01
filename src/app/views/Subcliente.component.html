@@ -38,7 +38,7 @@
                                     <td>
                                     
                                     
-                                        <button class="btn btn-default" (click)="CargarDatosForm(item.CodigoSucursal, item.Nit, item.RazonSocial, item.Telefono, item.Representante, item.Estado, item.Codigo)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
+                                        <button class="btn btn-default" (click)="CargarDatosForm(item.CodigoSucursal, item.Nit, item.RazonSocial, item.Telefono, item.Representante, item.estado, item.Codigo)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -85,10 +85,12 @@
 
             <div class="form-group">
                 <label for="CodigoSucursal">C&oacute;digo Sucursal</label>
-                <select name="" id=""  class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal">
-                    <option *ngFor="let item of DatoSucursal.Data"  [value]="item.Codigo">{{item.Nombre}}</option>
+                <select class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal" *ngFor="let item of DatoSucursal.Data">
+                    <option [value]="item.Codigo">{{item.Nombre}}</option>
                 </select>
             </div>
+
+            
 
         </form>
       </div>
@@ -102,7 +104,7 @@
 
 
 <!--Model Actualizar-->
-<!--
+
 <div class="modal fade SubclienteModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -135,21 +137,44 @@
 
             <div class="form-group">
                 <label for="CodigoSucursal">C&oacute;digo Sucursal</label>
-                <select name="" id=""  class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal">
+                <select class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal">
                     <option *ngFor="let item of DatoSucursal.Data"  [value]="item.Codigo">{{item.Nombre}}</option>
                 </select>
+            </div>
+
+             <div class="radio">
+                <label>
+                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="true">
+                    Activo
+                </label>
+            </div>
+
+             <div class="radio">
+                <label>
+                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="false">
+                    Inactivo
+                </label>
             </div>
 
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="ActualizarEmpresa()" [disabled]="!SubclienteForm.form.valid" *ngIf="!loading">Guardar</button>
+        <button type="button" class="btn btn-primary" (click)="ActualizarSubcliente()" [disabled]="!SubclienteForm.form.valid" *ngIf="!loading">Guardar</button>
         <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
       </div>
     </div>
   </div>
-</div>-->
+</div>
+
+
+
+<div id="ContentPreloader" *ngIf="loading">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <h5 class="loadingText">Cargando...</h5>
+    </div> 
+</div>
 
 
 

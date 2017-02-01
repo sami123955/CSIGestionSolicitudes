@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@aular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subcliente } from '../models/Subcliente';
 import { DatosServidor } from '../models/DatosServidor';
 import { SubclienteService } from '../services/Subcliente.service';
@@ -22,6 +22,7 @@ declare var DataTable: any;
 
 export class SubclienteComponent implements OnInit {
 
+ constructor (private _SubclienteService: SubclienteService, private _SucursalService: SucursalService) {}
 
     model = new Subcliente('','','','','','','',);
 
@@ -30,22 +31,26 @@ export class SubclienteComponent implements OnInit {
     DatosSubcliente = '';
     DatoSucursal = '';
 
-    constructor (private _SubclienteService: SubclienteService, private _SucursalService: SucursalService) {}
+   
     
     loading=false;
 
+    DatosServidorModel=new DatosServidor();
+
+    DataTable=false;
+
     ngOnInit() {
-        //alert();
+        
+        this.loading = true;
         this.BuscarSucursal();
         this.BuscarSubcliente();
-        this.searchCompany();
     }
     GuardarSubcliente(){
         this._SubclienteService.GuardarSubcliente(this.model, this.DatosServidor.url)
             .subscribe(
-                data => alert(JSON.stringify(data)),
+                data => alertify.sucess('Registrado Correctamente'),
                 error => alert(error),
-                () => console.log('termina')
+                //() =>//
             );
     }
 
@@ -54,39 +59,31 @@ export class SubclienteComponent implements OnInit {
         this._SucursalService.BuscarSucursal(this.DatosServidor.url).subscribe(
             data => this.DatoSucursal = data,
             error => alert(error),
-            () => console.log('Termina')
+            //() => 
         );
+    }
 
+    LimpiarCampos(){
+
+        //para cerrar el modal
+        $('.SubclienteModal').modal('hide');
+        this.loading = false;
 
     }
 
     CargarDatosForm(CodigoSucursal, Nit, RazonSocial, Telefono, Representante, Estado, Codigo){
+
         this.model = new Subcliente(CodigoSucursal, Nit, RazonSocial, Telefono, Representante, Estado, Codigo);
-   
 
     }
-
-    searchCompany(){
-        
-        this._SubclienteService.searchCompany(this.DatosServidor.url).subscribe(
-            data => this.DatosSubcliente = data,
-            error => alertify.error('No funciona'),
-            () => this.LimpiarForm()
-        );
-
-        
-
-
-    }
-
      ActualizarSubcliente() {
 
         this.loading = true;
-            this._SubclienteService.ActualizarEmpresa(this.model, this.DatosServidor.url)
+            this._SubclienteService.ActualizarSubCliente(this.model, this.DatosServidor.url)
             .subscribe(
                 data => alertify.success('Actualizado Correctamente'),
                 error => alert(error),
-                () => this.searchCompany()
+                () => this.BuscarSubcliente()
             );
             
     }
@@ -96,11 +93,10 @@ export class SubclienteComponent implements OnInit {
         this._SubclienteService.BuscarSubcliente(this.DatosServidor.url).subscribe(
             data => this.DatosSubcliente = data,
             error => alert(error),
-            () => console.log('Termina')
+            () => this.LimpiarCampos()
         );
 
 
     }
 
-    arr = ['1', '2', '3']
 }

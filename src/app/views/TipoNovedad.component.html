@@ -5,7 +5,7 @@
     <div class="col-md-11">
     <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#myModal">Crear Tipo Novedad</button>
         <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h4 class="panel-title">Registros</h4>
@@ -15,6 +15,7 @@
                         <table class="table table-hover" id="companyTable" >
                             <thead>
                                 <tr>
+                                    <th>C&oacute;digo</th>
                                     <th>Nombre</th>
                                    
                                 </tr>
@@ -50,11 +51,22 @@
         <h4 class="modal-title" id="myModalLabel">Empresa</h4>
       </div>
       <div class="modal-body">
-        <form #SucursalForm="ngForm">
+        <form #TipoNovedadForm="ngForm">
+
+            <div class="form-group">
+                <label for="Nombre">C&oacute;digo</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.Codigo" name="Codigo" placeholder="C&oacute;digo" id="Codigo">
+            </div>
+
 
             <div class="form-group">
                 <label for="Nombre">Nombre</label>
                 <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+            </div>
+
+            <div class="form-group">
+                <label for="Estado">Estado</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.Estado" name="Estado" placeholder="Estado" id="Estado">
             </div>
             
 
@@ -62,7 +74,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" [disabled]="!SucursalForm.form.valid">Guardar</button>
+        <button type="button" class="btn btn-primary" [disabled]="!TipoNovedadForm.form.valid" (click)="GuardarTipoNovedad()">Guardar</button>
       </div>
     </div>
   </div>

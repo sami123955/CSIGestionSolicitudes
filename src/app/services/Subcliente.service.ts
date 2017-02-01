@@ -11,7 +11,7 @@ export class SubclienteService {
     GuardarSubcliente(SubclienteObject: any, urlService: string) {
 
 
-        var params = '?CodigoSucursal=1&Nit='+SubclienteObject.Nit+'&RazonSocial='+SubclienteObject.RazonSocial+'&Telefono='+SubclienteObject.Telefono+'&Representante='+SubclienteObject.Representante+'&Estado='+true+'&Codigo=';
+        var params = '?CodigoSucursal='+SubclienteObject.CodigoSucursal+'&Nit='+SubclienteObject.Nit+'&RazonSocial='+SubclienteObject.RazonSocial+'&Telefono='+SubclienteObject.Telefono+'&Representante='+SubclienteObject.Representante+'&Estado='+true+'&Codigo=';
 
         var headers = new Headers();
         
@@ -20,7 +20,7 @@ export class SubclienteService {
         return this._http.post(urlService + 'SubCliente'+ params
             , '', options)
             .map(res => res.json());
-
+                
     }
     searchCompany(UrlApi) {
 
@@ -31,24 +31,24 @@ export class SubclienteService {
 
     BuscarSubcliente(UrlApi) {
 
-        var params = 'CodigoSucursal=&Nit=&RazonSocial=&Telefono=&Representante=&Estado=&Codigo=';
+        var params = 'CodigoSucursal=&Nit=&RazonSocial=&Telefono=&Estado=&Codigo=&CodigoEmpresa=';
 
         return this._http.get(UrlApi + 'SubCliente?' + params).map(res => res.json());
     }
 
 
-    ActualizarEmpresa(SubclienteObject: any, urlService: string){
-        var frmData= SubclienteObject.Archivos;
+    ActualizarSubCliente(SubclienteObject: any, urlService: string){
 
-        
-        var params = '?CodigoSucursal=1&Nit'+SubclienteObject.Nit+'&RazonSocial='+SubclienteObject.RazonSocial+'&Telefono='+SubclienteObject.Telefono+'&Representante='+SubclienteObject.Representante+'&Estado='+SubclienteObject.Estado+'&Codigo='+SubclienteObject.Codigo;
+       
+        var params = '?CodigoSucursal='+SubclienteObject.CodigoSucursal+'&Nit='+SubclienteObject.Nit+'&RazonSocial='+SubclienteObject.RazonSocial+'&Telefono='+SubclienteObject.Telefono+'&Representante='+SubclienteObject.Representante+'&Estado='+SubclienteObject.Estado+'&Codigo='+SubclienteObject.Codigo;
+
         var headers = new Headers();
 
         var options = new RequestOptions({ headers: headers });
 
 
         return this._http.post(urlService + 'SubCliente' + params
-            , frmData, options).map(res => res.json());
+            , '', options).map(res => res.json());
 
     }
 

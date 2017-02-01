@@ -25,7 +25,7 @@ export class SucursalService {
 
     BuscarSucursal(UrlApi) {
 
-        var params = 'Direccion=&Nombre=&Email=&Telefono=&Representante=&Estado=&CodigoEmpresa=35&Codigo=';
+        var params = 'Direccion=&Nombre=&Email=&Telefono=&Representante=&Estado=&CodigoEmpresa=37&Codigo=';
 
         return this._http.get(UrlApi + 'Sucursal?' + params).map(res => res.json());
     }
