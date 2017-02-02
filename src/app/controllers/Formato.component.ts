@@ -7,7 +7,6 @@ declare var $:any;
 declare var alertify:any;
 declare var success:any;
 declare var error:any;
-//declare var destroy:any;
 
 @Component({
     selector: 'Formato',
@@ -97,7 +96,7 @@ export class FormatoComponent implements OnInit {
                 .subscribe(
                     data => alertify.success('Registrado Correctamente'),
                     error => alert(error),
-                    () => location.reload()
+                    () => this.BuscarFormato()
                 );
 
         } catch (error) {
@@ -112,8 +111,12 @@ export class FormatoComponent implements OnInit {
 
        if(this.DataTable == false) {
 
-            $('#FormatoTabla').DataTable({
-                    bDestroy: true,
+           alert();
+
+           let jquery: any = Object.assign(window["$"]);
+
+           /*jquery('#FormatoTabla').DataTable({
+                    "bDestroy": true,
                     "language": {
                         "sProcessing":     "Procesando...",
                         "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -138,7 +141,7 @@ export class FormatoComponent implements OnInit {
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 }
-            });
+            });*/
 
             this.DataTable = true;
        }
@@ -175,7 +178,7 @@ export class FormatoComponent implements OnInit {
             .subscribe(
                 data => alertify.success('Actualizado Correctamente'),
                 error => alert(error),
-                () => location.reload()
+                () => this.BuscarFormato()
             );
 
         } catch (error) {
