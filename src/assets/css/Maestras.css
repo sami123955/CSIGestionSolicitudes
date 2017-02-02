@@ -115,3 +115,8 @@
         transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
     }
 }
+
+
+.SelectMultiple {
+    text-align: left;
+}

@@ -25,6 +25,7 @@ import { TipoServicioComponent } from './controllers/TipoServicio.component';
 import { FormatoComponent } from './controllers/Formato.component';
 import { PersonaComponent } from './controllers/Persona.component';
 import { ComboServicioComponent } from './controllers/ComboServicio.component';
+import { MunicipioComponent } from './controllers/Municipio.component';
 
 @NgModule({
   imports:      [ 
@@ -47,7 +48,8 @@ import { ComboServicioComponent } from './controllers/ComboServicio.component';
                   TipoServicioComponent,
                   FormatoComponent,
                   PersonaComponent,
-                  ComboServicioComponent
+                  ComboServicioComponent,
+                  MunicipioComponent
                 ],
   providers: [],
   bootstrap:    [ AppComponent ]
