@@ -76,10 +76,9 @@
 
             <div class="form-group">
                 <label for="Cargo">Sucursal</label>
-                <ss-multiselect-dropdown [options]="SucursalesSelect" [settings]="mySettings" style="width: 300px;" [(ngModel)]="model.Sucursal" name="Sucursal" required></ss-multiselect-dropdown>
+                <ss-multiselect-dropdown [options]="SucursalesSelect" id="SelectSucursal" [settings]="ConfiguracionSelect" [(ngModel)]="model.Sucursal" name="Sucursal" required></ss-multiselect-dropdown>
             </div>
             
-
         </form>
       </div>
       <div class="modal-footer">

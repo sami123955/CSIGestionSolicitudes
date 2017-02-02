@@ -10,6 +10,9 @@ import { SubclienteComponent } from './controllers/Subcliente.component';
 import { CausanteNovedadComponent } from './controllers/CausanteNovedad.component';
 import { TipoServicioComponent } from './controllers/TipoServicio.component';
 import { FormatoComponent } from './controllers/Formato.component';
+import { PersonaComponent } from './controllers/Persona.component';
+import { ComboServicioComponent } from './controllers/ComboServicio.component';
+import { MunicipioComponent } from './controllers/Municipio.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,6 +25,9 @@ const routes: Routes = [
   { path: 'causantenovedad', component: CausanteNovedadComponent},
   { path: 'tipoServicio', component: TipoServicioComponent},
   { path: 'formato', component: FormatoComponent},
+  { path: 'persona', component: PersonaComponent},
+  { path: 'comboServicio', component: ComboServicioComponent},
+   { path: 'municipio', component: MunicipioComponent},
 ];
 
 @NgModule({
