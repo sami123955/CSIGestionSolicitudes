@@ -50,11 +50,11 @@
         <h4 class="modal-title" id="myModalLabel">Empresa</h4>
       </div>
       <div class="modal-body">
-        <form #EmpleadoaForm="ngForm">
+        <form #EmpleadoForm="ngForm">
 
             <div class="form-group">
-                <label for="Nombre">NIT</label>
-                <input type="number" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+                <label for="Nombre">Nombre</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
             </div>
 
             <div class="form-group">
@@ -76,7 +76,7 @@
 
             <div class="form-group">
                 <label for="Cargo">Sucursal</label>
-                <ss-multiselect-dropdown [options]="myOptions"></ss-multiselect-dropdown>
+                <ss-multiselect-dropdown [options]="SucursalesSelect" [settings]="mySettings" style="width: 300px;" [(ngModel)]="model.Sucursal" name="Sucursal" required></ss-multiselect-dropdown>
             </div>
             
 
@@ -84,7 +84,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" [disabled]="!EmpleadoaForm.form.valid">Guardar</button>
+        <button type="button" class="btn btn-primary" [disabled]="!EmpleadoForm.form.valid" (click)="GuardarEmpleado()">Guardar</button>
       </div>
     </div>
   </div>

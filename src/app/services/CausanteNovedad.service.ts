@@ -6,11 +6,11 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CausanteNovedadService {
-    constructor(private _http: Http){ }
+    constructor(private _http:Http){ }
 
 
 GuardarCausanteNovedad(CausanteNovedadObject: any, urlService: string){
-    var params = '?CodigoTipoSucursal='+CausanteNovedadObject.CodigoTipoSucursal+'&Nombre='+CausanteNovedadObject.Nombre+'&Codigo=';
+    var params = '?CodigoTipoNovedad='+CausanteNovedadObject.CodigoTipoNovedad+'&Nombre='+CausanteNovedadObject.Nombre+'&Estado='+true+'&Codigo=';
 
     var headers = new Headers();
         
@@ -20,5 +20,23 @@ GuardarCausanteNovedad(CausanteNovedadObject: any, urlService: string){
             , '', options)
             .map(res => res.json());
 }
+
+    BuscarCausanteNovedad(UrlApi){
+        var params ='?Nombre=&CodigoTipoNovedad=&Codigo=&Estado=';
+
+        return this._http.get(UrlApi + 'CausanteNovedad' + params).map(res => res.json());;
+    }
+
+    ActualizarCausanteNovedad(CausanteNovedadObject:any, urlService:string){
+        var params = '?Nombre='+CausanteNovedadObject.Nombre+'&CodigoTipoNovedad='+CausanteNovedadObject.CodigoTipoNovedad+'&Codigo='+CausanteNovedadObject.Codigo+'&Estado='+CausanteNovedadObject.Estado;
+
+        var headers = new Headers();
+
+        var options = new RequestOptions({headers: headers});
+
+        return this._http.post(urlService + 'CausanteNovedad'+ params
+                ,'', options).map(res=>res.json());
+
+    }
 
 }

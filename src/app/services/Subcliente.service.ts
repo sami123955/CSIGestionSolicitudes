@@ -27,7 +27,7 @@ export class SubclienteService {
         var params = "CodigoSucursal=&Nit=&RazonSocial=&Telefono=&Representante=&Estado=&Codigo=";
 
         return this._http.get(UrlApi + 'SubCliente?' + params).map(res => res.json());
-    }
+    }   
 
     BuscarSubcliente(UrlApi) {
 

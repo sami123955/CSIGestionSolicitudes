@@ -1,9 +1,9 @@
-<h4 class="Titulo">Tipos de servicios</h4>
+<h4 class="Titulo">Administaci&oacute;n de Formatos</h4>
 
 <div class="container">
     
     <div class="col-md-11">
-    <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#TipoServicioModal">Crear tipo de servicio</button>
+    <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#FormatoModal">Crear formatos</button>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
@@ -12,22 +12,24 @@
                     </div>
                     <div class="panel-body">
                     </div>
-                    <table class="table table-hover" id="TipoServicioTabla" >
+                    <table class="table table-hover" id="FormatoTabla" >
                         <thead>
                             <tr>
-                                <th>Nombre</th>
                                 <th>Descrpci&oacute;n</th>
+                                <th>Formato</th>
                                 <th>Estado</th>
                                 <th>Editar</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngIf="DatosTipoServicio.Data?.length == 0">
+                            <tr *ngIf="DatosFormato.Data?.length == 0">
                                 <td colspan="4">No se encontraron registros.</td>
                             </tr>
-                            <tr *ngFor="let item of DatosTipoServicio.Data; let last = last;">
-                                <td>{{item.Nombre}}</td>
+                            <tr *ngFor="let item of DatosFormato.Data; let last = last;">
                                 <td>{{item.Descripcion}}</td>
+                                <td>
+                                    <a [href]="item.Formato"><button class="btn btn-default" >Ver</button></a>
+                                </td>
                                 <td *ngIf="item.Estado">
                                     Activo
                                 </td>
@@ -35,7 +37,7 @@
                                     Inactivo
                                 </td>
                                 <td>
-                                    <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar" (click)="CargarCampos(item.Nombre, item.Descripcion, item.Codigo, item.Estado)">Editar</button>
+                                    <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar" (click)="CargarCampos(item.Formato, item.Descripcion, item.Codigo, item.Estado)">Editar</button>
                                 </td>
 
                                 <span *ngIf="last == true">{{AplicarDataTable()}}</span>
@@ -49,19 +51,19 @@
 </div>
 
 
-<div class="modal fade TipoServicioModal" id="TipoServicioModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade FormatoModal" id="FormatoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tipos de servicios</h4>
+        <h4 class="modal-title" id="myModalLabel">Formato</h4>
       </div>
       <div class="modal-body">
-        <form #TipoServicioForm="ngForm">
+        <form #FormatoForm="ngForm">
 
             <div class="form-group">
-                <label for="Nombre">Nombre</label>
-                <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+                <label for="rut">Formato</label>
+                <input type="file" class="form-control" id="RutaRuta" (change)="CargarArchivo($event)" #RutaRuta>
             </div>
 
             <div class="form-group">
@@ -73,16 +75,15 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="GuardarTipoServicio();" [disabled]="!TipoServicioForm.form.valid" *ngIf="!loading">Guardar</button>
-        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
+        <button type="button" class="btn btn-primary" (click)="GuardarFormato();" [disabled]="!FormatoForm.form.valid">Guardar</button>
       </div>
     </div>
   </div>
 </div>  
-
 <!-- Modal Actualizar -->
 
-<div class="modal fade TipoServicioModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+<div class="modal fade FormatoModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -90,16 +91,16 @@
         <h4 class="modal-title" id="myModalLabel">Tipos de servicios</h4>
       </div>
       <div class="modal-body">
-        <form #TipoServicioForm="ngForm">
+        <form #FormatoForm="ngForm">
 
-            <div class="form-group">
-                <label for="Nombre">Nombre</label>
-                <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+             <div class="form-group">
+                <label for="rut">Formato</label>
+                <input type="file" class="form-control" id="RutaRuta" (change)="CargarArchivo($event)" #RutaRuta>
             </div>
 
             <div class="form-group">
                 <label for="notes">Descripci&oacute;n</label>
-                <textarea class="form-control textarea" rows="3" placeholder="Descripci&oacute;n" id="notes" [(ngModel)]="model.Descripcion" name="Descripcion" required></textarea>
+                <textarea class="form-control textarea" rows="3" placeholder="Descripci&oacute;n" [(ngModel)]="model.Descripcion" name="Descripcion" required></textarea>
             </div>
 
             <div class="radio">
@@ -119,13 +120,11 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="ActualizarTipoEmpresa()" [disabled]="!TipoServicioForm.form.valid" *ngIf="!loading">Guardar</button>
-        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
+        <button type="button" class="btn btn-primary" (click)="ActualizarFormato()" [disabled]="!FormatoForm.form.valid">Guardar</button>
       </div>
     </div>
   </div>
-</div>  
-
+</div>
 
 <div id="ContentPreloader" *ngIf="Cargando">
     <div id="loader-wrapper">

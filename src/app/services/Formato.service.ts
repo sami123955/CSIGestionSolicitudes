@@ -5,39 +5,39 @@ import { RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class TipoServicioService {
+export class FormatoService {
     constructor(private _http: Http) { }
 
-    GuardarTipoServicio(ObjetoTipoServicio: any, UrlServicio: string) {
-        
-        var params = '?Codigo=&Nombre='+this.ValidarCadena(ObjetoTipoServicio.Nombre)+'&Descripcion='+this.ValidarCadena(ObjetoTipoServicio.Descripcion)+'&Estado='+true;
+    GuardarFormato(ObjetoFormato: any, UrlServicio: string) {
+ 
+        var params = '?Codigo=&Formato=&Descripcion='+this.ValidarCadena(ObjetoFormato.Descripcion)+'&Estado='+true;
 
         var headers = new Headers();
         
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(UrlServicio + 'TipoServicio'+ params
-            , '', options)
+        return this._http.post(UrlServicio + 'Formato'+ params
+            , ObjetoFormato.Archivo, options)
             .map(res => res.json());
-
     }
 
-    BuscarTipoServicio(UrlServicio) {
+    BuscarFormato(UrlServicio) {
 
-        var params = "Codigo=&Nombre=&Descripcion=&Estado=";
+        var params = "Codigo=&Estado=";
 
-        return this._http.get(UrlServicio + 'TipoServicio?' + params).map(res => res.json());
+        return this._http.get(UrlServicio + 'Formato?' + params).map(res => res.json());
     }
 
-    ActualizarTipoServicio(ObjetoTipoServicio: any, UrlServicio: string){
-        var params = '?Codigo='+ObjetoTipoServicio.Codigo+'&Nombre='+this.ValidarCadena(ObjetoTipoServicio.Nombre)+'&Descripcion='+this.ValidarCadena(ObjetoTipoServicio.Descripcion)+'&Estado='+ObjetoTipoServicio.Estado;
+
+    ActualizarFormato(ObjetoFormato: any, UrlServicio: string){
+        var params = '?Codigo='+ObjetoFormato.Codigo+'&Formato='+encodeURIComponent(ObjetoFormato.Formato)+'&Descripcion='+this.ValidarCadena(ObjetoFormato.Descripcion)+'&Estado='+true;
 
         var headers = new Headers();
         
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(UrlServicio + 'TipoServicio'+ params
-            , '', options)
+        return this._http.post(UrlServicio + 'Formato'+ params
+            , ObjetoFormato.Archivo, options)
             .map(res => res.json());
     }
 

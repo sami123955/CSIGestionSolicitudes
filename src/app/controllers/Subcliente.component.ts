@@ -43,7 +43,7 @@ export class SubclienteComponent implements OnInit {
  //Variable que usaremos para validar si ya se le aplica data table o No
     DataTable=false;
 
-    ngOnInit() {
+    ngOnInit() {    
         
         this.loading = true;
         this.BuscarSucursal();
