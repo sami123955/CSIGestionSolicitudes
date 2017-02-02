@@ -11,7 +11,7 @@ export class SucursalService {
     GuardarSucursal(SucursalObject: any, urlService: string) {
 
         
-        var params = '?Direccion='+SucursalObject.Direccion+'&Nombre='+SucursalObject.Nombre+'&Email='+SucursalObject.Email+'&Telefono='+SucursalObject.Telefono+'&Representante='+SucursalObject.Representante+'&Estado='+true+'&CodigoEmpresa=35';
+        var params = '?Direccion='+SucursalObject.Direccion+'&Nombre='+SucursalObject.Nombre+'&Email='+SucursalObject.Email+'&Telefono='+SucursalObject.Telefono+'&Representante='+SucursalObject.Representante+'&Estado='+true+'&CodigoEmpresa=35'+'&Codigo=';
 
         var headers = new Headers();
         
@@ -25,25 +25,23 @@ export class SucursalService {
 
     BuscarSucursal(UrlApi) {
 
-        var params = 'Direccion=&Nombre=&Email=&Telefono=&Representante=&Estado=&CodigoEmpresa=37&Codigo=';
+        var params = '?Direccion=&Nombre=&Email=&Telefono=&Representante=&Estado=&CodigoEmpresa=&Codigo=';
 
-        return this._http.get(UrlApi + 'Sucursal?' + params).map(res => res.json());
+        return this._http.get(UrlApi + 'Sucursal' + params).map(res => res.json());
     }
 
 
-    ActualizarEmpresa(empresaObject: any, urlService: string){
-        var frmData= empresaObject.Archivos;
+    ActualizarSucursal(SucursalObject: any, urlService: string){
 
-        
-        var params = '?Codigo='+empresaObject.Codigo+'&Nit='+empresaObject.Nit+'&RazonSocial='+empresaObject.RazonSocial+'&Direccion='+empresaObject.Direccion+'&DireccionRecepcion='+empresaObject.DireccionRecepcion+'&EmailEmpresa='+empresaObject.EmailEmpresa+'&Telefono='+empresaObject.Telefono+'&Representante='+empresaObject.Representante+'&Observaciones='+empresaObject.Observaciones+'&Estado='+empresaObject.Estado+'&Contacto='+empresaObject.Contacto+'&EmailContacto='+empresaObject.EmailContacto+'&RutaRut='+encodeURIComponent(empresaObject.RutaRut)+'&RutaCamaraComercio='+encodeURIComponent(empresaObject.RutaCamaraComercio)+'&Contrato='+encodeURIComponent(empresaObject.Contrato);
+        var params = '?Direccion='+SucursalObject.Direccion+'&Nombre='+SucursalObject.Nombre+'&Email='+SucursalObject.Email+'&Telefono='+SucursalObject.Telefono+'&Representante='+SucursalObject.Representante+'&Estado='+SucursalObject.Estado+'&Codigo='+SucursalObject.Codigo+'&CodigoEmpresa=35';
 
         var headers = new Headers();
 
         var options = new RequestOptions({ headers: headers });
 
 
-        return this._http.post(urlService + 'Empresa' + params
-            , frmData, options).map(res => res.json());
+        return this._http.post(urlService + 'Sucursal' + params
+            , '', options).map(res => res.json());
 
     }
 

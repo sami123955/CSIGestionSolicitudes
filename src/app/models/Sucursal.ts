@@ -6,8 +6,9 @@ export class Sucursal {
             public Direccion: string,
             public Email:string,
             public Telefono:string,
-            public Representante:string
-
+            public Representante:string,
+            public Codigo?:string,
+            public Estado?: string
     ) {}
 
 }
