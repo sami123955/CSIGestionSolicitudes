@@ -3,7 +3,7 @@
 <div class="container">
     
     <div class="col-md-11">
-    <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#myModal">Crear Sucursal</button>
+    <button class="btn btn-primary BtnCrear" (click)="LimpiarDatos()" data-toggle="modal" data-target="#myModal">Crear Sucursal</button>
         <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
@@ -12,7 +12,7 @@
                         </div>
                         <div class="panel-body">
                         </div>
-                        <table class="table table-hover" id="companyTable" >
+                        <table class="table table-hover" id="SucursalTabla" >
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
@@ -24,7 +24,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of DatosSucursal.Data">
+                                <tr *ngIf="DatosSucursal.Data?.length == 0">
+                                    <td colspan="6">No se encontraron registros</td>
+                                </tr>
+                                <tr *ngFor="let item of DatosSucursal.Data; let last = last;">
                                     <td>{{item.Nombre}}</td>
                                     <td>{{item.Telefono}}</td>
                                     <td>{{item.Direccion}}</td>
@@ -32,10 +35,9 @@
                                     <td>{{item.Representante}}</td>
                                     
                                     <td>
-                                    
-                                    
                                         <button class="btn btn-default" (click)="CargarDatosForm(item.Nombre, item.Telefono, item.Direccion, item.Email, item.Representante, item.Codigo, item.Estado)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
                                     </td>
+                                    <span *ngIf="last == true">{{AplicarDataTable()}}</span>
                                 </tr>
                             </tbody>
                         </table>
@@ -157,6 +159,14 @@
     </div>
   </div>
 </div>
+
+<div id="ContentPreloader" *ngIf="Cargando">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <h5 class="loadingText">Cargando...</h5>
+    </div> 
+</div>
+
 
 
 

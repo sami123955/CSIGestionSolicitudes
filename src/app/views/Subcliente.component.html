@@ -3,7 +3,7 @@
 <div class="container">
     
     <div class="col-md-11">
-    <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#myModal">Crear Subcliente</button>
+    <button class="btn btn-primary BtnCrear" (click)="LimpiarDatos()" data-toggle="modal" data-target="#myModal">Crear Subcliente</button>
         <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
@@ -12,7 +12,7 @@
                         </div>
                         <div class="panel-body">
                         </div>
-                        <table class="table table-hover" id="companyTable" >
+                        <table class="table table-hover" id="SubClienteTabla">
                             <thead>
                                 <tr>
                                     <th>Nit</th>
@@ -25,21 +25,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of DatosSubcliente.Data">
+                                <tr *ngIf="DatosSubcliente.Data?.length == 0">
+                                    <td colspan="7">No se encontraron registros</td>
+                                </tr>
+                                <tr *ngFor="let item of DatosSubcliente.Data; let last = last;">
                                     <td>{{item.Nit}}</td>
-                                     <td>{{item.RazonSocial}}</td>
-                                      <td>{{item.Telefono}}</td>
-                                       <td>{{item.Representante}}</td>
-                                        <td>{{item.CodigoSucursal}}</td>
-                                          
-                                         <td *ngIf="item.estado">Activo</td>
-                                         <td *ngIf="!item.estado">Inactivo</td>
-
+                                    <td>{{item.RazonSocial}}</td>
+                                    <td>{{item.Telefono}}</td>
+                                    <td>{{item.Representante}}</td>
+                                    <td>{{item.CodigoSucursal}}</td>    
+                                    <td *ngIf="item.estado">Activo</td>
+                                    <td *ngIf="!item.estado">Inactivo</td>
                                     <td>
-                                    
-                                    
                                         <button class="btn btn-default" (click)="CargarDatosForm(item.CodigoSucursal, item.Nit, item.RazonSocial, item.Telefono, item.Representante, item.estado, item.Codigo)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
                                     </td>
+
+                                    <span *ngIf="last == true">{{AplicarDataTable()}}</span>
                                 </tr>
                             </tbody>
                         </table>
@@ -84,9 +85,9 @@
             </div>
 
             <div class="form-group">
-                <label for="CodigoSucursal">C&oacute;digo Sucursal</label>
-                <select class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal" *ngFor="let item of DatoSucursal.Data">
-                    <option [value]="item.Codigo">{{item.Nombre}}</option>
+                <label for="CodigoSucursal">Sucursal</label>
+                <select class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal" >
+                    <option *ngFor="let item of DatoSucursal.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                 </select>
             </div>
 
@@ -136,8 +137,9 @@
             </div>
 
             <div class="form-group">
-                <label for="CodigoSucursal">C&oacute;digo Sucursal</label>
+                <label for="CodigoSucursal">Sucursal</label>
                 <select class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal">
+                    <option value="">Seleccionar sucursal...</option>
                     <option *ngFor="let item of DatoSucursal.Data"  [value]="item.Codigo">{{item.Nombre}}</option>
                 </select>
             </div>
@@ -169,7 +171,7 @@
 
 
 
-<div id="ContentPreloader" *ngIf="loading">
+<div id="ContentPreloader" *ngIf="Cargando">
     <div id="loader-wrapper">
         <div id="loader"></div>
         <h5 class="loadingText">Cargando...</h5>

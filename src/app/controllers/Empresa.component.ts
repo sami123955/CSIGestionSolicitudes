@@ -53,7 +53,7 @@ export class EmpresaComponent implements OnInit {
                 .subscribe(
                     data => alertify.success('Registrado Correctamente'),
                     error => alert(error),
-                    () => this.BuscarEmpresa()
+                    () => location.reload()//this.BuscarEmpresa()
                 );
 
             }
@@ -73,7 +73,7 @@ export class EmpresaComponent implements OnInit {
             this._empresaService.searchCompany(this.DatosServidorModel.url).subscribe(
             data => this.DatosConsulta = data,
             error => alertify.error('No funciona'),
-            () => this.LimpiarForm()
+            () => this.loading = false
             );
 
         } catch (error) {
@@ -134,17 +134,6 @@ export class EmpresaComponent implements OnInit {
         this.BuscarEmpresa();
     }
 
-
-    LimpiarForm(){
-        this.model = new Empresa('', '', '', '', '', '', '', '', '', '', '');
-        //Seteamos nuevamente el objeto formdata
-        this.model.Archivos = new FormData();
-
-        //Cerramos modal
-        $('.EmpresaModal').modal('hide');
-        this.loading = false;
-    }
-
     CargarDatosForm(Nit, RazonSocial, Direccion, DireccionRecepcion, Representante, Contacto, EmailContacto, Telefono, EmailEmpresa, Observaciones, Codigo, Estado, RutaRut, RutaCamaraComercio, Contrato){
 
         this.model = new Empresa(Nit,RazonSocial,Direccion,DireccionRecepcion, Representante, Contacto, EmailContacto, Telefono, EmailEmpresa, '',  Observaciones, Codigo, Estado, RutaRut, RutaCamaraComercio, Contrato);
@@ -162,7 +151,7 @@ export class EmpresaComponent implements OnInit {
             .subscribe(
                 data => alertify.success('Actualizado Correctamente'),
                 error => alert(error),
-                () => this.BuscarEmpresa()
+                () => location.reload()//this.BuscarEmpresa()
             );
             
         } catch (error) {
@@ -209,6 +198,18 @@ export class EmpresaComponent implements OnInit {
             this.DataTable = true;
        }
    }
+
+   LimpiarDatos(){
+
+        this.model = new Empresa('', '', '', '', '', '', '', '', '', '', '');
+        //Seteamos nuevamente el objeto formdata
+        this.model.Archivos = new FormData();
+
+    }
+
 }
+
+
+
 
 

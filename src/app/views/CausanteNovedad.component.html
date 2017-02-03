@@ -3,7 +3,7 @@
 <div class="container">
     
     <div class="col-md-11">
-    <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#myModal">Crear Causante Novedad</button>
+    <button class="btn btn-primary BtnCrear"  (click)="LimpiarDatos()" data-toggle="modal" data-target="#myModal">Crear Causante Novedad</button>
         <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
@@ -13,10 +13,10 @@
                         <div class="panel-body">
                         </div>
                         
-                        <table class="table table-hover" id="companyTable" >
+                        <table class="table table-hover" id="CausanteNovedadTabla">
                             <thead>
+                                
                                 <tr>
-
                                     <th>Nombre</th>
                                     <th>C&oacute;digo Tipo Novedad</th>
                                     <th>Estado</th>
@@ -25,17 +25,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of DatosCausanteNovedad.Data">
+                                <tr *ngIf="DatosCausanteNovedad.Data?.length == 0">
+                                    <td colspan="4">No se encontraron registros</td>
+                                </tr>
+                                <tr *ngFor="let item of DatosCausanteNovedad.Data; let last = last;">
                                     <td>{{item.Nombre}}</td>
                                     <td>{{item.CodigoTipoNovedad}}</td>
-                                    
-                                    
                                     <td *ngIf="item.Estado">Activo</td>
                                     <td *ngIf="!item.Estado">Inactivo</td>
-
                                     <td>
                                         <button class="btn btn-default" (click)="CargarDatosForm(item.Nombre, item.CodigoTipoNovedad, item.Codigo, item.Estado)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
                                     </td>
+                                    <span *ngIf="last == true">{{AplicarDataTable()}}</span>
                                 </tr>
                             </tbody>
                         </table>

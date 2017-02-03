@@ -29,45 +29,132 @@ export class TipoNovedadComponent implements OnInit {
     DatosTipoNovedad = '';
 
 //Variable que usaremos para controlar los preloaders 
-    loading=false;
+    Cargando=false;
 
      DatosServidorModel=new DatosServidor();
 
- //Variable que usaremos para validar si ya se le aplica data table o No
-    DataTable=false;
+    //Variable que usaremos para validar si ya se le aplica data table o No
+    DataTable = false;
 
     ngOnInit() {
         //alert();
-        this.loading=true;
+        this.Cargando=true;
         this.BuscarTipoNovedad();
     }
     GuardarTipoNovedad(){
-        this._TipoNovedadService.GuardarTipoNovedad(this.model, this.DatosServidor.url)
-        .subscribe(
-                data => alertify.success('Registrado Correctamente'),
-                error => alert(error),
-                //() =>//
-        );
+
+        try {
+            
+            this.Cargando = true;
+            
+            this._TipoNovedadService.GuardarTipoNovedad(this.model, this.DatosServidor.url)
+            .subscribe(
+                    data => alertify.success('Registrado Correctamente'),
+                    error => alert(error),
+                    () => location.reload()
+            );    
+
+
+        } catch (error) {
+            
+        }
+
+        
     }
     BuscarTipoNovedad(){
-        this._TipoNovedadService.BuscarTipoNovedad(this.DatosServidor.url).subscribe(
+
+        try {
+
+            this._TipoNovedadService.BuscarTipoNovedad(this.DatosServidor.url).subscribe(
             data => this.DatosTipoNovedad = data,
             error => alert(error),
-          //  () => alert(JSON.stringify(this.DatosTipoNovedad))
-        );
+            () => this.Cargando = false
+            );
+            
+        } catch (error) {
+            
+        }
+
+        
 }
 
     CargarDatosForm(Codigo, Nombre, Estado){
         this.model = new TipoNovedad(Nombre, Codigo, Estado);
     }
     ActualizarTipoNovedad(){
-        this.loading = true;
-        this._TipoNovedadService.ActualizarTipoNovedad(this.model, this.DatosServidor.url)
-        .subscribe(
-            data => alertify.success('Actualizado Correctamente'),
-            error => alert(error),
-            () => this.BuscarTipoNovedad()
-        );
+
+        try {
+
+            this.Cargando = true;
+            this._TipoNovedadService.ActualizarTipoNovedad(this.model, this.DatosServidor.url)
+            .subscribe(
+                data => alertify.success('Actualizado Correctamente'),
+                error => alert(error),
+                () => location.reload()//this.BuscarTipoNovedad()
+            );
+            
+        } catch (error) {
+
+
+        }
+
+        
+    }
+
+
+    AplicarDataTable(){
+
+        try {
+                if(this.DataTable == false) {
+
+                $('#TipoNovedadTabla').dataTable({
+
+                        "bDestroy": true,
+                        "language": {
+                        "sProcessing":     "Procesando...",
+                        "sLengthMenu":     "Mostrar _MENU_ registros",
+                        "sZeroRecords":    "No se encontraron resultados",
+                        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix":    "",
+                        "sSearch":         "Buscar:",
+                        "sUrl":            "",
+                        "sInfoThousands":  ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst":    "Primero",
+                            "sLast":     "Último",
+                            "sNext":     "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    }
+                });
+
+                this.DataTable = true;
+
+            }    
+        } catch (error) {
+            
+
+            var DescripcionError = 'TipoNovedad.component.ts--->AplicarDataTable--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+
+
+        }
+
+        
+    }
+
+    LimpiarDatos(){
+
+        this.model = new TipoNovedad('');
+
     }
 
 }

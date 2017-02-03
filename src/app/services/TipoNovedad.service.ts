@@ -34,7 +34,7 @@ export class TipoNovedadService{
     }
 
     ActualizarTipoNovedad(TipoNovedadObject:any, urlService:string){
-
+        
         var params ='?Codigo='+TipoNovedadObject.Codigo+'&Nombre='+TipoNovedadObject.Nombre+'&Estado='+TipoNovedadObject.Estado;
 
         var headers = new Headers();

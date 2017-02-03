@@ -21,6 +21,9 @@ declare var DataTable: any;
 export class SucursalComponent implements OnInit {
 
 
+    Cargando = false;
+
+
     model = new Sucursal('','','','','');
 
 
@@ -29,32 +32,41 @@ export class SucursalComponent implements OnInit {
 
     DatosSucursal = '';
 
+    DataTable = false;
+
     constructor (private _SucursalService: SucursalService) {}
 
 
     ngOnInit() {
+
+        this.Cargando = true;
+
         this.BuscarSucursal();
     }
 
     GuardarSucursal() {
+
+            this.Cargando = true;
 
 
             this._SucursalService.GuardarSucursal(this.model, this.DatosServidor.url)
             .subscribe(
                 data => alertify.success('Registrado Correctamente'),
                 error => alert(error),
-                () => this.BuscarSucursal()
+                () => location.reload()//this.BuscarSucursal()
             );
 
     }
 
     
     BuscarSucursal(){
+
+        
         
         this._SucursalService.BuscarSucursal(this.DatosServidor.url).subscribe(
             data => this.DatosSucursal = data,
             error => alert(error),
-            //() => console.log('Termina')
+            () => this.Cargando = false
         );
 
 
@@ -66,13 +78,61 @@ export class SucursalComponent implements OnInit {
     }
 
     ActualizarSucursal(){
+
+        this.Cargando = true;
               
         this._SucursalService.ActualizarSucursal(this.model, this.DatosServidor.url)
         .subscribe(
             data => alertify.success('Actualizado Correctamente'),
             error => alert(error),
-            () => this.BuscarSucursal()
+            () => location.reload()//this.BuscarSucursal()
         );
+    }
+
+    AplicarDataTable(){
+
+        if(this.DataTable == false){
+
+
+            $('#SucursalTabla').dataTable({
+
+                    "bDestroy": true,
+                    "language": {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+
+            this.DataTable = true;
+
+
+        }
+
+
+    }
+
+    LimpiarDatos(){
+        this.model = new Sucursal('','','','','');
     }
 
 }
