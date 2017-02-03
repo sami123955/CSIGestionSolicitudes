@@ -3,10 +3,16 @@ import { Formato } from '../models/Formato';
 import { FormatoService } from '../services/Formato.service';
 import { DatosServidor } from '../models/DatosServidor';
 
+
 declare var $:any;
 declare var alertify:any;
 declare var success:any;
 declare var error:any;
+declare var dataTable:any;
+declare var clear:any;
+declare var draw:any;
+
+//declare var DataTable:any;
 
 @Component({
     selector: 'Formato',
@@ -20,6 +26,7 @@ export class FormatoComponent implements OnInit {
     constructor (private _FormatoService:FormatoService) {}
 
     model = new Formato('');
+
 
     //Variable que usaremos para saber cuando sacar preloader
     Cargando = false;
@@ -40,12 +47,12 @@ export class FormatoComponent implements OnInit {
     
     }
 
-
     BuscarFormato(){
 
         try {
 
             this.DataTable = false;
+
             this._FormatoService.BuscarFormato(this.DatosServidorModel.url).subscribe(
             data => this.DatosFormato = data,
             error => alertify.error('No funciona'),
@@ -96,7 +103,7 @@ export class FormatoComponent implements OnInit {
                 .subscribe(
                     data => alertify.success('Registrado Correctamente'),
                     error => alert(error),
-                    () => this.BuscarFormato()
+                    () => location.reload()//this.BuscarFormato()
                 );
 
         } catch (error) {
@@ -111,39 +118,35 @@ export class FormatoComponent implements OnInit {
 
        if(this.DataTable == false) {
 
-           alert();
-
-           let jquery: any = Object.assign(window["$"]);
-
-           /*jquery('#FormatoTabla').DataTable({
+            $('#FormatoTabla').dataTable({
                     "bDestroy": true,
                     "language": {
-                        "sProcessing":     "Procesando...",
-                        "sLengthMenu":     "Mostrar _MENU_ registros",
-                        "sZeroRecords":    "No se encontraron resultados",
-                        "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix":    "",
-                        "sSearch":         "Buscar:",
-                        "sUrl":            "",
-                        "sInfoThousands":  ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst":    "Primero",
-                            "sLast":     "Último",
-                            "sNext":     "Siguiente",
-                            "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            "sProcessing":     "Procesando...",
+                            "sLengthMenu":     "Mostrar _MENU_ registros",
+                            "sZeroRecords":    "No se encontraron resultados",
+                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix":    "",
+                            "sSearch":         "Buscar:",
+                            "sUrl":            "",
+                            "sInfoThousands":  ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst":    "Primero",
+                                "sLast":     "Último",
+                                "sNext":     "Siguiente",
+                                "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
                     }
-                }
-            });*/
+                });
 
-            this.DataTable = true;
+            this.DataTable = true;    
        }
    }
 
@@ -155,12 +158,11 @@ export class FormatoComponent implements OnInit {
        $('.FormatoModal').modal('hide');
 
        this.Cargando = false;
-
    }
 
 
    CargarCampos(FormatoRuta, Descripcion, Codigo, Estado){
-
+       //
        this.model = new Formato(Descripcion, '', FormatoRuta, Codigo, Estado);
 
        this.model.Archivo = new FormData();
@@ -178,7 +180,7 @@ export class FormatoComponent implements OnInit {
             .subscribe(
                 data => alertify.success('Actualizado Correctamente'),
                 error => alert(error),
-                () => this.BuscarFormato()
+                () => location.reload()//this.BuscarFormato()
             );
 
         } catch (error) {
@@ -190,6 +192,10 @@ export class FormatoComponent implements OnInit {
 
 
    }
+
+
+
+
 
 
 

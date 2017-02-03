@@ -6,9 +6,12 @@ import { HttpModule} from '@angular/http';
 
 import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
+<<<<<<< HEAD
 
 //import { DataTablesModule } from 'angular-datatables';
 
+=======
+>>>>>>> origin/master
 import { AppComponent }  from './app.component';
 
 import { FormsModule } from '@angular/forms';
@@ -30,12 +33,15 @@ import { MunicipioComponent } from './controllers/Municipio.component';
 
 @NgModule({
   imports:      [ 
-                  BrowserModule, 
-                  AppRoutingModule ,
+                  BrowserModule,
+                  AppRoutingModule,
                   HttpModule,
                   FormsModule,
                   MultiselectDropdownModule,
+<<<<<<< HEAD
                   //DataTablesModule
+=======
+>>>>>>> origin/master
                 ],
   declarations: [ 
                   AppComponent,
@@ -50,7 +56,7 @@ import { MunicipioComponent } from './controllers/Municipio.component';
                   FormatoComponent,
                   PersonaComponent,
                   ComboServicioComponent,
-                  MunicipioComponent
+                  MunicipioComponent,
                 ],
   providers: [],
   bootstrap:    [ AppComponent ]
