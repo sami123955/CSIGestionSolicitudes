@@ -6,12 +6,8 @@ import { HttpModule} from '@angular/http';
 
 import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
-<<<<<<< HEAD
-
 //import { DataTablesModule } from 'angular-datatables';
 
-=======
->>>>>>> origin/master
 import { AppComponent }  from './app.component';
 
 import { FormsModule } from '@angular/forms';
