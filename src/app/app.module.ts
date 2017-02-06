@@ -38,10 +38,6 @@ import { MunicipioComponent } from './controllers/Municipio.component';
                   HttpModule,
                   FormsModule,
                   MultiselectDropdownModule,
-<<<<<<< HEAD
-                  //DataTablesModule
-=======
->>>>>>> origin/master
                 ],
   declarations: [ 
                   AppComponent,
