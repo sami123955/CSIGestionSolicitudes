@@ -8,19 +8,19 @@ import 'rxjs/add/operator/map';
 export class MunicipioService {
     constructor(private _http: Http) { }
 
-    /*GuardarTipoServicio(ObjetoTipoServicio: any, UrlServicio: string) {
+    GuardarTipoServicio(ObjetoMunicipio: any, UrlServicio: string) {
         
-        var params = '?Codigo=&Nombre='+this.ValidarCadena(ObjetoTipoServicio.Nombre)+'&Descripcion='+this.ValidarCadena(ObjetoTipoServicio.Descripcion)+'&Estado='+true;
+        var params = '?Codigo=&Nombre='+this.ValidarDato(ObjetoMunicipio.Nombre)+'&CodigoDepartamento='+ObjetoMunicipio.CodigoDepartamento;
 
         var headers = new Headers();
         
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(UrlServicio + 'TipoServicio'+ params
+        return this._http.post(UrlServicio + 'Municipio'+ params
             , '', options)
             .map(res => res.json());
 
-    }*/
+    }
 
     BuscarDepartamento(UrlServicio) {
 
@@ -28,39 +28,43 @@ export class MunicipioService {
 
         return this._http.get(UrlServicio + 'Departamento?' + params).map(res => res.json());
     }
-/*
-    ActualizarTipoServicio(ObjetoTipoServicio: any, UrlServicio: string){
-        var params = '?Codigo='+ObjetoTipoServicio.Codigo+'&Nombre='+this.ValidarCadena(ObjetoTipoServicio.Nombre)+'&Descripcion='+this.ValidarCadena(ObjetoTipoServicio.Descripcion)+'&Estado='+ObjetoTipoServicio.Estado;
+
+    BuscarMunicipio(UrlServicio){
+
+        var params = "Codigo=&CodigoDepartamento=";
+
+        return this._http.get(UrlServicio + 'Municipio?' + params).map(res => res.json());
+    }
+
+    ActualizarTipoServicio(ObjetoMunicipio: any, UrlServicio: string){
+        var params = '?Codigo='+ObjetoMunicipio.Codigo+'&Nombre='+this.ValidarDato(ObjetoMunicipio.Nombre)+'&CodigoDepartamento='+ObjetoMunicipio.CodigoDepartamento;
 
         var headers = new Headers();
         
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(UrlServicio + 'TipoServicio'+ params
+        return this._http.post(UrlServicio + 'Municipio'+ params
             , '', options)
             .map(res => res.json());
     }
 
-
-*/
     //Metodo que elimanara caracteres especiales 
 
-    ValidarCadena(Cadena){
-
-        Cadena = Cadena.replace('"', '');
-        Cadena = Cadena.replace("'", '');
-        Cadena = Cadena.replace("%", '');
-        Cadena = Cadena.replace("&", '');
-        Cadena = Cadena.replace("/", '');
-        Cadena = Cadena.replace("!", '');
-        Cadena = Cadena.replace("?", '');
-        Cadena = Cadena.replace("¿", '');
-        Cadena = Cadena.replace("*", '');
+    ValidarDato(Cadena) {
+        var DatoRespuesta = Cadena.replace("x", "X");
+        DatoRespuesta = DatoRespuesta.replace("*", "MULTI");
+        DatoRespuesta = DatoRespuesta.replace("x", "X");
+        DatoRespuesta = DatoRespuesta.replace("x", "X");
+        DatoRespuesta = DatoRespuesta.replace("x", "X");
+        DatoRespuesta = DatoRespuesta.replace("x", "X");
+        DatoRespuesta = DatoRespuesta.replace("x", "X");
+        DatoRespuesta = DatoRespuesta.replace("x", "X");
+        DatoRespuesta = DatoRespuesta.replace("&", "y");
+        DatoRespuesta = DatoRespuesta.replace("x", "X");
         
-        return Cadena;
+        console.log(DatoRespuesta);
 
+        return DatoRespuesta;
     }
-
-
 
 }

@@ -12,15 +12,26 @@
                     </div>
                     <div class="panel-body">
                     </div>
-                    <table class="table table-hover" id="TipoServicioTabla" >
+                    <table class="table table-hover" id="MunicipioTabla" >
                         <thead>
                             <tr>
                                 <th>Municipio</th>
                                 <th>Departamento</th>
+                                <th>Editar</th>
                             </tr>
                         </thead>
                         <tbody>
-
+                            <tr *ngIf="DatosMunicipio.Data?.length == 0">
+                                <td colspan="3">No se encontraron registros.</td>
+                            </tr>
+                            <tr *ngFor="let item of DatosMunicipio.Data; let last = last;">
+                                <td>{{item.Nombre}}</td>
+                                <td>{{item.NombreDepartamento}}</td>
+                                <td>
+                                    <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar" (click)="CargarDatos(item.Nombre, item.CodigoDepartamento, item.Codigo)">Editar</button>
+                                </td>
+                                <span *ngIf="last == true">{{AplicarDataTable()}}</span>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -44,17 +55,19 @@
                 <label for="Nombre">Nombre</label>
                 <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
             </div>
-
             <div class="form-group">
                 <label for="CodigoDepartamento">Departamento</label>
-                <select id="" [(ngModel)]="model.Nombre" name="Nombre" class="form-control"></select>
+                <select id="" [(ngModel)]="model.CodigoDepartamento" name="CodigoDepartamento" class="form-control">
+                    <option *ngFor="let item of DatosDepartamento.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                </select>
             </div>
+
 
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="GuardarTipoServicio();" [disabled]="!MunicipioForm.form.valid" *ngIf="!loading">Guardar</button>
+        <button type="button" class="btn btn-primary" (click)="GuardarMunicipio();" [disabled]="!MunicipioForm.form.valid" *ngIf="!loading">Guardar</button>
         <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
       </div>
     </div>
@@ -62,7 +75,7 @@
 </div>  
 
 <!-- Modal Actualizar -->
-<!--
+
 <div class="modal fade TipoServicioModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -71,42 +84,30 @@
         <h4 class="modal-title" id="myModalLabel">Tipos de servicios</h4>
       </div>
       <div class="modal-body">
-        <form #TipoServicioForm="ngForm">
+        <form #MunicipioForm="ngForm">
 
-            <div class="form-group">
+             <div class="form-group">
                 <label for="Nombre">Nombre</label>
                 <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
             </div>
-
             <div class="form-group">
-                <label for="notes">Descripci&oacute;n</label>
-                <textarea class="form-control textarea" rows="3" placeholder="Descripci&oacute;n" id="notes" [(ngModel)]="model.Descripcion" name="Descripcion" required></textarea>
-            </div>
-
-            <div class="radio">
-                <label>
-                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="true">
-                    Activo
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="false">
-                    Inactivo
-                </label>
+                <label for="CodigoDepartamento">Departamento</label>
+                <select id="" [(ngModel)]="model.CodigoDepartamento" name="CodigoDepartamento" class="form-control">
+                    <option *ngFor="let item of DatosDepartamento.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                </select>
             </div>
 
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="ActualizarTipoEmpresa()" [disabled]="!TipoServicioForm.form.valid" *ngIf="!loading">Guardar</button>
+        <button type="button" class="btn btn-primary" (click)="ActualizarMunicipio()" [disabled]="!MunicipioForm.form.valid" *ngIf="!loading">Guardar</button>
         <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
       </div>
     </div>
   </div>
 </div>  
--->
+
 
 <div id="ContentPreloader" *ngIf="Cargando">
     <div id="loader-wrapper">
