@@ -10,7 +10,7 @@ export class CausanteNovedadService {
 
 
 GuardarCausanteNovedad(CausanteNovedadObject: any, urlService: string){
-    var params = '?CodigoTipoNovedad='+CausanteNovedadObject.CodigoTipoNovedad+'&Nombre='+CausanteNovedadObject.Nombre+'&Estado='+true+'&Codigo=';
+    var params = '?CodigoTipoNovedad='+CausanteNovedadObject.CodigoTipoNovedad+'&Nombre='+this.ValidarCadena(CausanteNovedadObject.Nombre)+'&Estado='+true+'&Codigo=';
 
     var headers = new Headers();
         
@@ -28,7 +28,7 @@ GuardarCausanteNovedad(CausanteNovedadObject: any, urlService: string){
     }
 
     ActualizarCausanteNovedad(CausanteNovedadObject:any, urlService:string){
-        var params = '?Nombre='+CausanteNovedadObject.Nombre+'&CodigoTipoNovedad='+CausanteNovedadObject.CodigoTipoNovedad+'&Codigo='+CausanteNovedadObject.Codigo+'&Estado='+CausanteNovedadObject.Estado;
+        var params = '?Nombre='+this.ValidarCadena(CausanteNovedadObject.Nombre)+'&CodigoTipoNovedad='+CausanteNovedadObject.CodigoTipoNovedad+'&Codigo='+CausanteNovedadObject.Codigo+'&Estado='+CausanteNovedadObject.Estado;
 
         var headers = new Headers();
 
@@ -39,4 +39,22 @@ GuardarCausanteNovedad(CausanteNovedadObject: any, urlService: string){
 
     }
 
+     //Metodo para eliminar caracteres especiales
+    ValidarCadena(Cadena){
+        Cadena=Cadena.replace(/'/g, '');
+        Cadena = Cadena.replace(/"/g, '');
+        Cadena = Cadena.replace(/%/g, '');
+        Cadena = Cadena.replace(/&/g, '');
+        Cadena = Cadena.replace(/\$/g, '');
+        Cadena = Cadena.replace(/!/g, '');
+        Cadena = Cadena.replace(/¿/g, '');
+        Cadena = Cadena.replace(/\*/g, '');
+        Cadena = Cadena.replace(/\?/g, '');
+        Cadena = Cadena.replace(/º/g, '');
+        Cadena = Cadena.replace(/\//g, '');
+        Cadena = Cadena.replace(/#/g, '');
+        Cadena = Cadena.replace(/\+/g, '');
+        
+        return Cadena;
+    }
 }

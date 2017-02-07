@@ -58,13 +58,14 @@ export class MunicipioService {
         Cadena = Cadena.replace(/&/g, '');
         Cadena = Cadena.replace(/\$/g, '');
         Cadena = Cadena.replace(/!/g, '');
-        Cadena = Cadena.replace(/¿/g, '');
+        Cadena = Cadena.replace(/¿/g, '');  
         Cadena = Cadena.replace(/\*/g, '');
         Cadena = Cadena.replace(/\?/g, '');
         Cadena = Cadena.replace(/º/g, '');
         Cadena = Cadena.replace(/\//g, '');
         Cadena = Cadena.replace(/#/g, '');
         Cadena = Cadena.replace(/\+/g, '');
+        
         
         return Cadena;
     }
