@@ -12,7 +12,7 @@ export class EmpresaService {
 
         var frmData= empresaObject.Archivos;
         
-        var params = '?Codigo=&Nit='+empresaObject.Nit+'&RazonSocial='+empresaObject.RazonSocial+'&Direccion='+empresaObject.Direccion+'&DireccionRecepcion='+empresaObject.DireccionRecepcion+'&EmailEmpresa='+empresaObject.EmailEmpresa+'&Telefono='+empresaObject.Telefono+'&Representante='+empresaObject.Representante+'&Observaciones='+empresaObject.Observaciones+'&Estado='+true+'&Contacto='+empresaObject.Contacto+'&EmailContacto='+empresaObject.EmailContacto+'&RutaRut='+""+'&RutaCamaraComercio='+""+'&Contrato='+"";
+        var params = '?Codigo=&Nit='+this.ValidarCadena(empresaObject.Nit)+'&RazonSocial='+this.ValidarCadena(empresaObject.RazonSocial)+'&Direccion='+this.ValidarCadena(empresaObject.Direccion)+'&DireccionRecepcion='+this.ValidarCadena(empresaObject.DireccionRecepcion)+'&EmailEmpresa='+this.ValidarCadena(empresaObject.EmailEmpresa)+'&Telefono='+this.ValidarCadena(empresaObject.Telefono)+'&Representante='+this.ValidarCadena(empresaObject.Representante)+'&Observaciones='+this.ValidarCadena(empresaObject.Observaciones)+'&Estado='+true+'&Contacto='+empresaObject.Contacto+'&EmailContacto='+empresaObject.EmailContacto+'&RutaRut='+""+'&RutaCamaraComercio='+""+'&Contrato='+"";
 
         var headers = new Headers();
         
@@ -46,6 +46,26 @@ export class EmpresaService {
         return this._http.post(urlService + 'Empresa' + params
             , frmData, options).map(res => res.json());
 
+    }
+
+    ValidarCadena(Cadena){
+
+        console.log(Cadena);
+
+        Cadena = Cadena.replace(/'/g, '');
+        Cadena = Cadena.replace(/"/g, '');
+        Cadena = Cadena.replace(/%/g, '');
+        Cadena = Cadena.replace(/&/g, '');
+        Cadena = Cadena.replace(/\$/g, '');
+        Cadena = Cadena.replace(/!/g, '');
+        Cadena = Cadena.replace(/¿/g, '');
+        Cadena = Cadena.replace(/\*/g, '');
+        Cadena = Cadena.replace(/\?/g, '');
+        Cadena = Cadena.replace(/º/g, '');
+        Cadena = Cadena.replace(/\//g, '');
+        Cadena = Cadena.replace(/\+/g, '');
+        
+        return Cadena;
     }
 
 

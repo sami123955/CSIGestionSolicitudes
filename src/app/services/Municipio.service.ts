@@ -10,7 +10,7 @@ export class MunicipioService {
 
     GuardarTipoServicio(ObjetoMunicipio: any, UrlServicio: string) {
         
-        var params = '?Codigo=&Nombre='+this.ValidarDato(ObjetoMunicipio.Nombre)+'&CodigoDepartamento='+ObjetoMunicipio.CodigoDepartamento;
+        var params = '?Codigo=&Nombre='+this.ValidarCadena(ObjetoMunicipio.Nombre)+'&CodigoDepartamento='+ObjetoMunicipio.CodigoDepartamento;
 
         var headers = new Headers();
         
@@ -37,7 +37,7 @@ export class MunicipioService {
     }
 
     ActualizarTipoServicio(ObjetoMunicipio: any, UrlServicio: string){
-        var params = '?Codigo='+ObjetoMunicipio.Codigo+'&Nombre='+this.ValidarDato(ObjetoMunicipio.Nombre)+'&CodigoDepartamento='+ObjetoMunicipio.CodigoDepartamento;
+        var params = '?Codigo='+ObjetoMunicipio.Codigo+'&Nombre='+this.ValidarCadena(ObjetoMunicipio.Nombre)+'&CodigoDepartamento='+ObjetoMunicipio.CodigoDepartamento;
 
         var headers = new Headers();
         
@@ -50,21 +50,23 @@ export class MunicipioService {
 
     //Metodo que elimanara caracteres especiales 
 
-    ValidarDato(Cadena) {
-        var DatoRespuesta = Cadena.replace("x", "X");
-        DatoRespuesta = DatoRespuesta.replace("*", "MULTI");
-        DatoRespuesta = DatoRespuesta.replace("x", "X");
-        DatoRespuesta = DatoRespuesta.replace("x", "X");
-        DatoRespuesta = DatoRespuesta.replace("x", "X");
-        DatoRespuesta = DatoRespuesta.replace("x", "X");
-        DatoRespuesta = DatoRespuesta.replace("x", "X");
-        DatoRespuesta = DatoRespuesta.replace("x", "X");
-        DatoRespuesta = DatoRespuesta.replace("&", "y");
-        DatoRespuesta = DatoRespuesta.replace("x", "X");
-        
-        console.log(DatoRespuesta);
+    ValidarCadena(Cadena){
 
-        return DatoRespuesta;
+        Cadena = Cadena.replace(/'/g, '');
+        Cadena = Cadena.replace(/"/g, '');
+        Cadena = Cadena.replace(/%/g, '');
+        Cadena = Cadena.replace(/&/g, '');
+        Cadena = Cadena.replace(/\$/g, '');
+        Cadena = Cadena.replace(/!/g, '');
+        Cadena = Cadena.replace(/¿/g, '');
+        Cadena = Cadena.replace(/\*/g, '');
+        Cadena = Cadena.replace(/\?/g, '');
+        Cadena = Cadena.replace(/º/g, '');
+        Cadena = Cadena.replace(/\//g, '');
+        Cadena = Cadena.replace(/#/g, '');
+        Cadena = Cadena.replace(/\+/g, '');
+        
+        return Cadena;
     }
 
 }

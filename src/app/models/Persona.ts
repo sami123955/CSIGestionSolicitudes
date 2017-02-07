@@ -17,6 +17,7 @@ export class Persona {
         public Foto: any,
         public Banco: string,
         public TipoCuenta: string,
+        public Archivo:any,
         public NumeroCuenta: string,
         public Codigo?:string,
         public Estado?:string

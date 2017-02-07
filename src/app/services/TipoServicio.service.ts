@@ -47,20 +47,23 @@ export class TipoServicioService {
 
     ValidarCadena(Cadena){
 
-        Cadena = Cadena.replace('"', '');
-        Cadena = Cadena.replace("'", '');
-        Cadena = Cadena.replace("%", '');
-        Cadena = Cadena.replace("&", '');
-        Cadena = Cadena.replace("/", '');
-        Cadena = Cadena.replace("!", '');
-        Cadena = Cadena.replace("?", '');
-        Cadena = Cadena.replace("¿", '');
-        Cadena = Cadena.replace("*", '');
+        console.log(Cadena);
+
+        Cadena = Cadena.replace(/'/g, '');
+        Cadena = Cadena.replace(/"/g, '');
+        Cadena = Cadena.replace(/%/g, '');
+        Cadena = Cadena.replace(/&/g, '');
+        Cadena = Cadena.replace(/\$/g, '');
+        Cadena = Cadena.replace(/!/g, '');
+        Cadena = Cadena.replace(/¿/g, '');
+        Cadena = Cadena.replace(/\*/g, '');
+        Cadena = Cadena.replace(/\?/g, '');
+        Cadena = Cadena.replace(/º/g, '');
+        Cadena = Cadena.replace(/\//g, '');
+        Cadena = Cadena.replace(/\+/g, '');
         
         return Cadena;
-
     }
-
 
 
 }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Headers } from '@angular/http';
 import { RequestOptions } from '@angular/http';
+
+
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -47,18 +49,22 @@ export class FormatoService {
 
     ValidarCadena(Cadena){
 
-        Cadena = Cadena.replace('"', '');
-        Cadena = Cadena.replace("'", '');
-        Cadena = Cadena.replace("%", '');
-        Cadena = Cadena.replace("&", '');
-        Cadena = Cadena.replace("/", '');
-        Cadena = Cadena.replace("!", '');
-        Cadena = Cadena.replace("?", '');
-        Cadena = Cadena.replace("¿", '');
-        Cadena = Cadena.replace("*", '');
+        console.log(Cadena);
+
+        Cadena = Cadena.replace(/'/g, '');
+        Cadena = Cadena.replace(/"/g, '');
+        Cadena = Cadena.replace(/%/g, '');
+        Cadena = Cadena.replace(/&/g, '');
+        Cadena = Cadena.replace(/\$/g, '');
+        Cadena = Cadena.replace(/!/g, '');
+        Cadena = Cadena.replace(/¿/g, '');
+        Cadena = Cadena.replace(/\*/g, '');
+        Cadena = Cadena.replace(/\?/g, '');
+        Cadena = Cadena.replace(/º/g, '');
+        Cadena = Cadena.replace(/\//g, '');
+        Cadena = Cadena.replace(/\+/g, '');
         
         return Cadena;
-
     }
 
 

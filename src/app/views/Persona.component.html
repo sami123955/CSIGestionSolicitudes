@@ -39,7 +39,7 @@
         <h4 class="modal-title" id="myModalLabel">Persona</h4>
       </div>
       <div class="modal-body">
-        <form #TipoServicioForm="ngForm">
+        <form #PersonaForm="ngForm">
 
             <div class="row">
 
@@ -54,7 +54,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="Cedula">C&eacute;dula</label>
-                        <input type="text" class="form-control" required [(ngModel)]="model.Cedula" name="Cedula" placeholder="Cedula" id="Cedula">
+                        <input type="number" class="form-control" required [(ngModel)]="model.Cedula" name="Cedula" placeholder="Cedula" id="Cedula">
                     </div>
                 </div>
 
@@ -75,14 +75,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="Telefono">Tel&eacute;fono</label>
-                        <input type="text" class="form-control" required [(ngModel)]="model.Telefono" name="Telefono" placeholder="Telefono" id="Telefono">
+                        <input type="number" class="form-control" required [(ngModel)]="model.Telefono" name="Telefono" placeholder="Telefono" id="Telefono">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="Telefono2">Segundo tel&eacute;fono</label>
-                        <input type="text" class="form-control" required [(ngModel)]="model.Telefono2" name="Telefono2" placeholder="Telefono" id="Telefono2">
+                        <input type="number" class="form-control" required [(ngModel)]="model.Telefono2" name="Telefono2" placeholder="Telefono" id="Telefono2">
                     </div>
                 </div>
 
@@ -113,9 +113,7 @@
                     <div class="form-group">
                         <label for="Cedula">Municipio</label>
                         <select class="form-control" name="CodigoMunicipio" id="CodigoMunicipio" required [(ngModel)]="model.CodigoMunicipio">
-                            <option value="1">Municipio 1</option>
-                            <option value="2">Municipio 2</option>
-                            <option value="3">Municipio 3</option>
+                            <option *ngFor="let item of DatosMunicipio.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                         </select>
                     </div>
                 </div>
@@ -141,9 +139,7 @@
                     <div class="form-group">
                         <label for="Banco">Banco</label>
                         <select class="form-control" name="Banco" id="Banco" required [(ngModel)]="model.Banco">
-                            <option value="1">Banco 1</option>
-                            <option value="2">Banco 2</option>
-                            <option value="3">Banco 3</option>
+                            <option *ngFor="let item of DatosBanco.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                         </select>
                     </div>
                 </div>
@@ -152,9 +148,7 @@
                     <div class="form-group">
                         <label for="TipoCuenta">Tipo de cuenta</label>
                         <select class="form-control" name="TipoCuenta" id="TipoCuenta" required [(ngModel)]="model.TipoCuenta">
-                            <option value="1">Tipo de cuenta 1</option>
-                            <option value="2">Tipo de cuenta 2</option>
-                            <option value="3">Tipo de cuenta 3</option>
+                            <option *ngFor="let item of DatosTipoCuenta.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                         </select>
                     </div>
                 </div>
@@ -162,14 +156,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="FechaCumpleanios">N&uacute;mero de cuenta</label>
-                        <input type="text" class="form-control" required [(ngModel)]="model.NumeroCuenta" name="NumeroCuenta" placeholder="Numero de cuenta" id="NumeroCuenta">
+                        <input type="number" class="form-control" required [(ngModel)]="model.NumeroCuenta" name="NumeroCuenta" placeholder="Numero de cuenta" id="NumeroCuenta">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="Foto">Foto</label>
-                        <input type="file" class="form-control" id="Foto">
+                        <input type="file" class="form-control" id="Foto" (change)="CargarArchivo($event)">
                     </div>
                 </div>
 
@@ -179,7 +173,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="GuardarTipoServicio();" [disabled]="!TipoServicioForm.form.valid" *ngIf="!loading">Guardar</button>
+        <button type="button" class="btn btn-primary" (click)="GuardarPersona();" [disabled]="!PersonaForm.form.valid" *ngIf="!loading">Guardar</button>
         <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
       </div>
     </div>

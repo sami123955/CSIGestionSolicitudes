@@ -184,12 +184,6 @@ export class MunicipioComponent implements OnInit {
 
     }
 
-    ValidarDato(Cadena){
-
-        Cadena.split('&').join('y');
-        console.log(Cadena);
-
-    }
 
 
 }
