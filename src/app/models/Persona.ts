@@ -20,6 +20,7 @@ export class Persona {
         public TipoCuenta: string,
         public Archivo:any,
         public NumeroCuenta: string,
+        public CodigoRol: string,
         public Codigo?:string,
         public Estado?:string
 

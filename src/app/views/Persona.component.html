@@ -162,6 +162,15 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label for="Rol">Rol</label>
+                        <select class="form-control" name="CodigoRol" id="Rol" required [(ngModel)]="model.CodigoRol">
+                            <option *ngFor="let item of DatosRol.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label for="FechaCumpleanios">N&uacute;mero de cuenta</label>
                         <input type="number" class="form-control" required [(ngModel)]="model.NumeroCuenta" name="NumeroCuenta" placeholder="Numero de cuenta" id="NumeroCuenta">
                     </div>

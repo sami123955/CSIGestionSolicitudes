@@ -12,7 +12,7 @@ export class PersonaService {
         
        var frmData = ObjetoPersona.Archivo;
         
-        var params = '?Codigo=&Estado='+true+'&Nombre='+this.ValidarCadena(ObjetoPersona.Nombre)+'&Cedula='+ObjetoPersona.Cedula+'&Direccion='+this.ValidarCadena(ObjetoPersona.Direccion)+'&Barrio='+this.ValidarCadena(ObjetoPersona.Barrio)+'&Telefono='+/*this.ValidarCadena(*/ObjetoPersona.Telefono/*)*/+'&Telefono2='+/*this.ValidarCadena(*/ObjetoPersona.Telefono2/*)*/+'&Celular='+/*this.ValidarCadena(*/ObjetoPersona.Celular/*)*/+'&Email='+/*this.ValidarCadena(*/ObjetoPersona.Email/*)*/+'&Email2='+ObjetoPersona.Email2+'&Profesion='+/*this.ValidarCadena(*/ObjetoPersona.Profesion/*)*/+'&CodigoMunicipio='+ObjetoPersona.CodigoMunicipio+'&FechaIngreso='+ObjetoPersona.FechaIngreso+'&FechaCumpleanios='+ObjetoPersona.FechaCumpleanios+'&Foto=&Banco='+ObjetoPersona.Banco+'&TipoCuenta='+ObjetoPersona.TipoCuenta+'&NumeroCuenta='+/*this.ValidarCadena(*/ObjetoPersona.NumeroCuenta/*)*/;
+        var params = '?Codigo=&Estado='+true+'&Nombre='+this.ValidarCadena(ObjetoPersona.Nombre)+'&Cedula='+ObjetoPersona.Cedula+'&Direccion='+this.ValidarCadena(ObjetoPersona.Direccion)+'&Barrio='+this.ValidarCadena(ObjetoPersona.Barrio)+'&Telefono='+/*this.ValidarCadena(*/ObjetoPersona.Telefono/*)*/+'&Telefono2='+/*this.ValidarCadena(*/ObjetoPersona.Telefono2/*)*/+'&Celular='+/*this.ValidarCadena(*/ObjetoPersona.Celular/*)*/+'&Email='+/*this.ValidarCadena(*/ObjetoPersona.Email/*)*/+'&Email2='+ObjetoPersona.Email2+'&Profesion='+/*this.ValidarCadena(*/ObjetoPersona.Profesion/*)*/+'&CodigoMunicipio='+ObjetoPersona.CodigoMunicipio+'&FechaIngreso='+ObjetoPersona.FechaIngreso+'&FechaCumpleanios='+ObjetoPersona.FechaCumpleanios+'&Foto=&CodigoBanco='+ObjetoPersona.Banco+'&CodigoTipoCuenta='+ObjetoPersona.TipoCuenta+'&CodigoPersona='+/*this.ValidarCadena(*/ObjetoPersona.NumeroCuenta/*)*/+'&CodigoRol='+ObjetoPersona.CodigoRol;
 
         console.log(params);
 
@@ -39,6 +39,15 @@ export class PersonaService {
 
         return this._http.get(UrlServicio + 'TipoCuenta?' + params).map(res => res.json());
 
+
+    }
+
+
+    BuscarRoles(UrlServicio){
+
+        var params = "Codigo=&Estado=";
+
+        return this._http.get(UrlServicio + 'Rol?' + params).map(res => res.json());
 
     }
 /*
