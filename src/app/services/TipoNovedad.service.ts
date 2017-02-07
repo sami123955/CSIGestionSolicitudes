@@ -10,7 +10,7 @@ export class TipoNovedadService{
 
     GuardarTipoNovedad(TipoNovedadObject: any, urlService: string){
 
-        var params='?Codigo=&Nombre='+TipoNovedadObject.Nombre+'&Estado='+true;
+        var params='?Codigo=&Nombre='+this.ValidarCadena(TipoNovedadObject.Nombre)+'&Estado='+true;
 
         var headers=new Headers();
 
@@ -35,7 +35,7 @@ export class TipoNovedadService{
 
     ActualizarTipoNovedad(TipoNovedadObject:any, urlService:string){
         
-        var params ='?Codigo='+TipoNovedadObject.Codigo+'&Nombre='+TipoNovedadObject.Nombre+'&Estado='+TipoNovedadObject.Estado;
+        var params ='?Codigo='+TipoNovedadObject.Codigo+'&Nombre='+this.ValidarCadena(TipoNovedadObject.Nombre)+'&Estado='+TipoNovedadObject.Estado;
 
         var headers = new Headers();
 
@@ -43,5 +43,24 @@ export class TipoNovedadService{
 
         return this._http.post(urlService + 'TipoNovedad'+ params
                     ,'', options).map(res=>res.json());
+    }
+
+//Metodo para eliminar caracteres especiales
+    ValidarCadena(Cadena){
+        Cadena=Cadena.replace(/'/g, '');
+        Cadena = Cadena.replace(/"/g, '');
+        Cadena = Cadena.replace(/%/g, '');
+        Cadena = Cadena.replace(/&/g, '');
+        Cadena = Cadena.replace(/\$/g, '');
+        Cadena = Cadena.replace(/!/g, '');
+        Cadena = Cadena.replace(/¿/g, '');
+        Cadena = Cadena.replace(/\*/g, '');
+        Cadena = Cadena.replace(/\?/g, '');
+        Cadena = Cadena.replace(/º/g, '');
+        Cadena = Cadena.replace(/\//g, '');
+        Cadena = Cadena.replace(/#/g, '');
+        Cadena = Cadena.replace(/\+/g, '');
+        
+        return Cadena;
     }
 }
