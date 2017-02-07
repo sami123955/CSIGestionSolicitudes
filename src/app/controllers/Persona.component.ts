@@ -46,6 +46,12 @@ export class PersonaComponent implements OnInit{
     //Variable que almacenar los datos del rol
     DatosRol = '';
 
+    //Variable que usaremos para controlar el preloader
+    Cargando = false;
+
+    //Variable que almacenara los datos de la persona
+    DatosPersona = '';
+
     ngOnInit() {
 
 
@@ -55,6 +61,8 @@ export class PersonaComponent implements OnInit{
         this.BuscarTipoCuenta();
         this.BuscarMunicipios();
         this.BuscarRoles();
+        this.BuscarPersona();
+        
     }
 
     BuscarBanco() {
@@ -130,14 +138,45 @@ export class PersonaComponent implements OnInit{
 
     GuardarPersona(){
 
-        console.log(this.model.Telefono2);
+        try {
 
-        this._PersonaService.GuardarPersona(this.model, this.DatosServidorModel.url).subscribe(
-            data => alertify.success('Registrado Correctamente'),
+            this.Cargando = true;
+
+            this._PersonaService.GuardarPersona(this.model, this.DatosServidorModel.url).subscribe(
+            data => this.TerminarPeticion(data),
             error => alert(error)
-        );
+            );
+
+
+        } catch (error) {
+
+            var DescripcionError = 'Persona.component.ts--->GuardarPersona--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+            
+        }
 
         
+    }
+
+
+    //Metodo que usaremos para validar que accion se hara en el momento que se registra o actualiza una persona, 
+    TerminarPeticion(Data){
+
+        if(Data.TipoResultado == false){
+
+            alertify.error(Data.Mensaje);
+            this.Cargando = false;
+
+        }
+
+        else {
+
+
+            alertify.success(Data.Mensaje);
+            location.reload();
+
+        }
+
     }
 
 
@@ -167,6 +206,28 @@ export class PersonaComponent implements OnInit{
             console.log(DescripcionError);
             
         }
+    }
+
+
+    BuscarPersona(){
+
+        try {
+
+            this._PersonaService.BuscarPersona(this.DatosServidorModel.url).subscribe(
+            data => /*this.DatosPersona = */alert(JSON.stringify(data)),
+            error => alertify.error(error)
+            );
+
+        } catch (error) {
+
+            var DescripcionError = 'Empresa.component.ts--->BuscarPersona--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+            
+        }
+
+
+        
+
     }
 
 

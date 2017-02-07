@@ -69,15 +69,16 @@ export class MunicipioComponent implements OnInit {
 
     GuardarMunicipio() {
         try {
-<<<<<<< HEAD
+
 
            // this.ValidarDato(this.model.Nombre);
 
+
+
            this.Cargando = true;
-=======
+            
             
             this.Cargando = true;
->>>>>>> origin/master
 
             this._MunicipioService.GuardarTipoServicio(this.model, this.DatosServidorModel.url).subscribe(
                 data => alertify.success('Registrado correctamente'),

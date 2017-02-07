@@ -50,6 +50,14 @@ export class PersonaService {
         return this._http.get(UrlServicio + 'Rol?' + params).map(res => res.json());
 
     }
+
+    BuscarPersona(UrlServicio){
+
+        var params = "Codigo=&Nombre=&Cedula=&Celular=&Email=&Estado=";
+
+        return this._http.get(UrlServicio + 'Persona?' + params).map(res => res.json());
+
+    }
 /*
     ActualizarTipoServicio(ObjetoTipoServicio: any, UrlServicio: string){
         var params = '?Codigo='+ObjetoTipoServicio.Codigo+'&Nombre='+this.ValidarCadena(ObjetoTipoServicio.Nombre)+'&Descripcion='+this.ValidarCadena(ObjetoTipoServicio.Descripcion)+'&Estado='+ObjetoTipoServicio.Estado;
