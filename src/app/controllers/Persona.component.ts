@@ -29,7 +29,7 @@ export class PersonaComponent implements OnInit{
 
 
 
-    model = new Persona('','','','','','','','','','','','','','','','','','');
+    model = new Persona('','','','','','','','','','','','','','','','','','','');
 
     //Instanciamos el modelo de DatosServidor para obtener la url del servicio que vamos a consumuir
     DatosServidorModel = new DatosServidor();
@@ -43,6 +43,9 @@ export class PersonaComponent implements OnInit{
     //Variable que almacenara los datos de municipios 
     DatosMunicipio = '';
 
+    //Variable que almacenar los datos del rol
+    DatosRol = '';
+
     ngOnInit() {
 
 
@@ -51,6 +54,7 @@ export class PersonaComponent implements OnInit{
         this.BuscarBanco();
         this.BuscarTipoCuenta();
         this.BuscarMunicipios();
+        this.BuscarRoles();
     }
 
     BuscarBanco() {
@@ -103,6 +107,24 @@ export class PersonaComponent implements OnInit{
 
         }
 
+
+    }
+
+    BuscarRoles(){
+
+        try {
+
+            this._PersonaService.BuscarRoles(this.DatosServidorModel.url).subscribe(
+                data => this.DatosRol = data,
+                error => alert(error)
+            );
+            
+        } catch (error) {
+            
+            var DescripcionError = 'Persona.component.ts--->BuscarRoles--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+
+        }
 
     }
 
