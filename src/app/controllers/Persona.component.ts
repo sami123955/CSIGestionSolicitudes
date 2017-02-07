@@ -29,7 +29,7 @@ export class PersonaComponent implements OnInit{
 
 
 
-    model = new Persona('','','','','','','','','','','','','','','','','');
+    model = new Persona('','','','','','','','','','','','','','','','','','');
 
     //Instanciamos el modelo de DatosServidor para obtener la url del servicio que vamos a consumuir
     DatosServidorModel = new DatosServidor();
@@ -131,9 +131,9 @@ export class PersonaComponent implements OnInit{
                 let file: File = fileList[0];   
 
 
-                        this.model.Archivo.has('Foto') ? this.model.Archivo.delete('Rut') : '';
+                        this.model.Archivo.has('FotoPersona') ? this.model.Archivo.delete('FotoPersona') : '';
                         
-                        this.model.Archivo.append('Foto', file, file.name);
+                        this.model.Archivo.append('FotoPersona', file, file.name);
 
                         console.log(this.model.Archivo);           
             }

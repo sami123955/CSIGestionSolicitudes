@@ -10,6 +10,7 @@ export class Persona {
         public Telefono2: string,
         public Celular: string,
         public Email: string,
+        public Email2: string,
         public Profesion: string,
         public CodigoMunicipio: string,
         public FechaIngreso: string,
