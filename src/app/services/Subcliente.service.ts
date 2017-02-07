@@ -11,7 +11,7 @@ export class SubclienteService {
     GuardarSubcliente(SubclienteObject: any, urlService: string) {
 
 
-        var params = '?CodigoSucursal='+SubclienteObject.CodigoSucursal+'&Nit='+SubclienteObject.Nit+'&RazonSocial='+SubclienteObject.RazonSocial+'&Telefono='+SubclienteObject.Telefono+'&Representante='+SubclienteObject.Representante+'&Estado='+true+'&Codigo=';
+        var params = '?CodigoSucursal='+SubclienteObject.CodigoSucursal+'&Nit='+this.ValidarCadena(SubclienteObject.Nit)+'&RazonSocial='+this.ValidarCadena(SubclienteObject.RazonSocial)+'&Telefono='+SubclienteObject.Telefono+'&Representante='+this.ValidarCadena(SubclienteObject.Representante)+'&Estado='+true+'&Codigo=';
 
         var headers = new Headers();
         
@@ -40,7 +40,7 @@ export class SubclienteService {
     ActualizarSubCliente(SubclienteObject: any, urlService: string){
 
        
-        var params = '?CodigoSucursal='+SubclienteObject.CodigoSucursal+'&Nit='+SubclienteObject.Nit+'&RazonSocial='+SubclienteObject.RazonSocial+'&Telefono='+SubclienteObject.Telefono+'&Representante='+SubclienteObject.Representante+'&Estado='+SubclienteObject.Estado+'&Codigo='+SubclienteObject.Codigo;
+        var params = '?CodigoSucursal='+SubclienteObject.CodigoSucursal+'&Nit='+this.ValidarCadena(SubclienteObject.Nit)+'&RazonSocial='+this.ValidarCadena(SubclienteObject.RazonSocial)+'&Telefono='+SubclienteObject.Telefono+'&Representante='+this.ValidarCadena(SubclienteObject.Representante)+'&Estado='+SubclienteObject.Estado+'&Codigo='+SubclienteObject.Codigo;
 
         var headers = new Headers();
 
@@ -50,6 +50,27 @@ export class SubclienteService {
         return this._http.post(urlService + 'SubCliente' + params
             , '', options).map(res => res.json());
 
+    }
+
+//Metodo para eliminar caracteres especiales
+     ValidarCadena(Cadena){
+
+        Cadena = Cadena.replace(/'/g, '');
+        Cadena = Cadena.replace(/"/g, '');
+        Cadena = Cadena.replace(/%/g, '');
+        Cadena = Cadena.replace(/&/g, '');
+        Cadena = Cadena.replace(/\$/g, '');
+        Cadena = Cadena.replace(/!/g, '');
+        Cadena = Cadena.replace(/¿/g, '');  
+        Cadena = Cadena.replace(/\*/g, '');
+        Cadena = Cadena.replace(/\?/g, '');
+        Cadena = Cadena.replace(/º/g, '');
+        Cadena = Cadena.replace(/\//g, '');
+        Cadena = Cadena.replace(/#/g, '');
+        Cadena = Cadena.replace(/\+/g, '');
+        Cadena = Cadena.replace(/\-/g, '');
+        
+        return Cadena;
     }
 
 
