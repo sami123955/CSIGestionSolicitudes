@@ -17,8 +17,7 @@ export class ComboServicioService {
                             Nombre: ObjetoComboServicio.Nombre,
                             CodigoSubcliente: ObjetoComboServicio.CodigoSubcliente,
                             Estado: true,
-                            CodigoDetalle: '',
-                            CodigoCiudad: '',
+                            
                             Costo: ObjetoComboServicio.Costo,
                             lstCiudades: ObjetoComboServicio.Municipio,
                             lstDetalle: ObjetoComboServicio.CodigoServicio
