@@ -4,8 +4,8 @@ import { DatosServidor } from '../models/DatosServidor';
 import { SucursalService } from '../services/Sucursal.service';
 import { TipoServicioService } from '../services/TipoServicio.service';
 import { SubclienteService } from '../services/Subcliente.service';
-
-
+import { MunicipioService } from '../services/Municipio.service';
+import { ComboServicioService } from '../services/ComboServicio.service';
 
 declare var $:any;
 declare var alertify:any;
@@ -16,7 +16,7 @@ declare var error:any;
     selector: 'ComboServicio',
     templateUrl: '../views/ComboServicio.component.html',
     styleUrls: ['../../assets/css/Maestras.css'],
-    providers: [SucursalService, TipoServicioService, SubclienteService]
+    providers: [SucursalService, TipoServicioService, SubclienteService, MunicipioService, ComboServicioService]
 })
 export class ComboServicioComponent implements OnInit{
 
@@ -24,7 +24,9 @@ export class ComboServicioComponent implements OnInit{
     constructor (
                     private _SucursalService:SucursalService, 
                     private _TipoServicioService:TipoServicioService,
-                    private _SubClienteService:SubclienteService
+                    private _SubClienteService:SubclienteService,
+                    private _MunicipioService:MunicipioService,
+                    private _ComboServicioService:ComboServicioService
                 ) {}
 
     //Instanciamos la clase de ComboServicio
@@ -34,14 +36,13 @@ export class ComboServicioComponent implements OnInit{
 
 
     //Variable que almacenara las opciones para el select de municipio
-    OpcionesMunicipio = [{id: '1', name:'Prueba'}];
+    OpcionesMunicipio = [];
     //Variable que almacenar las opciones para el select de servicios
     OpcionesServicios = [];
     //Variable que almacenara la informacion de las sucursales
     DatosSucursal = '';
     //Variable que almacenara la informacion de los SubclienteService
     DatosSubCliente = '';
-
 
     //Variable que almacenara la configuracion para los select multipleas
     ConfiguracionSelect = {
@@ -61,6 +62,7 @@ export class ComboServicioComponent implements OnInit{
         this.BuscarSucursales();
         this.BuscarServicios();
         this.BuscarSubClientes();
+        this.BuscarMunicipios();
     }
 
 
@@ -85,6 +87,22 @@ export class ComboServicioComponent implements OnInit{
         );
     }
 
+    BuscarMunicipios(){
+        try {
+
+            this._MunicipioService.BuscarMunicipio(this.DatosServidorModel.url).subscribe(
+                data => this.OpcionesMunicipio = this.ConstruirOpciones(data),
+                error => alertify.error(error)
+            );
+            
+        } catch (error) {
+
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+            
+        }
+    }
+
     //Metodo que usaremos para crear las opciones tal y como el select multiple las espera
     ConstruirOpciones(Dato){
 
@@ -97,6 +115,28 @@ export class ComboServicioComponent implements OnInit{
         }
 
         return Opciones;
+
+    }
+
+    GuardarComboServicio() {
+
+        try {
+
+            this._ComboServicioService.GuardarComboServicio(this.model, this.DatosServidorModel.url).subscribe(
+            data => alertify.success('Registrado correctamente'),
+            error => alert(error)
+        );
+            
+        } catch (error) {
+
+            var DescripcionError = 'ComboServicio.component.ts--->GuardarComboServicio--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+          
+        }
+
+
+        
+
 
     }
 
