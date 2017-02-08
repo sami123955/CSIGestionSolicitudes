@@ -32,8 +32,12 @@ export class ComboServicioService {
         
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(UrlServicio + 'ComboServicios'+ params
+        /*return this._http.post(UrlServicio + 'ComboServicios'+ params
             , '', options)
+            .map(res => res.json());*/
+
+        return this._http.post(UrlServicio + 'ComboServicios'
+            , JSON.stringify(JsonSalida), options)
             .map(res => res.json());
 
     }
