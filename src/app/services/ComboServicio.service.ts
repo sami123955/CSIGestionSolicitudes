@@ -9,8 +9,8 @@ export class ComboServicioService {
     constructor(private _http: Http) { }
 
     GuardarComboServicio(ObjetoComboServicio: any, UrlServicio: string) {
-
-        var JsonSalida = {
+        var formdata=new FormData();
+        /*var JsonSalida = {
 
                             Codigo: '',
                             CodigoSucursal: ObjetoComboServicio.CodigoSucursal,
@@ -22,13 +22,26 @@ export class ComboServicioService {
                             lstCiudades: ObjetoComboServicio.Municipio,
                             lstDetalle: ObjetoComboServicio.CodigoServicio
                             
-                         };
+                         };*/
 
-        var params = '?Datos='+JSON.stringify(JsonSalida);
 
-        console.log(params);
+        //var params = '?Datos='+JSON.stringify(JsonSalida);
+
+        //console.log(params);
+        formdata.append("Codigo",'');
+        formdata.append("CodigoSucursal",ObjetoComboServicio.CodigoSucursal);
+        formdata.append("Nombre",ObjetoComboServicio.Nombre);
+        formdata.append("CodigoSubcliente",ObjetoComboServicio.CodigoSubcliente);
+        formdata.append("Estado",true);
+        formdata.append("Costo",ObjetoComboServicio.Costo);
+        formdata.append("lstCiudades",ObjetoComboServicio.Municipio);
+        formdata.append("lstDetalle",ObjetoComboServicio.CodigoServicio);
+
+
 
         var headers = new Headers();
+        /*headers.append('Content-type', "application/x-www-form-urlencoded");
+        headers.append('dataType', "json");*/
         
         var options = new RequestOptions({ headers: headers });
 
@@ -36,8 +49,8 @@ export class ComboServicioService {
             , '', options)
             .map(res => res.json());*/
 
-        return this._http.post(UrlServicio + 'ComboServicios'
-            , JSON.stringify(JsonSalida), options)
+        return this._http.post(UrlServicio + 'ComboDetalle'
+            , formdata, options)
             .map(res => res.json());
 
     }
