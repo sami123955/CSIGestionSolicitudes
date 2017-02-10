@@ -17,8 +17,7 @@ export class ComboServicioService {
                             Nombre: ObjetoComboServicio.Nombre,
                             CodigoSubcliente: ObjetoComboServicio.CodigoSubcliente,
                             Estado: true,
-                            CodigoDetalle: '',
-                            CodigoCiudad: '',
+                            
                             Costo: ObjetoComboServicio.Costo,
                             lstCiudades: ObjetoComboServicio.Municipio,
                             lstDetalle: ObjetoComboServicio.CodigoServicio
@@ -33,10 +32,20 @@ export class ComboServicioService {
         
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(UrlServicio + 'ComboServicios'+ params
+        /*return this._http.post(UrlServicio + 'ComboServicios'+ params
             , '', options)
+            .map(res => res.json());*/
+
+        return this._http.post(UrlServicio + 'ComboDetalle'
+            , JSON.stringify(JsonSalida), options)
             .map(res => res.json());
 
+    }
+
+    /*Metodo para buscar ComboServicios*/
+    BuscarComboServicio(UrlApi){
+        var params ="?Codigo=&Nombre=&CodigoSubcliente=&Estado=&CodigoSucursal=";
+        return this._http.get(UrlApi+'ComboDetalle'+params).map(res => res.json());
     }
 
 /*
@@ -76,8 +85,7 @@ export class ComboServicioService {
         Cadena = Cadena.replace(/\//g, '');
         Cadena = Cadena.replace(/#/g, '');
         Cadena = Cadena.replace(/\+/g, '');
-        
-        
+         
         return Cadena;
     }
 

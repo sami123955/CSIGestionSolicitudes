@@ -24,7 +24,7 @@ GuardarCausanteNovedad(CausanteNovedadObject: any, urlService: string){
     BuscarCausanteNovedad(UrlApi){
         var params ='?Nombre=&CodigoTipoNovedad=&Codigo=&Estado=';
 
-        return this._http.get(UrlApi + 'CausanteNovedad' + params).map(res => res.json());;
+        return this._http.get(UrlApi + 'CausanteNovedad' + params).map(res => res.json());
     }
 
     ActualizarCausanteNovedad(CausanteNovedadObject:any, urlService:string){
