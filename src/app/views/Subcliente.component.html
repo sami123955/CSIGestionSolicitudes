@@ -19,7 +19,7 @@
                                     <th>Razon Social</th>
                                     <th>Télefono</th>
                                     <th>Representante</th>
-                                    <th>Codigo Sucursal</th>
+                                    <th>Sucursal</th>
                                     <th>Estado</th>
                                     <th>Editar</th>
                                 </tr>
@@ -33,7 +33,7 @@
                                     <td>{{item.RazonSocial}}</td>
                                     <td>{{item.Telefono}}</td>
                                     <td>{{item.Representante}}</td>
-                                    <td>{{item.CodigoSucursal}}</td>    
+                                    <td>{{item.NombreSucursal}}</td>    
                                     <td *ngIf="item.estado">Activo</td>
                                     <td *ngIf="!item.estado">Inactivo</td>
                                     <td>

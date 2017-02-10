@@ -214,7 +214,7 @@ export class PersonaComponent implements OnInit{
         try {
 
             this._PersonaService.BuscarPersona(this.DatosServidorModel.url).subscribe(
-            data => /*this.DatosPersona = */alert(JSON.stringify(data)),
+            data => this.DatosPersona = /*console.log(JSON.stringify(*/data/*))*/,
             error => alertify.error(error)
             );
 
@@ -227,6 +227,26 @@ export class PersonaComponent implements OnInit{
 
 
         
+
+    }
+
+    CargarDatos(Nombre, Cedula, Direccion, Barrio, Telefono, Telefono2, Celular, Email, Email2, Profesion, CodigoMunicipio, FechaIngreso, FechaCumpleanios, Foto, CodigoBanco, CodigoTipoCuenta, NumeroCuenta, CodigoRol, Codigo, Estado){
+
+        this.model = new Persona(Nombre, Cedula, Direccion, Barrio, Telefono, Telefono2, Celular, Email, Email2, Profesion, CodigoMunicipio, FechaIngreso, FechaCumpleanios, Foto, CodigoBanco, CodigoTipoCuenta, '', NumeroCuenta, CodigoRol, Codigo, Estado);
+
+        this.model.Archivo = new FormData();
+    }
+
+    ActualizarPersona(){
+
+        try {
+            
+        } catch (error) {
+            
+            var DescripcionError = 'Empresa.component.ts--->BuscarPersona--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+
+        }
 
     }
 

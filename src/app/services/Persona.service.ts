@@ -58,20 +58,26 @@ export class PersonaService {
         return this._http.get(UrlServicio + 'Persona?' + params).map(res => res.json());
 
     }
-/*
-    ActualizarTipoServicio(ObjetoTipoServicio: any, UrlServicio: string){
-        var params = '?Codigo='+ObjetoTipoServicio.Codigo+'&Nombre='+this.ValidarCadena(ObjetoTipoServicio.Nombre)+'&Descripcion='+this.ValidarCadena(ObjetoTipoServicio.Descripcion)+'&Estado='+ObjetoTipoServicio.Estado;
+
+    ActualizarPersona(ObjetoPersona: any, UrlServicio: string) {
+        
+       var frmData = ObjetoPersona.Archivo;
+        
+        var params = '?Codigo='+ObjetoPersona.Codigo+'&Estado='+ObjetoPersona.Estado+'&Nombre='+this.ValidarCadena(ObjetoPersona.Nombre)+'&Cedula='+ObjetoPersona.Cedula+'&Direccion='+this.ValidarCadena(ObjetoPersona.Direccion)+'&Barrio='+this.ValidarCadena(ObjetoPersona.Barrio)+'&Telefono='+ObjetoPersona.Telefono+'&Telefono2='+ObjetoPersona.Telefono2+'&Celular='+ObjetoPersona.Celular+'&Email='+this.ValidarCadena(ObjetoPersona.Email)+'&Email2='+this.ValidarCadena(ObjetoPersona.Email2)+'&Profesion='+this.ValidarCadena(ObjetoPersona.Profesion)+'&CodigoMunicipio='+ObjetoPersona.CodigoMunicipio+'&FechaIngreso='+ObjetoPersona.FechaIngreso+'&FechaCompleanios='+ObjetoPersona.FechaCumpleanios+'&Foto='+ObjetoPersona.Foto+'&CodigoBanco='+ObjetoPersona.Banco+'&CodigoTipoCuenta='+ObjetoPersona.TipoCuenta+'&CuentaBancaria='+ObjetoPersona.NumeroCuenta+'&CodigoRol='+ObjetoPersona.CodigoRol;
+
+        console.log(params);
 
         var headers = new Headers();
         
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(UrlServicio + 'TipoServicio'+ params
-            , '', options)
+        return this._http.post(UrlServicio + 'Persona'+ params
+            , frmData, options)
             .map(res => res.json());
+
     }
 
-*/
+
 
     //Metodo que elimanara caracteres especiales 
 

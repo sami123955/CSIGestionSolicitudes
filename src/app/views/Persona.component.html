@@ -28,12 +28,12 @@
                                 <td>{{item.Nombre}}</td>
                                 <td>{{item.Email}}</td>
                                 <td>{{item.NombreMunicipio}}</td>
-                                <td><!--{{item.lstRol[0].Nombre}}--></td>
+                                <td>{{item.lstRol[0].Nombre}}</td>
                                 <td>
                                     <a [href]="item.Foto"><button class="btn btn-default">Ver</button></a>
                                 </td>
                                 <td>
-                                    <button class="btn btn-default">Editar</button>
+                                    <button class="btn btn-default"  data-toggle="modal" data-target="#ModalActualizar" (click)="CargarDatos(item.Nombre, item.Cedula, item.Direccion, item.Barrio, item.Telefono, item.Telefono2, item.Celular, item.Email, item.Email2, item.Profesion, item.CodigoMunicipio, item.FechaIngreso, item.FechaCompleanios, item.Foto, item.lstCuenta[0].CodigoBanco, item.lstCuenta[0].CodigoTipoCuenta, item.lstCuenta[0].CuentaBancaria, item.lstRol[0].CodigoRol, item.Codigo, item.Estado)">Editar</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -211,7 +211,7 @@
 </div>  
 
 <!-- Modal Actualizar -->
-<!--
+
 <div class="modal fade TipoServicioModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -220,41 +220,156 @@
         <h4 class="modal-title" id="myModalLabel">Tipos de servicios</h4>
       </div>
       <div class="modal-body">
-        <form #TipoServicioForm="ngForm">
+        <form #PersonaForm="ngForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Nombre">Nombre</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="Nombre">Nombre</label>
-                <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
-            </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Cedula">C&eacute;dula</label>
+                        <input type="number" class="form-control" required [(ngModel)]="model.Cedula" name="Cedula" placeholder="Cedula" id="Cedula">
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="notes">Descripci&oacute;n</label>
-                <textarea class="form-control textarea" rows="3" placeholder="Descripci&oacute;n" id="notes" [(ngModel)]="model.Descripcion" name="Descripcion" required></textarea>
-            </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Direccion">Direcci&oacute;n</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Direccion" name="Direccion" placeholder="Direcci&oacute;n" id="Direccion">
+                    </div>
+                </div>
 
-            <div class="radio">
-                <label>
-                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="true">
-                    Activo
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="false">
-                    Inactivo
-                </label>
-            </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Barrio">Barrio</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Barrio" name="Barrio" placeholder="Barrio" id="Barrio">
+                    </div>
+                </div>
 
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Telefono">Tel&eacute;fono</label>
+                        <input type="number" class="form-control" required [(ngModel)]="model.Telefono" name="Telefono" placeholder="Telefono" id="Telefono">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Telefono2">Segundo tel&eacute;fono</label>
+                        <input type="number" class="form-control" required [(ngModel)]="model.Telefono2" name="Telefono2" placeholder="Telefono" id="Telefono2">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Celular">Celular</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Celular" name="Celular" placeholder="Celular" id="Celular">
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Email">Correo electr&oacute;nico</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Email" name="Email" placeholder="Email" id="Email" disabled>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Email">Segundo correo electr&oacute;nico</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Email2" name="Email2" placeholder="Email" id="Email">
+                    </div>
+                </div>
+
+            
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Profesion">Profesi&oacute;n</label>
+                        <input type="text" class="form-control" required [(ngModel)]="model.Profesion" name="Profesion" placeholder="Profesion" id="Profesion">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Cedula">Municipio</label>
+                        <select class="form-control" name="CodigoMunicipio" id="CodigoMunicipio" required [(ngModel)]="model.CodigoMunicipio">
+                            <option *ngFor="let item of DatosMunicipio.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Banco">Banco</label>
+                        <select class="form-control" name="Banco" id="Banco" required [(ngModel)]="model.Banco">
+                            <option *ngFor="let item of DatosBanco.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="TipoCuenta">Tipo de cuenta</label>
+                        <select class="form-control" name="TipoCuenta" id="TipoCuenta" required [(ngModel)]="model.TipoCuenta">
+                            <option *ngFor="let item of DatosTipoCuenta.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Rol">Rol</label>
+                        <select class="form-control" name="CodigoRol" id="Rol" required [(ngModel)]="model.CodigoRol">
+                            <option *ngFor="let item of DatosRol.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="FechaCumpleanios">N&uacute;mero de cuenta</label>
+                        <input type="number" class="form-control" required [(ngModel)]="model.NumeroCuenta" name="NumeroCuenta" placeholder="Numero de cuenta" id="NumeroCuenta">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Foto">Foto</label>
+                        <input type="file" class="form-control" id="Foto" (change)="CargarArchivo($event)">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="true">
+                            Activo
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="false">
+                            Inactivo
+                        </label>
+                    </div>
+                </div>
+            
+            </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="ActualizarTipoEmpresa()" [disabled]="!TipoServicioForm.form.valid" *ngIf="!loading">Guardar</button>
+        <button type="button" class="btn btn-primary" (click)="ActualizarPersona()" [disabled]="!PersonaForm.form.valid" *ngIf="!loading">Guardar</button>
         <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
       </div>
     </div>
   </div>
-</div>-->  
+</div> 
 
 
 <div id="ContentPreloader" *ngIf="Cargando">

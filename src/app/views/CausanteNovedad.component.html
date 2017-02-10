@@ -18,7 +18,7 @@
                                 
                                 <tr>
                                     <th>Nombre</th>
-                                    <th>C&oacute;digo Tipo Novedad</th>
+                                    <th>Tipo de Novedad</th>
                                     <th>Estado</th>
                                     <th>Editar</th>
                                     
@@ -30,7 +30,7 @@
                                 </tr>
                                 <tr *ngFor="let item of DatosCausanteNovedad.Data; let last = last;">
                                     <td>{{item.Nombre}}</td>
-                                    <td>{{item.CodigoTipoNovedad}}</td>
+                                    <td>{{item.NombreTipoNovedad}}</td>
                                     <td *ngIf="item.Estado">Activo</td>
                                     <td *ngIf="!item.Estado">Inactivo</td>
                                     <td>
