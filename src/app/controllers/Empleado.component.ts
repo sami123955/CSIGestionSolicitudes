@@ -18,7 +18,7 @@ declare var alertify:any;
     
 })
 
-export class EmpleadoComponent implements OnInit {
+export class EmpleadoComponent implements OnInit  {
 
 
     constructor (private _EmpleadoService:EmpleadoService, private _SucursalService: SucursalService) {}

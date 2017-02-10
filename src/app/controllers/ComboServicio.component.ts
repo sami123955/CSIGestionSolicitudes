@@ -7,10 +7,13 @@ import { SubclienteService } from '../services/Subcliente.service';
 import { MunicipioService } from '../services/Municipio.service';
 import { ComboServicioService } from '../services/ComboServicio.service';
 
+//Importar libreria externas
+declare var jQuery: any;
 declare var $:any;
 declare var alertify:any;
 declare var success:any;
 declare var error:any;
+declare var DataTable: any;
 
 @Component({
     selector: 'ComboServicio',
@@ -44,6 +47,9 @@ export class ComboServicioComponent implements OnInit{
     //Variable que almacenara la informacion de los SubclienteService
     DatosSubCliente = '';
 
+    //Variable que almacenara la informacion para el select de ComboServicio
+    DatosComboServicio='';
+
     //Variable que almacenara la configuracion para los select multipleas
     ConfiguracionSelect = {
         pullRight: true,
@@ -58,11 +64,15 @@ export class ComboServicioComponent implements OnInit{
         dynamicTitleMaxItems: 0,
     };
 
+    //Variable que usaremos para validar si ya se le aplica data table o No
+    DataTable = false;
+
     ngOnInit() {
         this.BuscarSucursales();
         this.BuscarServicios();
         this.BuscarSubClientes();
         this.BuscarMunicipios();
+        this.BuscarComboServicio();
     }
 
 
@@ -76,7 +86,7 @@ export class ComboServicioComponent implements OnInit{
     BuscarServicios(){
         this._TipoServicioService.BuscarTipoServicio(this.DatosServidorModel.url).subscribe(
             data => this.OpcionesServicios = this.ConstruirOpciones(data),
-            error => alertify.error('No se ha podido realizar la peticio')
+            error => alertify.error('No se ha podido realizar la peticion')
         );
     }
 
@@ -84,6 +94,14 @@ export class ComboServicioComponent implements OnInit{
         this._SubClienteService.BuscarSubcliente(this.DatosServidorModel.url).subscribe(
             data => this.DatosSubCliente = data,
             error => alertify.error('No se ha podido realizar la peticion')
+        );
+    }
+
+    BuscarComboServicio(){
+        this._ComboServicioService.BuscarComboServicio(this.DatosServidorModel.url).subscribe(
+            data => this.DatosComboServicio=data,
+            //data => /*this.DatosComboServicio=*/console.log(JSON.stringify(data)),
+            error => alert(error)
         );
     }
 
@@ -102,6 +120,11 @@ export class ComboServicioComponent implements OnInit{
             
         }
     }
+
+    CargarDatosForm(CodigoSucursal,Nombre,CodigoSubcliente,Municipio,Costo,CodigoServicio,Codigo,Estado){
+            this.model=new ComboServicio(CodigoSucursal,Nombre,CodigoSubcliente,Municipio,Costo,CodigoServicio,Codigo,Estado);
+    }
+    
 
     //Metodo que usaremos para crear las opciones tal y como el select multiple las espera
     ConstruirOpciones(Dato){
@@ -138,6 +161,46 @@ export class ComboServicioComponent implements OnInit{
         
 
 
+    }
+
+    AplicarDataTable(){
+        try {
+            
+             if(this.DataTable==false){
+                 $('#TipoServicioTabla').dataTable({
+                     "bDestroy": true,
+                            "language": {
+                            "sProcessing":     "Procesando...",
+                            "sLengthMenu":     "Mostrar _MENU_ registros",
+                            "sZeroRecords":    "No se encontraron resultados",
+                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix":    "",
+                            "sSearch":         "Buscar:",
+                            "sUrl":            "",
+                            "sInfoThousands":  ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst":    "Primero",
+                                "sLast":     "Último",
+                                "sNext":     "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
+                        }
+                 });
+                 this.DataTable=true;
+             }
+        } catch (error) {
+            
+            var DescripcionError = 'ComboServicio.component.ts--->AplicarDataTable--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+        }
     }
 
 

@@ -9,8 +9,8 @@ export class ComboServicioService {
     constructor(private _http: Http) { }
 
     GuardarComboServicio(ObjetoComboServicio: any, UrlServicio: string) {
-        var formdata=new FormData();
-        /*var JsonSalida = {
+
+        var JsonSalida = {
 
                             Codigo: '',
                             CodigoSucursal: ObjetoComboServicio.CodigoSucursal,
@@ -22,26 +22,13 @@ export class ComboServicioService {
                             lstCiudades: ObjetoComboServicio.Municipio,
                             lstDetalle: ObjetoComboServicio.CodigoServicio
                             
-                         };*/
+                         };
 
+        var params = '?Datos='+JSON.stringify(JsonSalida);
 
-        //var params = '?Datos='+JSON.stringify(JsonSalida);
-
-        //console.log(params);
-        formdata.append("Codigo",'');
-        formdata.append("CodigoSucursal",ObjetoComboServicio.CodigoSucursal);
-        formdata.append("Nombre",ObjetoComboServicio.Nombre);
-        formdata.append("CodigoSubcliente",ObjetoComboServicio.CodigoSubcliente);
-        formdata.append("Estado",true);
-        formdata.append("Costo",ObjetoComboServicio.Costo);
-        formdata.append("lstCiudades",ObjetoComboServicio.Municipio);
-        formdata.append("lstDetalle",ObjetoComboServicio.CodigoServicio);
-
-
+        console.log(params);
 
         var headers = new Headers();
-        /*headers.append('Content-type', "application/x-www-form-urlencoded");
-        headers.append('dataType', "json");*/
         
         var options = new RequestOptions({ headers: headers });
 
@@ -50,9 +37,15 @@ export class ComboServicioService {
             .map(res => res.json());*/
 
         return this._http.post(UrlServicio + 'ComboDetalle'
-            , formdata, options)
+            , JSON.stringify(JsonSalida), options)
             .map(res => res.json());
 
+    }
+
+    /*Metodo para buscar ComboServicios*/
+    BuscarComboServicio(UrlApi){
+        var params ="?Codigo=&Nombre=&CodigoSubcliente=&Estado=&CodigoSucursal=";
+        return this._http.get(UrlApi+'ComboDetalle'+params).map(res => res.json());
     }
 
 /*
@@ -92,8 +85,7 @@ export class ComboServicioService {
         Cadena = Cadena.replace(/\//g, '');
         Cadena = Cadena.replace(/#/g, '');
         Cadena = Cadena.replace(/\+/g, '');
-        
-        
+         
         return Cadena;
     }
 

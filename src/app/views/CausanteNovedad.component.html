@@ -32,7 +32,7 @@
                                     <td>{{item.Nombre}}</td>
                                     <td>{{item.CodigoTipoNovedad}}</td>
                                     <td *ngIf="item.Estado">Activo</td>
-                                    <td *ngIf="!item.Estado">Inactivo</td>
+                                    <td *ngIf="!item.Estado">Inactivo</td>  
                                     <td>
                                         <button class="btn btn-default" (click)="CargarDatosForm(item.Nombre, item.CodigoTipoNovedad, item.Codigo, item.Estado)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
                                     </td>

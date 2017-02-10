@@ -20,7 +20,7 @@ declare var DataTable: any;
 
 export class SucursalComponent implements OnInit {
 
-
+//Variable que usaremos para controlar los preloaders
     Cargando = false;
 
 
@@ -29,9 +29,10 @@ export class SucursalComponent implements OnInit {
 
     DatosServidor = new DatosServidor();
 
-
+//Variable que almacenara todos los datos de la consulta de empresa.
     DatosSucursal = '';
-
+    
+//Variable que usaremos para validar si ya se le aplica data table o No
     DataTable = false;
 
     constructor (private _SucursalService: SucursalService) {}

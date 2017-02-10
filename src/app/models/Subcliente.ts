@@ -6,6 +6,6 @@ export class Subcliente {
         public Telefono:string,
         public Representante:string,
         public Estado?:string,
-        public Codigo?:string,    
+        public Codigo?:string    
     ){}
 }
