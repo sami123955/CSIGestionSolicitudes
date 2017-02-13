@@ -37,6 +37,8 @@ export class ComboServicioComponent implements OnInit{
     //Instanciamos la calse DatosServidor para que esta nos pueda proveer la url del servicios
     DatosServidorModel = new DatosServidor();
 
+    //Variable que se encargara de controlar cuando mostrar el preloader
+    Cargando = false;
 
     //Variable que almacenara las opciones para el select de municipio
     OpcionesMunicipio = [];
@@ -67,7 +69,11 @@ export class ComboServicioComponent implements OnInit{
     //Variable que usaremos para validar si ya se le aplica data table o No
     DataTable = false;
 
+    //Variable que almacenara los datos a mostrar en el modal luego de dar click en el boton ver
+    DatosServicio = '';
+
     ngOnInit() {
+        this.Cargando = true;
         this.BuscarSucursales();
         this.BuscarServicios();
         this.BuscarSubClientes();
@@ -77,32 +83,63 @@ export class ComboServicioComponent implements OnInit{
 
 
     BuscarSucursales() {
-        this._SucursalService.BuscarSucursal(this.DatosServidorModel.url).subscribe(
+        try {
+
+           this._SucursalService.BuscarSucursal(this.DatosServidorModel.url).subscribe(
             data => this.DatosSucursal = data,
             error => alertify.error('No se ha podido realizar la peticion')
-        );
+        ); 
+
+        } catch (error) {
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+        }
+        
     }
 
     BuscarServicios(){
-        this._TipoServicioService.BuscarTipoServicio(this.DatosServidorModel.url).subscribe(
+        try {
+           this._TipoServicioService.BuscarTipoServicio(this.DatosServidorModel.url).subscribe(
             data => this.OpcionesServicios = this.ConstruirOpciones(data),
             error => alertify.error('No se ha podido realizar la peticion')
-        );
+        ); 
+        } catch (error) {
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+        }
+        
     }
 
     BuscarSubClientes(){
-        this._SubClienteService.BuscarSubcliente(this.DatosServidorModel.url).subscribe(
+        try {
+           this._SubClienteService.BuscarSubcliente(this.DatosServidorModel.url).subscribe(
             data => this.DatosSubCliente = data,
             error => alertify.error('No se ha podido realizar la peticion')
-        );
+        ); 
+        } catch (error) {
+
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+        }
+        
     }
 
     BuscarComboServicio(){
+        try {
+          this.Cargando=true;
         this._ComboServicioService.BuscarComboServicio(this.DatosServidorModel.url).subscribe(
             data => this.DatosComboServicio=data,
             //data => /*this.DatosComboServicio=*/console.log(JSON.stringify(data)),
-            error => alert(error)
-        );
+            error => alert(error),
+            () => this.Cargando = false
+            
+        );  
+        } catch (error) {
+
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+        }
+        
     }
 
     BuscarMunicipios(){
@@ -144,10 +181,11 @@ export class ComboServicioComponent implements OnInit{
     GuardarComboServicio() {
 
         try {
-
+            this.Cargando=true;
             this._ComboServicioService.GuardarComboServicio(this.model, this.DatosServidorModel.url).subscribe(
             data => alertify.success('Registrado correctamente'),
-            error => alert(error)
+            error => alert(error),
+            () => location.reload()
         );
             
         } catch (error) {
@@ -167,7 +205,8 @@ export class ComboServicioComponent implements OnInit{
         try {
             
              if(this.DataTable==false){
-                 $('#TipoServicioTabla').dataTable({
+                 alert("hola");
+                 $('#ComboServicioTabla').dataTable({
                      "bDestroy": true,
                             "language": {
                             "sProcessing":     "Procesando...",
@@ -201,6 +240,12 @@ export class ComboServicioComponent implements OnInit{
             var DescripcionError = 'ComboServicio.component.ts--->AplicarDataTable--->'+'  Error:  ' + error;
             console.log(DescripcionError);
         }
+    }
+
+    CargarTipoServicio(DetalleServicio){
+        this.DatosServicio = DetalleServicio;
+        
+
     }
 
 
