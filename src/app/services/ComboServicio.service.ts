@@ -10,8 +10,18 @@ export class ComboServicioService {
 
     GuardarComboServicio(ObjetoComboServicio: any, UrlServicio: string) {
 
-        var JsonSalida = {
+        var Datos = new FormData;
 
+        Datos.append('Codigo', '');
+        Datos.append('CodigoSucursal', ObjetoComboServicio.CodigoSucursal);
+        Datos.append('Nombre',  this.ValidarCadena(ObjetoComboServicio.Nombre));
+        Datos.append('CodigoSubcliente', ObjetoComboServicio.CodigoSubcliente);
+        Datos.append('Estado', true);
+        Datos.append('Costo', this.ValidarCadena(ObjetoComboServicio.Costo));
+        Datos.append('lstCiudades', ObjetoComboServicio.Municipio);
+        Datos.append('lstDetalle', ObjetoComboServicio.CodigoServicio);
+
+/*
                             Codigo: '',
                             CodigoSucursal: ObjetoComboServicio.CodigoSucursal,
                             Nombre: ObjetoComboServicio.Nombre,
@@ -22,11 +32,11 @@ export class ComboServicioService {
                             lstCiudades: ObjetoComboServicio.Municipio,
                             lstDetalle: ObjetoComboServicio.CodigoServicio
                             
-                         };
+                         };*/
 
-        var params = '?Datos='+JSON.stringify(JsonSalida);
+       // var params = '?Datos='+JSON.stringify(JsonSalida);
 
-        console.log(params);
+      //  console.log(params);
 
         var headers = new Headers();
         
@@ -37,7 +47,7 @@ export class ComboServicioService {
             .map(res => res.json());*/
 
         return this._http.post(UrlServicio + 'ComboDetalle'
-            , JSON.stringify(JsonSalida), options)
+            , Datos, options)
             .map(res => res.json());
 
     }
@@ -85,6 +95,9 @@ export class ComboServicioService {
         Cadena = Cadena.replace(/\//g, '');
         Cadena = Cadena.replace(/#/g, '');
         Cadena = Cadena.replace(/\+/g, '');
+        Cadena = Cadena.replace(/\(/g, '');
+        Cadena = Cadena.replace(/\)/g, '');
+        Cadena = Cadena.replace(/\%/g, '');
          
         return Cadena;
     }

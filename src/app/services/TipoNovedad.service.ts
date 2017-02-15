@@ -60,7 +60,8 @@ export class TipoNovedadService{
         Cadena = Cadena.replace(/\//g, '');
         Cadena = Cadena.replace(/#/g, '');
         Cadena = Cadena.replace(/\+/g, '');
-        
+        Cadena = Cadena.replace(/\+/g, '');
+
         return Cadena;
     }
 }

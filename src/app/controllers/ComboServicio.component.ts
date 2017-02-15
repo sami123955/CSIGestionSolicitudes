@@ -184,8 +184,8 @@ export class ComboServicioComponent implements OnInit{
         try {
             this.Cargando=true;
             this._ComboServicioService.GuardarComboServicio(this.model, this.DatosServidorModel.url).subscribe(
-            //data => alertify.success('Registrado correctamente'),
-            data => alert(JSON.stringify(data)),
+            data => alertify.success('Registrado correctamente'),
+           // data => alert(JSON.stringify(data)),
             error => alert(error),
             () => location.reload()
         );
@@ -196,10 +196,6 @@ export class ComboServicioComponent implements OnInit{
             console.log(DescripcionError);
           
         }
-
-
-        
-
 
     }
 
@@ -247,7 +243,6 @@ export class ComboServicioComponent implements OnInit{
     CargarTipoServicio(DetalleServicio){
         this.DatosServicio = DetalleServicio;
         
-
     }
 
 
