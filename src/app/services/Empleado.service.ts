@@ -10,15 +10,47 @@ export class EmpleadoService {
 
     GuardarEmpleado(ObjetoEmpleado: any, UrlServicio: string) {
 
-        var params = 'Codigo=&Nombre='+ObjetoEmpleado.Nombre+'&Telefono='+ObjetoEmpleado.Telefono+'&Celular='+ObjetoEmpleado.Celular+'&Cargo='+ObjetoEmpleado.Cargo+'&Estado='+true;
+
+        var Datos = new FormData;
+
+        Datos.append('Codigo', '');
+        Datos.append('Telefono', ObjetoEmpleado.Telefono);
+        Datos.append('Nombre', ObjetoEmpleado.Celular);
+        Datos.append('Celular', ObjetoEmpleado.Celular);
+        Datos.append('Cargo', ObjetoEmpleado.Cargo);
+        Datos.append('Email', ObjetoEmpleado.Email);
+        Datos.append('Estado', true);
+        Datos.append('lstCodigoSucursal', ObjetoEmpleado.Sucursal);
+
+        //var params = 'Codigo=&Nombre='+ObjetoEmpleado.Nombre+'&Telefono='+ObjetoEmpleado.Telefono+'&Celular='+ObjetoEmpleado.Celular+'&Cargo='+ObjetoEmpleado.Cargo+'&Estado='+true;
 
         var headers = new Headers();
 
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(UrlServicio + 'Empresa?'
-            , '', options)
+        return this._http.post(UrlServicio + 'Empleado'
+            , Datos, options)
             .map(res => res.json());
+    }
+
+    ValidarCadena(Cadena){
+
+        console.log(Cadena);
+
+        Cadena = Cadena.replace(/'/g, '');
+        Cadena = Cadena.replace(/"/g, '');
+        Cadena = Cadena.replace(/%/g, '');
+        Cadena = Cadena.replace(/&/g, '');
+        Cadena = Cadena.replace(/\$/g, '');
+        Cadena = Cadena.replace(/!/g, '');
+        Cadena = Cadena.replace(/¿/g, '');
+        Cadena = Cadena.replace(/\*/g, '');
+        Cadena = Cadena.replace(/\?/g, '');
+        Cadena = Cadena.replace(/º/g, '');
+        Cadena = Cadena.replace(/\//g, '');
+        Cadena = Cadena.replace(/\+/g, '');
+        
+        return Cadena;
     }
 
 

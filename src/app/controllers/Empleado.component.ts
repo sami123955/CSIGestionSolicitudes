@@ -26,7 +26,7 @@ export class EmpleadoComponent implements OnInit  {
     //Instanciamos la siguiente clase, para acceder al atributo url, y así dinamicamente se cambiará la ruta del seridor donde consumiremos los servicios
     DatosServidorModel = new DatosServidor();
 
-    model = new Empleado('', '', '', '', []);
+    model = new Empleado('', '', '', '', '', []);
 
     SucursalesSelect = [];
 
@@ -35,7 +35,7 @@ export class EmpleadoComponent implements OnInit  {
         pullRight: true,
         enableSearch: true,
         checkedStyle: 'checkboxes',
-        buttonClasses: 'btn btn-default',
+        buttonClasses: 'btn btn-default col-md-12',
         selectionLimit: 0,
         closeOnSelect: false,
         showCheckAll: true,
@@ -76,13 +76,34 @@ export class EmpleadoComponent implements OnInit  {
 
     GuardarEmpleado(){
 
-        this._EmpleadoService.GuardarEmpleado(this.model, this.DatosServidorModel.url).
-            subscribe(
-                data => alertify.success('Guardado correctamente'),
-                error => alertify.error('No se pudo realizar la accion'),
+        try {
 
+            this._EmpleadoService.GuardarEmpleado(this.model, this.DatosServidorModel.url).
+            subscribe(
+                data => this.ValidarPeticion(data),
+                error => alert(error),
             );
+
+        } catch (error) {
+
+            var DescripcionError = 'Empleado.component.ts--->GuardarEmpleado--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+            
+        }
+
         
+        
+    }
+
+    ValidarPeticion(Resultado){
+
+        if(Resultado.TipoResultado == false){
+            alertify.error(Resultado.Mensaje);
+        }
+        else{
+            location.reload();
+        }
+
     }
 
         
