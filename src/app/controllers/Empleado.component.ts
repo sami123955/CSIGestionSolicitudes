@@ -46,10 +46,12 @@ export class EmpleadoComponent implements OnInit  {
     };
 
 
-    data;
+    //Variable que usaremos para almacenar los datos del empleado
+    DatosEmpleado = '';
 
     ngOnInit() {
         this.BuscarSucursales();
+        this.BuscarEmpleado();
     }
 
     BuscarSucursales(){
@@ -101,8 +103,34 @@ export class EmpleadoComponent implements OnInit  {
             alertify.error(Resultado.Mensaje);
         }
         else{
+            alertify.success('Registro satisfactorio');
             location.reload();
         }
+
+    }
+
+    LimpiarFormulario(){
+
+        this.model = new Empleado('', '', '', '', '', []);
+
+    }
+
+    BuscarEmpleado(){
+
+        try {
+
+            this._EmpleadoService.BuscarEmpleado(this.DatosServidorModel.url).subscribe(
+                data => console.log(JSON.stringify(data)),
+                error => console.log(error)
+            );
+            
+        } catch (error) {
+
+            var DescripcionError = 'Empleado.component.ts--->BuscarEmpleado--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+            
+        }
+
 
     }
 

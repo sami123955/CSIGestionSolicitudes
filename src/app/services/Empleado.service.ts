@@ -15,7 +15,7 @@ export class EmpleadoService {
 
         Datos.append('Codigo', '');
         Datos.append('Telefono', ObjetoEmpleado.Telefono);
-        Datos.append('Nombre', ObjetoEmpleado.Celular);
+        Datos.append('Nombre', ObjetoEmpleado.Nombre);
         Datos.append('Celular', ObjetoEmpleado.Celular);
         Datos.append('Cargo', ObjetoEmpleado.Cargo);
         Datos.append('Email', ObjetoEmpleado.Email);
@@ -31,6 +31,16 @@ export class EmpleadoService {
         return this._http.post(UrlServicio + 'Empleado'
             , Datos, options)
             .map(res => res.json());
+    }
+
+
+    BuscarEmpleado(UrlServicio){
+
+
+        var Parametros = '?Codigo=&Nombre=&CodigoUsuario=';
+
+        return this._http.get(UrlServicio + 'Empleado' + Parametros).map(res => res.json());
+
     }
 
     ValidarCadena(Cadena){
