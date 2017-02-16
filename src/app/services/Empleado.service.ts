@@ -34,6 +34,30 @@ export class EmpleadoService {
     }
 
 
+    ActualizarEmpleado(ObjetoEmpleado: any, UrlServicio: string){
+
+        var Datos = new FormData;
+
+        Datos.append('Codigo', ObjetoEmpleado.Codigo);
+        Datos.append('Telefono', ObjetoEmpleado.Telefono);
+        Datos.append('Nombre', ObjetoEmpleado.Nombre);
+        Datos.append('Celular', ObjetoEmpleado.Celular);
+        Datos.append('Cargo', ObjetoEmpleado.Cargo);
+        Datos.append('Email', ObjetoEmpleado.Email);
+        Datos.append('Estado', ObjetoEmpleado.Estado);
+        Datos.append('lstCodigoSucursal', ObjetoEmpleado.Sucursal);
+
+        var headers = new Headers();
+
+        var options = new RequestOptions({ headers: headers });
+
+        return this._http.post(UrlServicio + 'Empleado'
+            , Datos, options)
+            .map(res => res.json());
+
+    }
+
+
     BuscarEmpleado(UrlServicio){
 
 

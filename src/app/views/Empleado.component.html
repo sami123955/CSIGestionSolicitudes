@@ -12,31 +12,42 @@
                         </div>
                         <div class="panel-body">
                         </div>
-                        <table class="table table-hover" id="companyTable" >
+                        <table class="table table-hover" id="EmpleadoSucursal">
                             <thead>
                                 <tr>
-                                    <th>NIT</th>
-                                    <th>Raz&oacute;n Social</th>
-                                    <th>Estado</th>
+                                    <th>Nombre</th>
+                                    <th>Celular</th>
+                                    <th>Cargo</th>
+                                    <th>Sucursales</th>
+                                    <!--<th>Estado</th>-->
                                     <th>Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                <tr *ngFor="let item of DatosEmpleado.Data; let last = last;">
+                                    <td>{{item.Nombre}}</td>
+                                    <td>{{item.Celular}}</td>
+                                    <td>{{item.Cargo}}</td>
                                     <td>
-                                        <button class="btn btn-default">Editar</button>
+                                        <button class="btn btn-default" data-toggle="modal" data-target="#SucursalesModal" (click)="CargarSucursalesModal(item.lstEmpleadoSucursal)">Ver</button>
                                     </td>
+                                    <!--<td *ngIf="item.Estado">Activo</td>
+                                    <td *ngIf="!item.Estado">Inactivo</td>-->
+                                    <td>
+                                        <button class="btn btn-default"  data-toggle="modal" data-target="#Actualizar" (click)="CargarDatos(item.Nombre, item.Telefono, item.Celular, item.Email, item.Cargo, item.lstEmpleadoSucursal, item.Codigo, item.Estado)">Editar</button>
+                                    </td>
+                                    <span *ngIf="last == true">{{AplicarDataTable()}}</span>
                                 </tr>
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
         </div>
     </div>        
 </div>
+
+
 
 
 
@@ -84,6 +95,106 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" [disabled]="!EmpleadoForm.form.valid" (click)="GuardarEmpleado()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+
+
+
+
+
+<!-- Actualizar --> 
+
+<div class="modal fade" id="Actualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Empleado</h4>
+      </div>
+      <div class="modal-body">
+        <form #EmpleadoForm="ngForm">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="Nombre">Nombre</label>
+                    <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+                </div>
+                <div class="col-md-6">
+                    <label for="Telefono">Tel&eacute;fono</label>
+                    <input type="number" class="form-control" id="Telefono" required [(ngModel)]="model.Telefono" name="Telefono"  placeholder="Tel&eacute;fono">    
+                </div>
+                <div class="col-md-6">
+                    <label for="Celular">Celular</label>
+                    <input type="number" class="form-control" id="Celular" required [(ngModel)]="model.Celular" name="Celular"  placeholder="Celular">    
+                </div>
+                <div class="col-md-6">
+                    <label for="Cargo">Cargo</label>
+                    <input type="text" class="form-control" id="Cargo" placeholder="Cargo" required [(ngModel)]="model.Cargo" name="Cargo">    
+                </div>
+                <div class="col-md-6">
+                    <label for="Cargo">Sucursales</label>
+                    <ss-multiselect-dropdown [options]="SucursalesSelect" id="SelectSucursal" [settings]="ConfiguracionSelect" [(ngModel)]="model.Sucursal" name="Sucursal" required></ss-multiselect-dropdown>    
+                </div>
+
+                <div class="col-md-6">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="true" required>
+                            Activo
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="false" required>
+                            Inactivo
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" [disabled]="!EmpleadoForm.form.valid" (click)="ActualizarEmpleado()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+
+
+<!-- Modal sucursales -->
+
+<div class="modal fade" id="SucursalesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Sucursales</h4>
+      </div>
+      <div class="modal-body">
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>Sucursal</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of DatosSucursal">
+                      <td>{{item.Nombre}}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

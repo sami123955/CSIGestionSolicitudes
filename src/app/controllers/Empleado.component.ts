@@ -7,7 +7,7 @@ import { SucursalService } from '../services/Sucursal.service';
 import {IMultiSelectSettings } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
 
-
+declare var $:any;
 declare var alertify:any;
 
 @Component({
@@ -48,6 +48,12 @@ export class EmpleadoComponent implements OnInit  {
 
     //Variable que usaremos para almacenar los datos del empleado
     DatosEmpleado = '';
+
+    //Variable que usaremos para almacenar los datos de la sucursal
+    DatosSucursal = '';
+
+    //Variable que usaremos para verificar si se aplico datatable
+    DataTable = false;
 
     ngOnInit() {
         this.BuscarSucursales();
@@ -120,7 +126,7 @@ export class EmpleadoComponent implements OnInit  {
         try {
 
             this._EmpleadoService.BuscarEmpleado(this.DatosServidorModel.url).subscribe(
-                data => console.log(JSON.stringify(data)),
+                data => this.DatosEmpleado = data,
                 error => console.log(error)
             );
             
@@ -133,6 +139,99 @@ export class EmpleadoComponent implements OnInit  {
 
 
     }
+
+    CargarSucursalesModal(Sucursales){
+
+        this.DatosSucursal = Sucursales;
+        console.log(JSON.stringify(this.DatosSucursal));
+
+    }
+    
+    AplicarDataTable(){
+
+        try {
+
+            if(this.DataTable == false) {
+
+                $('#EmpleadoSucursal').dataTable({
+                        "bDestroy": true,
+                        "language": {
+                                "sProcessing":     "Procesando...",
+                                "sLengthMenu":     "Mostrar _MENU_ registros",
+                                "sZeroRecords":    "No se encontraron resultados",
+                                "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                                "sInfoPostFix":    "",
+                                "sSearch":         "Buscar:",
+                                "sUrl":            "",
+                                "sInfoThousands":  ",",
+                                "sLoadingRecords": "Cargando...",
+                                "oPaginate": {
+                                    "sFirst":    "Primero",
+                                    "sLast":     "Último",
+                                    "sNext":     "Siguiente",
+                                    "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
+                        }
+                    });
+
+                this.DataTable = true;    
+        }
+            
+        } catch (error) {
+
+            var DescripcionError = 'Empleado.component.ts--->AplicarDataTable--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+            
+        }
+
+        
+
+    }
+
+    CargarDatos(Nombre, Telefono, Celular, Email, Cargo, Sucursal, Codigo, Estado){
+        
+        this.model = new Empleado(Nombre, Telefono, Celular, Email, Cargo, this.OpcionesSeleccionadas(Sucursal), Codigo, Estado);
+
+    }
+
+
+    OpcionesSeleccionadas(Datos){
+
+        var Salida = [];
+
+        for(let item of Datos){
+            Salida.push(item.CodigoSucursal);
+        }
+
+        return Salida;
+
+    }
+
+
+    ActualizarEmpleado(){
+
+        try {
+            this._EmpleadoService.ActualizarEmpleado(this.model, this.DatosServidorModel.url).subscribe(
+                data => alertify.success('Actualizado correctamente'),
+                error => alert(error),
+                () => location.reload()
+            );
+        } catch (error) {
+            var DescripcionError = 'Empleado.component.ts--->ActualizarEmpleado--->'+'  Error:  ' + error;
+            console.log(DescripcionError);
+        }
+
+    }
+
+
+    
 
         
 }
