@@ -73,7 +73,7 @@ export class ComboServicioComponent implements OnInit{
     DatosServicio = '';
 
     ngOnInit() {
-        this.Cargando = true;
+      //  this.Cargando = true;
         this.BuscarSucursales();
         this.BuscarServicios();
         this.BuscarSubClientes();
@@ -128,9 +128,10 @@ export class ComboServicioComponent implements OnInit{
         try {
           this.Cargando=true;
         this._ComboServicioService.BuscarComboServicio(this.DatosServidorModel.url).subscribe(
-            data => this.DatosComboServicio=data,
-            //data => /*this.DatosComboServicio=*/console.log(JSON.stringify(data)),
-            error => alert(error),
+           data => this.DatosComboServicio=data,
+           //data => /*this.DatosComboServicio=*/console.log(JSON.stringify(data)),
+            
+             error => alert(error),
             () => this.Cargando = false
             
         );  
@@ -184,6 +185,7 @@ export class ComboServicioComponent implements OnInit{
             this.Cargando=true;
             this._ComboServicioService.GuardarComboServicio(this.model, this.DatosServidorModel.url).subscribe(
             data => alertify.success('Registrado correctamente'),
+           // data => alert(JSON.stringify(data)),
             error => alert(error),
             () => location.reload()
         );
@@ -195,17 +197,13 @@ export class ComboServicioComponent implements OnInit{
           
         }
 
-
-        
-
-
     }
 
     AplicarDataTable(){
         try {
             
              if(this.DataTable==false){
-                 alert("hola");
+        
                  $('#ComboServicioTabla').dataTable({
                      "bDestroy": true,
                             "language": {
@@ -245,7 +243,6 @@ export class ComboServicioComponent implements OnInit{
     CargarTipoServicio(DetalleServicio){
         this.DatosServicio = DetalleServicio;
         
-
     }
 
 
