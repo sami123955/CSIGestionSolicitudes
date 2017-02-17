@@ -114,11 +114,30 @@ export class FormatoComponent implements OnInit {
         }
     }
 
-    AplicarDataTable(){
 
-       if(this.DataTable == false) {
+   LimpiarFormulario(){
 
-            $('#FormatoTabla').dataTable({
+       try {
+           
+       } catch (error) {
+
+          var DescripcionError = 'Formato.component.ts--->GuardarFormato--->'+'  Error:  ' + error;
+          console.log(DescripcionError);
+           
+       }
+
+
+       this.model = new Formato('');
+
+       this.model.Archivo  = new FormData();
+       $('.FormatoModal').modal('hide');
+
+       this.Cargando = false;
+
+       setTimeout(function() {
+
+
+           $('#FormatoTabla').dataTable({
                     "bDestroy": true,
                     "language": {
                             "sProcessing":     "Procesando...",
@@ -146,23 +165,12 @@ export class FormatoComponent implements OnInit {
                     }
                 });
 
-            this.DataTable = true;    
-       }
-   }
-
-
-   LimpiarFormulario(){
-       this.model = new Formato('');
-
-       this.model.Archivo  = new FormData();
-       $('.FormatoModal').modal('hide');
-
-       this.Cargando = false;
+       }, 20);
    }
 
 
    CargarCampos(FormatoRuta, Descripcion, Codigo, Estado){
-       //
+       
        this.model = new Formato(Descripcion, '', FormatoRuta, Codigo, Estado);
 
        this.model.Archivo = new FormData();
@@ -180,7 +188,7 @@ export class FormatoComponent implements OnInit {
             .subscribe(
                 data => alertify.success('Actualizado Correctamente'),
                 error => alert(error),
-                () => location.reload()//this.BuscarFormato()
+                () => location.reload()
             );
 
         } catch (error) {

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ComboServicioService } from '../services/ComboServicio.service';
 import { DatosServidor } from '../models/DatosServidor';
 import { MunicipioService } from '../services/Municipio.service';
 import { SucursalService } from '../services/Sucursal.service';
 import { SolicitudServicio } from '../models/SolicitudServicio';
 import { SolicitudServicioService } from '../services/SolicitudServicio.service';
+
 
 declare var alertify:any;
 declare var success:any;
@@ -66,14 +67,15 @@ export class SolicitudServicioComponent implements OnInit{
     };
 
 
+
     ngOnInit(){
         
         
         this.BuscarMunicipios();
         this.BuscarSucursales();
         this.FormDataSalida = new FormData;
-    }
 
+    }
 
     //Metodo que usaremos para crear las opciones tal y como el select multiple las espera
     ConstruirOpciones(Dato){
@@ -210,6 +212,14 @@ export class SolicitudServicioComponent implements OnInit{
             var DescripcionError = 'SolicitudServicio.component.ts--->GuardarSolicitudServicio--->'+'  Error:  ' + error;
             console.log(DescripcionError);
         }
+
+    }
+
+
+    LlenarTabla(){
+
+        var hola = [{},{}]
+
 
     }
 

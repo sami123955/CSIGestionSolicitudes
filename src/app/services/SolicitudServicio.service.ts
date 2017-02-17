@@ -85,50 +85,11 @@ export class SolicitudServicioService {
     }
 
 
-    ActualizarEmpleado(ObjetoEmpleado: any, UrlServicio: string) {
+    BuscarSolitudServicio(UrlServicio) {
 
-        var Datos = new FormData;
+        var Parametros = '?Codigo=&Nombre=&Cedula=&CodigoUsuario=&FuchaInicio=&FechaFin=&CodigoEstado=&CodigoSucursal=';
 
-        Datos.append('Codigo', ObjetoEmpleado.Codigo);
-        Datos.append('Telefono', ObjetoEmpleado.Telefono);
-        Datos.append('Nombre', ObjetoEmpleado.Nombre);
-        Datos.append('Celular', ObjetoEmpleado.Celular);
-        Datos.append('Cargo', ObjetoEmpleado.Cargo);
-        Datos.append('Email', ObjetoEmpleado.Email);
-        Datos.append('Estado', ObjetoEmpleado.Estado);
-        Datos.append('lstCodigoSucursal', ObjetoEmpleado.Sucursal);
-
-        var headers = new Headers();
-
-        var options = new RequestOptions({ headers: headers });
-
-        return this._http.post(UrlServicio + 'Empleado'
-            , Datos, options)
-            .map(res => res.json());
-
-    }
-
-
-    BuscarEmpleado(UrlServicio) {
-
-
-        var Parametros = '?Codigo=&Nombre=&CodigoUsuario=';
-
-        Observable.interval(20000).subscribe(i=>{
-            //return 
-            this._http.get(UrlServicio + 'Empleado' + Parametros).map(res => {
-                let _res = res.json();
-                return _res;
-            }).subscribe(data => {
-                this.SolicitudServicio$.next(data.Data);
-            });
-        })
-
-
-    }
-
-    getEmpleados$(): Observable<any> {
-        return this.SolicitudServicio$;
+        this._http.get('SolicitudServicio').map(res => res.json());
 
     }
 

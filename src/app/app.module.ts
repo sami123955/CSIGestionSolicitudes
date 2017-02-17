@@ -6,6 +6,7 @@ import { HttpModule} from '@angular/http';
 
 import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
+
 //import { DataTablesModule } from 'angular-datatables';
 
 import { AppComponent }  from './app.component';
@@ -35,6 +36,7 @@ import { SolicitudServicioComponent } from './controllers/SolicitudServicio.comp
                   HttpModule,
                   FormsModule,
                   MultiselectDropdownModule,
+                  
                 ],
   declarations: [ 
                   AppComponent,
