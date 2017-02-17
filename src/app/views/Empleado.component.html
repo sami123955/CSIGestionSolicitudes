@@ -24,7 +24,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of DatosEmpleado.Data; let last = last;">
+                                <!--DatosEmpleado.Data-->
+                                <tr *ngFor="let item of empleados$ | async ; let last = last;">
                                     <td>{{item.Nombre}}</td>
                                     <td>{{item.Celular}}</td>
                                     <td>{{item.Cargo}}</td>

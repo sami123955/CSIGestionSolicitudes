@@ -4,9 +4,19 @@ import { Headers } from '@angular/http';
 import { RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+
+import { Subject, Observable } from "rxjs"
+
+
 @Injectable()
 export class EmpleadoService {
-    constructor(private _http: Http) { }
+
+    empleados$: Subject<any> = new Subject<any>();
+
+    constructor(private _http: Http) { 
+
+
+    }
 
     GuardarEmpleado(ObjetoEmpleado: any, UrlServicio: string) {
 
@@ -34,7 +44,7 @@ export class EmpleadoService {
     }
 
 
-    ActualizarEmpleado(ObjetoEmpleado: any, UrlServicio: string){
+    ActualizarEmpleado(ObjetoEmpleado: any, UrlServicio: string) {
 
         var Datos = new FormData;
 
@@ -58,16 +68,30 @@ export class EmpleadoService {
     }
 
 
-    BuscarEmpleado(UrlServicio){
+    BuscarEmpleado(UrlServicio) {
 
 
         var Parametros = '?Codigo=&Nombre=&CodigoUsuario=';
 
-        return this._http.get(UrlServicio + 'Empleado' + Parametros).map(res => res.json());
+        Observable.interval(20000).subscribe(i=>{
+            //return 
+            this._http.get(UrlServicio + 'Empleado' + Parametros).map(res => {
+                let _res = res.json();
+                return _res;
+            }).subscribe(data => {
+                this.empleados$.next(data.Data);
+            });
+        })
+
 
     }
 
-    ValidarCadena(Cadena){
+    getEmpleados$(): Observable<any> {
+        return this.empleados$;
+
+    }
+
+    ValidarCadena(Cadena) {
 
         console.log(Cadena);
 
@@ -83,9 +107,10 @@ export class EmpleadoService {
         Cadena = Cadena.replace(/º/g, '');
         Cadena = Cadena.replace(/\//g, '');
         Cadena = Cadena.replace(/\+/g, '');
-        
+
         return Cadena;
     }
+
 
 
 }

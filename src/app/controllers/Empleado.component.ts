@@ -4,24 +4,31 @@ import { DatosServidor } from '../models/DatosServidor';
 import { EmpleadoService } from '../services/Empleado.service';
 import { SucursalService } from '../services/Sucursal.service';
 
-import {IMultiSelectSettings } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
 
-declare var $:any;
-declare var alertify:any;
+import { Observable } from 'rxjs'
+
+declare var $: any;
+declare var alertify: any;
 
 @Component({
     selector: 'Empleado',
     templateUrl: '../views/Empleado.component.html',
     styleUrls: ['../../assets/css/Maestras.css'],
     providers: [EmpleadoService, SucursalService],
-    
+
 })
 
-export class EmpleadoComponent implements OnInit  {
+export class EmpleadoComponent implements OnInit {
+
+    empleados$: Observable<any>;
 
 
-    constructor (private _EmpleadoService:EmpleadoService, private _SucursalService: SucursalService) {}
+    constructor(private _EmpleadoService: EmpleadoService, private _SucursalService: SucursalService) {
+
+
+    }
 
     //Instanciamos la siguiente clase, para acceder al atributo url, y así dinamicamente se cambiará la ruta del seridor donde consumiremos los servicios
     DatosServidorModel = new DatosServidor();
@@ -58,155 +65,154 @@ export class EmpleadoComponent implements OnInit  {
     ngOnInit() {
         this.BuscarSucursales();
         this.BuscarEmpleado();
+
+        this.empleados$ = this._EmpleadoService.getEmpleados$();
     }
 
-    BuscarSucursales(){
-        
-        var DatosSucursal:any;
+    BuscarSucursales() {
+
+        var DatosSucursal: any;
 
         this._SucursalService.BuscarSucursal(this.DatosServidorModel.url).subscribe(
-        data => DatosSucursal = data,
-        error => alertify.error('No se ha podido procesar la peticion'),
-        () => this.FormatearOpcionesSelect(DatosSucursal)
+            data => DatosSucursal = data,
+            error => alertify.error('No se ha podido procesar la peticion'),
+            () => this.FormatearOpcionesSelect(DatosSucursal)
         );
 
-        
+
     }
 
-    FormatearOpcionesSelect(DatosSucursal){
+    FormatearOpcionesSelect(DatosSucursal) {
         for (let item of DatosSucursal.Data) {
-            
+
             this.SucursalesSelect.push({ id: item.Codigo, name: item.Nombre });
-            
+
         }
     }
 
 
-    GuardarEmpleado(){
+    GuardarEmpleado() {
 
         try {
 
             this._EmpleadoService.GuardarEmpleado(this.model, this.DatosServidorModel.url).
-            subscribe(
+                subscribe(
                 data => this.ValidarPeticion(data),
                 error => alert(error),
             );
 
         } catch (error) {
 
-            var DescripcionError = 'Empleado.component.ts--->GuardarEmpleado--->'+'  Error:  ' + error;
+            var DescripcionError = 'Empleado.component.ts--->GuardarEmpleado--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
 
-        
-        
+
+
     }
 
-    ValidarPeticion(Resultado){
+    ValidarPeticion(Resultado) {
 
-        if(Resultado.TipoResultado == false){
+        if (Resultado.TipoResultado == false) {
             alertify.error(Resultado.Mensaje);
         }
-        else{
+        else {
             alertify.success('Registro satisfactorio');
             location.reload();
         }
 
     }
 
-    LimpiarFormulario(){
+    LimpiarFormulario() {
 
         this.model = new Empleado('', '', '', '', '', []);
 
     }
 
-    BuscarEmpleado(){
+    BuscarEmpleado() {
 
         try {
 
-            this._EmpleadoService.BuscarEmpleado(this.DatosServidorModel.url).subscribe(
-                data => this.DatosEmpleado = data,
-                error => console.log(error)
-            );
-            
+            this._EmpleadoService.BuscarEmpleado(this.DatosServidorModel.url);           
+
         } catch (error) {
 
-            var DescripcionError = 'Empleado.component.ts--->BuscarEmpleado--->'+'  Error:  ' + error;
+            var DescripcionError = 'Empleado.component.ts--->BuscarEmpleado--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
 
 
     }
 
-    CargarSucursalesModal(Sucursales){
+    CargarSucursalesModal(Sucursales) {
 
         this.DatosSucursal = Sucursales;
         console.log(JSON.stringify(this.DatosSucursal));
 
     }
-    
-    AplicarDataTable(){
+
+    AplicarDataTable() {
 
         try {
 
-            if(this.DataTable == false) {
+            if (this.DataTable == false) {
 
                 $('#EmpleadoSucursal').dataTable({
-                        "bDestroy": true,
-                        "language": {
-                                "sProcessing":     "Procesando...",
-                                "sLengthMenu":     "Mostrar _MENU_ registros",
-                                "sZeroRecords":    "No se encontraron resultados",
-                                "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                                "sInfoPostFix":    "",
-                                "sSearch":         "Buscar:",
-                                "sUrl":            "",
-                                "sInfoThousands":  ",",
-                                "sLoadingRecords": "Cargando...",
-                                "oPaginate": {
-                                    "sFirst":    "Primero",
-                                    "sLast":     "Último",
-                                    "sNext":     "Siguiente",
-                                    "sPrevious": "Anterior"
-                            },
-                            "oAria": {
-                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                            }
+                    "bDestroy": true,
+                    "language": {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                         }
-                    });
+                    }
+                });
 
-                this.DataTable = true;    
-        }
-            
+                this.DataTable = true;
+            }
+
         } catch (error) {
 
-            var DescripcionError = 'Empleado.component.ts--->AplicarDataTable--->'+'  Error:  ' + error;
+            var DescripcionError = 'Empleado.component.ts--->AplicarDataTable--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
 
-        
+
 
     }
 
-    CargarDatos(Nombre, Telefono, Celular, Email, Cargo, Sucursal, Codigo, Estado){
-        
+    CargarDatos(Nombre, Telefono, Celular, Email, Cargo, Sucursal, Codigo, Estado) {
+
         this.model = new Empleado(Nombre, Telefono, Celular, Email, Cargo, this.OpcionesSeleccionadas(Sucursal), Codigo, Estado);
 
     }
 
 
-    OpcionesSeleccionadas(Datos){
+    OpcionesSeleccionadas(Datos) {
 
         var Salida = [];
 
-        for(let item of Datos){
+        for (let item of Datos) {
             Salida.push(item.CodigoSucursal);
         }
 
@@ -215,7 +221,7 @@ export class EmpleadoComponent implements OnInit  {
     }
 
 
-    ActualizarEmpleado(){
+    ActualizarEmpleado() {
 
         try {
             this._EmpleadoService.ActualizarEmpleado(this.model, this.DatosServidorModel.url).subscribe(
@@ -224,14 +230,14 @@ export class EmpleadoComponent implements OnInit  {
                 () => location.reload()
             );
         } catch (error) {
-            var DescripcionError = 'Empleado.component.ts--->ActualizarEmpleado--->'+'  Error:  ' + error;
+            var DescripcionError = 'Empleado.component.ts--->ActualizarEmpleado--->' + '  Error:  ' + error;
             console.log(DescripcionError);
         }
 
     }
 
 
-    
 
-        
+
+
 }
