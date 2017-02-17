@@ -38,6 +38,11 @@ export class ComboServicioService {
         return this._http.get(UrlApi+'ComboDetalle'+params).map(res => res.json());
     }
 
+    BuscarComboServicioMunicipio(UrlApi, CodigoMunicipio){
+        var params ="?Codigo=&Nombre=&CodigoSubcliente=&Estado=&CodigoSucursal=&CodigoMunicipio="+CodigoMunicipio+"";
+        return this._http.get(UrlApi+'ComboDetalle'+params).map(res => res.json());
+    }
+
 /*
     BuscarMunicipio(UrlServicio){
 

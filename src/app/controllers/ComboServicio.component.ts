@@ -128,7 +128,7 @@ export class ComboServicioComponent implements OnInit{
         try {
           this.Cargando=true;
         this._ComboServicioService.BuscarComboServicio(this.DatosServidorModel.url).subscribe(
-           data => /*this.DatosComboServicio=*/alert(JSON.stringify(data)),
+           data => this.DatosComboServicio = data,
            //data => /*this.DatosComboServicio=*/console.log(JSON.stringify(data)),
             
              error => alert(error),

@@ -94,8 +94,8 @@ export class SolicitudServicioComponent implements OnInit{
     BuscarComboServicio(){
 
         try {
-
-            this._ComboServicioService.BuscarComboServicio(this.DatosServidorModel.url).subscribe(
+            
+            this._ComboServicioService.BuscarComboServicioMunicipio(this.DatosServidorModel.url, this.SolicitudServicioObjeto.CodigoMunicipio).subscribe(
                 data => this.ObcionesComboServicio = this.ConstruirOpciones(data),
                 error => alert(error)
             );
@@ -156,7 +156,7 @@ export class SolicitudServicioComponent implements OnInit{
 
                 switch(typeFile){
                     case 'HojaVidaFile':
-                    alert();
+                    
                         this.FormDataSalida.has('HojaVidaFile') ? this.FormDataSalida.delete('HojaVidaFile') : '';
                         
                         this.FormDataSalida.append('HojaVidaFile', file, file.name);
