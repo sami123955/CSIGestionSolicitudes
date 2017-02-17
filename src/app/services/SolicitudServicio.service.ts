@@ -11,15 +11,16 @@ declare var alertify:any;
 declare var success:any;
 declare var error:any;
 
+
+
 @Injectable()
 export class SolicitudServicioService {
 
     SolicitudServicio$: Subject<any> = new Subject<any>();
 
-    constructor(private _http: Http) { 
+    constructor(private _http: Http) {  }
 
-
-    }
+    CargandoPeticion = false;
 
     GuardarSolicitudServicio(ObjetoSolicitudServicio: any, FormDataSalida: any, UrlServicio: string) {
 
@@ -78,6 +79,7 @@ export class SolicitudServicioService {
         }
         else{
             alertify.success(Respuesta.Mensaje);
+            this.CargandoPeticion = false;
         }
 
     }

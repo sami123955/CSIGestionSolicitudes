@@ -201,6 +201,7 @@ export class SolicitudServicioComponent implements OnInit{
 
             }
             else{
+                    this._SolicitudServicioService.CargandoPeticion = true;
                     this._SolicitudServicioService.GuardarSolicitudServicio(this.SolicitudServicioObjeto, this.FormDataSalida, this.DatosServidorModel.url);    
             }
             
@@ -211,5 +212,7 @@ export class SolicitudServicioComponent implements OnInit{
         }
 
     }
+
+    
 
 }
