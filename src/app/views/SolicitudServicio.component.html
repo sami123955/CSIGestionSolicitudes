@@ -47,7 +47,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Municipio</h4>
+        <h4 class="modal-title" id="myModalLabel">Solitud de servicio</h4>
       </div>
       <div class="modal-body">
         <form #SolicitudForm="ngForm">
@@ -108,14 +108,14 @@
 
                 <div class="col-md-6">
                     <label for="Municipio">Municipio</label>
-                    <select name="Municipio" id="Municipio" class="form-control" [(ngModel)]="SolicitudServicioObjeto.Municipio" required>
+                    <select name="Municipio" id="Municipio" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoMunicipio" required>
                         <option *ngFor="let item of DatosMunicipio.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                     </select>
                 </div>
 
                 <div class="col-md-6">
                     <label for="Sucursal">Sucursal</label>
-                    <select name="Sucursal" id="Sucursal" class="form-control" [(ngModel)]="SolicitudServicioObjeto.Sucursal" required>
+                    <select name="Sucursal" id="Sucursal" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoSucursal" required>
                         <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                     </select>
                 </div>

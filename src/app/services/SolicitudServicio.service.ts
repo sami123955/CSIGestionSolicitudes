@@ -23,16 +23,37 @@ export class SolicitudServicioService {
 
     GuardarSolicitudServicio(ObjetoSolicitudServicio: any, FormDataSalida: any, UrlServicio: string) {
 
+        FormDataSalida.has('Codigo') ?  FormDataSalida.delete('Codigo') : '';
         FormDataSalida.append('Codigo', '');
+        
+        FormDataSalida.has('Nombre') ?  FormDataSalida.delete('Nombre') : '';
         FormDataSalida.append('Nombre', ObjetoSolicitudServicio.Nombre);
+
+        FormDataSalida.has('Cedula') ?  FormDataSalida.delete('Cedula') : '';
         FormDataSalida.append('Cedula', ObjetoSolicitudServicio.Cedula);
+        
+        FormDataSalida.has('Direccion') ?  FormDataSalida.delete('Direccion') : '';
         FormDataSalida.append('Direccion', ObjetoSolicitudServicio.Direccion);
+        
+        FormDataSalida.has('Telefono') ?  FormDataSalida.delete('Telefono') : '';
         FormDataSalida.append('Telefono', ObjetoSolicitudServicio.Telefono);
+        
+        FormDataSalida.has('Celular') ?  FormDataSalida.delete('Celular') : '';
         FormDataSalida.append('Celular', ObjetoSolicitudServicio.Celular);
+        
+        FormDataSalida.has('Cargo') ?  FormDataSalida.delete('Cargo') : '';
         FormDataSalida.append('Cargo', ObjetoSolicitudServicio.Cargo);
+
+        FormDataSalida.has('CodigoMunicipio') ?  FormDataSalida.delete('CodigoMunicipio') : '';
         FormDataSalida.append('CodigoMunicipio', ObjetoSolicitudServicio.CodigoMunicipio);
+
+        FormDataSalida.has('CodigoUsuario') ?  FormDataSalida.delete('CodigoUsuario') : '';
         FormDataSalida.append('CodigoUsuario', '6'/*ObjetoSolicitudServicio.CodigoUsuario*/);
+
+        FormDataSalida.has('CodigoSucursal') ?  FormDataSalida.delete('CodigoSucursal') : '';
         FormDataSalida.append('CodigoSucursal', ObjetoSolicitudServicio.CodigoSucursal);
+
+        FormDataSalida.has('lstServicioDetalle') ?  FormDataSalida.delete('lstServicioDetalle') : '';
         FormDataSalida.append('lstServicioDetalle', ObjetoSolicitudServicio.lstServicioDetalle);
         
         var headers = new Headers();
@@ -42,11 +63,23 @@ export class SolicitudServicioService {
         this._http.post(UrlServicio + 'SolicitudServicio', FormDataSalida, options).map(res => {
                     let _res = res.json();
                     return _res;
-                }).subscribe(data => alertify.success('Registrado correctamente'),
+                }).subscribe(data => this.ValidarResultado(data),
                              error => alertify.error('No se ha podido registrar')/*{
                     this.SolicitudServicio$.next(data.Data);
                     
     }*/);
+    }
+
+
+    ValidarResultado(Respuesta){
+
+        if(Respuesta.TipoResultado == false){
+            alertify.error(Respuesta.Mensaje);
+        }
+        else{
+            alertify.success(Respuesta.Mensaje);
+        }
+
     }
 
 
