@@ -68,7 +68,7 @@ export class SolicitudServicioComponent implements OnInit{
 
     ngOnInit(){
         
-        this.BuscarComboServicio();
+        
         this.BuscarMunicipios();
         this.BuscarSucursales();
         this.FormDataSalida = new FormData;

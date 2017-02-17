@@ -21,30 +21,10 @@ export class ComboServicioService {
         Datos.append('lstCiudades', ObjetoComboServicio.Municipio);
         Datos.append('lstDetalle', ObjetoComboServicio.CodigoServicio);
 
-/*
-                            Codigo: '',
-                            CodigoSucursal: ObjetoComboServicio.CodigoSucursal,
-                            Nombre: ObjetoComboServicio.Nombre,
-                            CodigoSubcliente: ObjetoComboServicio.CodigoSubcliente,
-                            Estado: true,
-                            
-                            Costo: ObjetoComboServicio.Costo,
-                            lstCiudades: ObjetoComboServicio.Municipio,
-                            lstDetalle: ObjetoComboServicio.CodigoServicio
-                            
-                         };*/
-
-       // var params = '?Datos='+JSON.stringify(JsonSalida);
-
-      //  console.log(params);
 
         var headers = new Headers();
         
         var options = new RequestOptions({ headers: headers });
-
-        /*return this._http.post(UrlServicio + 'ComboServicios'+ params
-            , '', options)
-            .map(res => res.json());*/
 
         return this._http.post(UrlServicio + 'ComboDetalle'
             , Datos, options)
@@ -54,7 +34,7 @@ export class ComboServicioService {
 
     /*Metodo para buscar ComboServicios*/
     BuscarComboServicio(UrlApi){
-        var params ="?Codigo=&Nombre=&CodigoSubcliente=&Estado=&CodigoSucursal=";
+        var params ="?Codigo=&Nombre=&CodigoSubcliente=&Estado=&CodigoSucursal=&CodigoMunicipio=";
         return this._http.get(UrlApi+'ComboDetalle'+params).map(res => res.json());
     }
 

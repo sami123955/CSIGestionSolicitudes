@@ -17,7 +17,7 @@
                             <tr>
                                 <th>Municipio</th>
                                 <th>Departamento</th>
-                                <th>Editar</th>
+                                <th>Editar {{Globales.GlobalCargando}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,7 +108,7 @@
 
                 <div class="col-md-6">
                     <label for="Municipio">Municipio</label>
-                    <select name="Municipio" id="Municipio" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoMunicipio" required>
+                    <select name="Municipio" id="Municipio" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoMunicipio" (change)="BuscarComboServicio();" required>
                         <option *ngFor="let item of DatosMunicipio.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                     </select>
                 </div>
