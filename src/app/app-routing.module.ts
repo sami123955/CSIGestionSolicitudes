@@ -13,6 +13,7 @@ import { FormatoComponent } from './controllers/Formato.component';
 import { PersonaComponent } from './controllers/Persona.component';
 import { ComboServicioComponent } from './controllers/ComboServicio.component';
 import { MunicipioComponent } from './controllers/Municipio.component';
+import { SolicitudServicioComponent } from './controllers/SolicitudServicio.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -27,7 +28,10 @@ const routes: Routes = [
   { path: 'formato', component: FormatoComponent},
   { path: 'persona', component: PersonaComponent},
   { path: 'comboServicio', component: ComboServicioComponent},
-   { path: 'municipio', component: MunicipioComponent},
+  { path: 'municipio', component: MunicipioComponent},
+  { path: 'solicitudServicio', component: SolicitudServicioComponent},
+
+   
 ];
 
 @NgModule({
