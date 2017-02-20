@@ -18,7 +18,7 @@ export class TipoServicioService {
         Datos.append('Nombre', this.ValidarCadena(ObjetoTipoServicio.Nombre));
         Datos.append('Descripcion', this.ValidarCadena(ObjetoTipoServicio.Descripcion));
         Datos.append('Estado', true);
-        Datos.append('Costos', Costos);
+        Datos.append('Costos', JSON.stringify(Costos));
 
         var headers = new Headers();
         

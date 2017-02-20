@@ -36,9 +36,8 @@
                                     Inactivo
                                 </td>
                                 <td>
-                                    <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar" (click)="CargarCampos(item.Nombre, item.Descripcion, item.Codigo, item.Estado)">Editar</button>
+                                    <button class="btn btn-default" (click)="CargarCampos(item.Nombre, item.Descripcion, item.Codigo, item.Estado, item.lstTipoServicioCosto);ModalActualizar.show()">Editar</button>
                                 </td>
-                                <span *ngIf="last == true">{{AplicarDataTable()}}</span>
                             </tr>
                         </tbody>
                     </table>
@@ -89,7 +88,7 @@
 
 <!-- Modal Actualizar -->
 
-<div class="modal fade TipoServicioModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade TipoServicioModal" bsModal #ModalActualizar="bs-modal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -117,9 +116,13 @@
             </div>
             <div class="radio">
                 <label>
-                    <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="false">
+                    <input type="radio" name="Estado" [(ngModel)]="!model.Estado" [value]="false">
                     Inactivo
                 </label>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-default" (click)="TipoServicioModal.hide();CostosModal.show()" type="button">Administrar costos</button>
             </div>
 
         </form>
@@ -127,7 +130,6 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" (click)="ActualizarTipoEmpresa()" [disabled]="!TipoServicioForm.form.valid" *ngIf="!loading">Guardar</button>
-        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
       </div>
     </div>
   </div>
@@ -145,12 +147,12 @@
         <h4 class="modal-title" id="myModalLabel">Costos de tipo de servicio</h4>
       </div>
       <div class="modal-body">
-        <form #CostosForm="ngForm">
+        <form #CostoForm="ngForm">
 
             <div class="row">
                 <div class="col-md-6">
                     <label for="Empresa">Empresa</label>
-                    <select name="" id="Empresa" class="form-control" (change)="BuscarSucursal($event)" [(ngModel)]="ObjetosCostos.CodigoEmpresa" name="CodigoEmpresa" required>
+                    <select id="Empresa" class="form-control" (change)="BuscarSucursal($event)" [(ngModel)]="ObjetosCostos.CodigoEmpresa" name="CodigoEmpresa" required>
                         <option></option>
                         <option *ngFor="let item of DatosEmpresa.Data" [value]="item.Codigo+'|'+item.RazonSocial">{{item.RazonSocial}}</option>
                     </select>
@@ -171,40 +173,39 @@
                     <input type="number" class="form-control" [(ngModel)]="ObjetosCostos.Costo" name="Costo" required>
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-primary BtnCrear" [disabled]="!CostosForm.form.valid" (click)="AgregarCosto()">Agregar</button>
+                    <button class="btn btn-primary BtnCrear" type="button" [disabled]="!CostoForm.form.valid" (click)="AgregarCosto()">Agregar</button>
                 </div>
             </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <table *ngIf="ArrCostos?.length != 0" class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Sucursal</th>
-                                <th>Costo</th>
-                                <th>Municipios</th>
-                                <th>Acci&oacute;n</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of ArrCostos;let i = index">
-                                <td>{{item.CodigoSucursal}}</td>
-                                <td>{{item.Costo}}</td>
-                                <td>
-                                    <button type="button" class="btn btn-default" (click)="MunicipiosModal.show();NombresMunicipios = item.NombresMunicipios;" >Ver municipios</button>   
-                                </td>
-                                <td>
-                                    <button class="btn btn-default" (click)="EliminarCosto(i)">
-                                        Remover
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
         </form>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <table *ngIf="ArrCostos?.length != 0" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Sucursal</th>
+                            <th>Costo</th>
+                            <th>Municipios</th>
+                            <th>Acci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of ArrCostos;let i = index">
+                            <td>{{item.CodigoSucursal}}</td>
+                            <td>{{item.Costo}}</td>
+                            <td>
+                                <button type="button" class="btn btn-default" (click)="MunicipiosModal.show();NombresMunicipios = item.NombresMunicipios;" >Ver municipios</button>   
+                            </td>
+                            <td>
+                                <button class="btn btn-default" (click)="EliminarCosto(i)">
+                                    Remover
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-default" (click)="CostosModal.hide()">Cerrar</button>

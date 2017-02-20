@@ -7,32 +7,32 @@ import { SucursalService } from '../services/Sucursal.service';
 import { MunicipioService } from '../services/Municipio.service';
 import { Costos } from '../models/Costos';
 
-declare var $:any;
-declare var alertify:any;
-declare var success:any;
-declare var error:any;
+declare var $: any;
+declare var alertify: any;
+declare var success: any;
+declare var error: any;
 
 @Component({
-    selector:'TipoServico',
+    selector: 'TipoServico',
     templateUrl: '../views/TipoServicio.component.html',
     styleUrls: ['../../assets/css/Maestras.css'],
     providers: [TipoServicioService, EmpresaService, SucursalService, MunicipioService]
 })
 export class TipoServicioComponent implements OnInit {
 
-    constructor (
-                    private _TipoServicioService: TipoServicioService,
-                    private _EmpresaService: EmpresaService,
-                    private _SucursalService: SucursalService,
-                    private _MunicipioService: MunicipioService
+    constructor(
+        private _TipoServicioService: TipoServicioService,
+        private _EmpresaService: EmpresaService,
+        private _SucursalService: SucursalService,
+        private _MunicipioService: MunicipioService
 
-                ) {}
+    ) { }
 
     //Instanciamos clase
-    model = new TipoServicio('','', []);
+    model = new TipoServicio('', '', []);
 
     //Instanicamos el objeto que se encarga de almacenar los datos de los Costos
-    ObjetosCostos = new Costos('','',[],'');
+    ObjetosCostos = new Costos('', '', [], '');
 
 
     //Variable que se encargara de controlar cuando mostrar el preloader
@@ -67,7 +67,7 @@ export class TipoServicioComponent implements OnInit {
     //Variable que almacenara la configuracion para los select multipleas
     ConfiguracionSelect = {
         pullRight: true,
-        pullLeft:true,
+        pullLeft: true,
         enableSearch: true,
         checkedStyle: 'checkboxes',
         buttonClasses: 'btn btn-default col-md-12',
@@ -78,70 +78,68 @@ export class TipoServicioComponent implements OnInit {
         dynamicTitleMaxItems: 0,
     };
 
-    GuardarTipoServicio(){
+    GuardarTipoServicio() {
 
         try {
-            
-                if(this.ArrCostos.length == 0){
-                    alertify.error('Primero debe agregar los costos del servicio');
-                }
-                else {
-                    
-                    this.Cargando = true;
 
-                    this._TipoServicioService.GuardarTipoServicio(this.model, this.ArrCostos,this.DatosServidorModel.url)
+            if (this.ArrCostos.length == 0) {
+                alertify.error('Primero debe agregar los costos del servicio');
+            }
+            else {
+
+                this.Cargando = true;
+
+                this._TipoServicioService.GuardarTipoServicio(this.model, this.ArrCostos, this.DatosServidorModel.url)
                     .subscribe(
-                        data => alertify.success('Registrado Correctamente'),
-                        error => alert(error),
-                        () => location.reload()//this.BuscarTipoServicio()
+                    data => alertify.success('Registrado Correctamente'),
+                    error => alert(error),
+                    () => location.reload()//this.BuscarTipoServicio()
                     );
-                }
+            }
 
-                
+
 
         } catch (error) {
 
-            var DescripcionError = 'TipoServicio.component.ts--->GuardarTipoServicio--->'+'  Error:  ' + error;
+            var DescripcionError = 'TipoServicio.component.ts--->GuardarTipoServicio--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
 
     }
 
 
-    BuscarTipoServicio(){
+    BuscarTipoServicio() {
         try {
             this._TipoServicioService.BuscarTipoServicio(this.DatosServidorModel.url).subscribe(
-            data => this.DatosTipoServicio = data,
-            error => alertify.error('No funciona'),
-            () => this.LimpiarCampos()
+                data => this.DatosTipoServicio = data,
+                error => alertify.error('No funciona'),
+                () => this.LimpiarCampos()
             );
         } catch (error) {
-            
-            var DescripcionError = 'TipoServicio.component.ts--->BuscarTipoServicio--->'+'  Error:  ' + error;
+
+            var DescripcionError = 'TipoServicio.component.ts--->BuscarTipoServicio--->' + '  Error:  ' + error;
             console.log(DescripcionError);
 
         }
     }
 
 
-    ngOnInit(){
+    ngOnInit() {
         this.Cargando = true;
         this.BuscarTipoServicio();
         this.BuscarEmpresas();
         this.BuscarMunicipios();
     }
 
-    LimpiarCampos(){
-        this.model = new TipoServicio('','','','');
-
-        $('.TipoServicioModal').modal('hide');
+    LimpiarCampos() {
+        this.AplicarDataTable();
 
         this.Cargando = false;
     }
 
 
-    CargarCampos(Nombre, Descripcion, Codigo, Estado){
+    CargarCampos(Nombre, Descripcion, Codigo, Estado) {
         this.model = new TipoServicio(Nombre, Descripcion, Codigo, Estado);
     }
 
@@ -149,92 +147,91 @@ export class TipoServicioComponent implements OnInit {
 
 
         try {
-            
-                this.Cargando = true;
 
-                this._TipoServicioService.ActualizarTipoServicio(this.model, this.DatosServidorModel.url)
+            this.Cargando = true;
+
+            this._TipoServicioService.ActualizarTipoServicio(this.model, this.DatosServidorModel.url)
                 .subscribe(
-                    data => alertify.success('Actualizado Correctamente'),
-                    error => alert(error),
-                    () => location.reload()//this.BuscarTipoServicio()
+                data => alertify.success('Actualizado Correctamente'),
+                error => alert(error),
+                () => location.reload()//this.BuscarTipoServicio()
                 );
 
         } catch (error) {
 
-            var DescripcionError = 'TipoServicio.component.ts--->ActualizarTipoEmpresa--->'+'  Error:  ' + error;
+            var DescripcionError = 'TipoServicio.component.ts--->ActualizarTipoEmpresa--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
 
 
     }
 
 
-    AplicarDataTable(){
+    AplicarDataTable() {
 
         try {
 
-                if(this.DataTable == false) {
-            
-                    $('#TipoServicioTabla').dataTable({
 
-                            "bDestroy": true,
-                            "language": {
-                            "sProcessing":     "Procesando...",
-                            "sLengthMenu":     "Mostrar _MENU_ registros",
-                            "sZeroRecords":    "No se encontraron resultados",
-                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                            "sInfoPostFix":    "",
-                            "sSearch":         "Buscar:",
-                            "sUrl":            "",
-                            "sInfoThousands":  ",",
-                            "sLoadingRecords": "Cargando...",
-                            "oPaginate": {
-                                "sFirst":    "Primero",
-                                "sLast":     "Último",
-                                "sNext":     "Siguiente",
-                                "sPrevious": "Anterior"
-                            },
-                            "oAria": {
-                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                            }
+            setTimeout(function () {
+                $('#TipoServicioTabla').dataTable({
+
+                    "bDestroy": true,
+                    "language": {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                         }
-                    });
-
-                    this.DataTable = true;
-            }
+                    }
+                }); 
+            }, 20);
+     
         } catch (error) {
-            
-            var DescripcionError = 'TipoServicio.component.ts--->AplicarDataTable--->'+'  Error:  ' + error;
+
+            var DescripcionError = 'TipoServicio.component.ts--->AplicarDataTable--->' + '  Error:  ' + error;
             console.log(DescripcionError);
 
         }
 
 
-   }
+    }
 
-   BuscarEmpresas(){
+    BuscarEmpresas() {
 
-       try {
-           this._EmpresaService.searchCompany(this.DatosServidorModel.url).subscribe(
-               data => this.DatosEmpresa = data,
-               error => alert(error)
-           );
-       } catch (error) {
-           var DescripcionError = 'TipoServicio.component.ts--->BuscarEmpresas--->'+'  Error:  ' + error;
-           console.log(DescripcionError);
-       }
+        try {
+            this._EmpresaService.searchCompany(this.DatosServidorModel.url).subscribe(
+                data => this.DatosEmpresa = data,
+                error => alert(error)
+            );
+        } catch (error) {
+            var DescripcionError = 'TipoServicio.component.ts--->BuscarEmpresas--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+        }
 
     }
 
-    BuscarSucursal(event){
+    BuscarSucursal(event) {
 
         try {
-            
+
 
             var CodigoEmpresa = event.target.value.split('|');
 
@@ -242,38 +239,38 @@ export class TipoServicioComponent implements OnInit {
                 data => this.DatosSucursal = data,
                 error => alert(error)
             );
-            
+
         } catch (error) {
-           var DescripcionError = 'TipoServicio.component.ts--->BuscarSucursal--->'+'  Error:  ' + error;
-           console.log(DescripcionError);
+            var DescripcionError = 'TipoServicio.component.ts--->BuscarSucursal--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
         }
 
     }
 
-    BuscarMunicipios(){
+    BuscarMunicipios() {
         try {
 
             this._MunicipioService.BuscarMunicipio(this.DatosServidorModel.url).subscribe(
                 data => this.OpcionesMunicipios = this.ConstruirOpciones(data),
                 error => alert(error)
             );
-            
+
         } catch (error) {
 
-           var DescripcionError = 'TipoServicio.component.ts--->BuscarMunicipios--->'+'  Error:  ' + error;
-           console.log(DescripcionError);
-            
+            var DescripcionError = 'TipoServicio.component.ts--->BuscarMunicipios--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+
         }
     }
 
     //Metodo que usaremos para crear las opciones tal y como el select multiple las espera
-    ConstruirOpciones(Dato){
+    ConstruirOpciones(Dato) {
 
         var Opciones = [];
 
-        for(let item of Dato.Data){
+        for (let item of Dato.Data) {
 
-            Opciones.push({id: item.Codigo+'|'+item.Nombre, name: item.Nombre});
+            Opciones.push({ id: item.Codigo + '|' + item.Nombre, name: item.Nombre });
 
         }
 
@@ -281,18 +278,18 @@ export class TipoServicioComponent implements OnInit {
 
     }
 
-    ObtenerValoresOpciones(Datos, Posicion){
-        
+    ObtenerValoresOpciones(Datos, Posicion) {
+
         var Salida = [];
-        
-        for(let item of Datos){
+
+        for (let item of Datos) {
             Salida.push(item.split('|')[Posicion]);
         }
 
         return Salida;
     }
 
-    AgregarCosto(){
+    AgregarCosto() {
 
         try {
 
@@ -313,22 +310,22 @@ export class TipoServicioComponent implements OnInit {
 
             //Agregamos nueva posicion
             this.ArrCostos.push(JsonCosto);
-            
+
             console.log(JSON.stringify(this.ArrCostos));
 
-            this.ObjetosCostos = new Costos('','',[],'');
-            
+            this.ObjetosCostos = new Costos('', '', [], '');
+
         } catch (error) {
 
-           var DescripcionError = 'TipoServicio.component.ts--->BuscarMunicipios--->'+'  Error:  ' + error;
-           console.log(DescripcionError);
-            
+            var DescripcionError = 'TipoServicio.component.ts--->BuscarMunicipios--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+
         }
 
     }
 
 
-    EliminarCosto(Posicion){
+    EliminarCosto(Posicion) {
 
         this.ArrCostos.splice(Posicion);
 
