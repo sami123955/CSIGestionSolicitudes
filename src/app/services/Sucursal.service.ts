@@ -45,6 +45,14 @@ export class SucursalService {
 
     }
 
+    BuscarSucursalEmpresa(UrlServidor, CodigoEmpresa){
+
+        var params = '?Direccion=&Nombre=&Email=&Telefono=&Representante=&Estado=&CodigoEmpresa='+CodigoEmpresa+'&Codigo=';
+
+        return this._http.get(UrlServidor + 'Sucursal' + params).map(res => res.json());
+
+    }
+
     //Metodo para eliminar caracteres especiales
      ValidarCadena(Cadena){ 
 

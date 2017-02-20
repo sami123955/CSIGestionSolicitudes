@@ -13,6 +13,8 @@ import { AppComponent }  from './app.component';
 
 import { FormsModule } from '@angular/forms';
 
+import { ModalModule } from 'ng2-bootstrap';
+
 import { AppRoutingModule } from './app-routing.module';
 
 import { HomeComponent } from '../app/controllers/home.component';
@@ -36,7 +38,7 @@ import { SolicitudServicioComponent } from './controllers/SolicitudServicio.comp
                   HttpModule,
                   FormsModule,
                   MultiselectDropdownModule,
-                  
+                  ModalModule.forRoot()
                 ],
   declarations: [ 
                   AppComponent,

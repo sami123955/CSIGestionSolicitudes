@@ -12,7 +12,7 @@ export class EmpresaService {
 
         var frmData= empresaObject.Archivos;
         
-        var params = '?Codigo=&Nit='+this.ValidarCadena(empresaObject.Nit)+'&RazonSocial='+this.ValidarCadena(empresaObject.RazonSocial)+'&Direccion='+this.ValidarCadena(empresaObject.Direccion)+'&DireccionRecepcion='+this.ValidarCadena(empresaObject.DireccionRecepcion)+'&EmailEmpresa='+this.ValidarCadena(empresaObject.EmailEmpresa)+'&Telefono='+this.ValidarCadena(empresaObject.Telefono)+'&Representante='+this.ValidarCadena(empresaObject.Representante)+'&Observaciones='+this.ValidarCadena(empresaObject.Observaciones)+'&Estado='+true+'&Contacto='+empresaObject.Contacto+'&EmailContacto='+empresaObject.EmailContacto+'&RutaRut='+""+'&RutaCamaraComercio='+""+'&Contrato='+"";
+        var params = '?Codigo=&Nit='+empresaObject.Nit+'&RazonSocial='+this.ValidarCadena(empresaObject.RazonSocial)+'&Direccion='+this.ValidarCadena(empresaObject.Direccion)+'&DireccionRecepcion='+this.ValidarCadena(empresaObject.DireccionRecepcion)+'&EmailEmpresa='+this.ValidarCadena(empresaObject.EmailEmpresa)+'&Telefono='+empresaObject.Telefono+'&Representante='+this.ValidarCadena(empresaObject.Representante)+'&Observaciones='+this.ValidarCadena(empresaObject.Observaciones)+'&Estado='+true+'&Contacto='+empresaObject.Contacto+'&EmailContacto='+empresaObject.EmailContacto+'&RutaRut='+""+'&RutaCamaraComercio='+""+'&Contrato='+"";
 
         var headers = new Headers();
         
@@ -36,7 +36,7 @@ export class EmpresaService {
         var frmData= empresaObject.Archivos;
 
         
-        var params = '?Codigo='+empresaObject.Codigo+'&Nit='+this.ValidarCadena(empresaObject.Nit)+'&RazonSocial='+this.ValidarCadena(empresaObject.RazonSocial)+'&Direccion='+this.ValidarCadena(empresaObject.Direccion)+'&DireccionRecepcion='+this.ValidarCadena(empresaObject.DireccionRecepcion)+'&EmailEmpresa='+this.ValidarCadena(empresaObject.EmailEmpresa)+'&Telefono='+this.ValidarCadena(empresaObject.Telefono)+'&Representante='+this.ValidarCadena(empresaObject.Representante)+'&Observaciones='+this.ValidarCadena(empresaObject.Observaciones)+'&Estado='+empresaObject.Estado+'&Contacto='+empresaObject.Contacto+'&EmailContacto='+empresaObject.EmailContacto+'&RutaRut='+encodeURIComponent(empresaObject.RutaRut)+'&RutaCamaraComercio='+encodeURIComponent(empresaObject.RutaCamaraComercio)+'&Contrato='+encodeURIComponent(empresaObject.Contrato);
+        var params = '?Codigo='+empresaObject.Codigo+'&Nit='+empresaObject.Nit+'&RazonSocial='+this.ValidarCadena(empresaObject.RazonSocial)+'&Direccion='+this.ValidarCadena(empresaObject.Direccion)+'&DireccionRecepcion='+this.ValidarCadena(empresaObject.DireccionRecepcion)+'&EmailEmpresa='+this.ValidarCadena(empresaObject.EmailEmpresa)+'&Telefono='+empresaObject.Telefono+'&Representante='+this.ValidarCadena(empresaObject.Representante)+'&Observaciones='+this.ValidarCadena(empresaObject.Observaciones)+'&Estado='+empresaObject.Estado+'&Contacto='+empresaObject.Contacto+'&EmailContacto='+empresaObject.EmailContacto+'&RutaRut='+encodeURIComponent(empresaObject.RutaRut)+'&RutaCamaraComercio='+encodeURIComponent(empresaObject.RutaCamaraComercio)+'&Contrato='+encodeURIComponent(empresaObject.Contrato);
 
         var headers = new Headers();
 
@@ -74,7 +74,7 @@ export class EmpresaService {
         }
 
         
-    }
+}
 
 
 

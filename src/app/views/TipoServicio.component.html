@@ -3,7 +3,8 @@
 <div class="container">
     
     <div class="col-md-11">
-    <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#TipoServicioModal">Crear tipo de servicio</button>
+    <!--<button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#TipoServicioModal">Crear tipo de servicio</button>-->
+    <button class="btn btn-primary BtnCrear" (click)="TipoServicioModal.show()">Crear tipo de servicio</button>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
@@ -48,7 +49,8 @@
 </div>
 
 
-<div class="modal fade TipoServicioModal" id="TipoServicioModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+<div class="modal fade TipoServicioModal" bsModal  #TipoServicioModal="bs-modal" id="TipoServicioModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -68,16 +70,22 @@
                 <textarea class="form-control textarea" rows="3" placeholder="Descripci&oacute;n" id="notes" [(ngModel)]="model.Descripcion" name="Descripcion" required></textarea>
             </div>
 
+            <div class="form-group">
+                <button class="btn btn-default" (click)="TipoServicioModal.hide();CostosModal.show()" type="button">Administrar costos</button>
+            </div>
+
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal" (click)="lgModal.hide()">Cerrar</button>-->
+        <button type="button" class="btn btn-default" (click)="TipoServicioModal.hide()">Cerrar</button>
         <button type="button" class="btn btn-primary" (click)="GuardarTipoServicio();" [disabled]="!TipoServicioForm.form.valid" *ngIf="!loading">Guardar</button>
-        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
       </div>
     </div>
   </div>
 </div>  
+
+
 
 <!-- Modal Actualizar -->
 
@@ -124,6 +132,126 @@
     </div>
   </div>
 </div>  
+
+
+
+<!-- Administrar costos -->
+
+<div class="modal fade TipoServicioModal" bsModal #CostosModal="bs-modal" id="CostosModal" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" (onHide)="TipoServicioModal.show()">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="CostosModal.hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Costos de tipo de servicio</h4>
+      </div>
+      <div class="modal-body">
+        <form #CostosForm="ngForm">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="Empresa">Empresa</label>
+                    <select name="" id="Empresa" class="form-control" (change)="BuscarSucursal($event)" [(ngModel)]="ObjetosCostos.CodigoEmpresa" name="CodigoEmpresa" required>
+                        <option></option>
+                        <option *ngFor="let item of DatosEmpresa.Data" [value]="item.Codigo+'|'+item.RazonSocial">{{item.RazonSocial}}</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="Empresa">Sucursal</label>
+                    <select id="Empresa" class="form-control" [(ngModel)]="ObjetosCostos.CodigoSucursal" name="CodigoSucursal" required>
+                        <option></option>
+                        <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo+'|'+item.Nombre">{{item.Nombre}}</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="Empresa">Municipio</label>
+                    <ss-multiselect-dropdown [options]="OpcionesMunicipios" id="Municipios" [settings]="ConfiguracionSelect" [(ngModel)]="ObjetosCostos.Municipios" name="Municipios" required></ss-multiselect-dropdown>
+                </div>
+                <div class="col-md-6">
+                    <label for="Empresa">Costo</label>
+                    <input type="number" class="form-control" [(ngModel)]="ObjetosCostos.Costo" name="Costo" required>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary BtnCrear" [disabled]="!CostosForm.form.valid" (click)="AgregarCosto()">Agregar</button>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <table *ngIf="ArrCostos?.length != 0" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Sucursal</th>
+                                <th>Costo</th>
+                                <th>Municipios</th>
+                                <th>Acci&oacute;n</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of ArrCostos;let i = index">
+                                <td>{{item.CodigoSucursal}}</td>
+                                <td>{{item.Costo}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-default" (click)="MunicipiosModal.show();NombresMunicipios = item.NombresMunicipios;" >Ver municipios</button>   
+                                </td>
+                                <td>
+                                    <button class="btn btn-default" (click)="EliminarCosto(i)">
+                                        Remover
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="CostosModal.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+
+
+<div class="modal fade" bsModal #MunicipiosModal="bs-modal" id="MunicipiosModal" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" (onHide)="CostosModal.show()">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="MunicipiosModal.hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Municipios</h4>
+      </div>
+      <div class="modal-body">
+        <form #CostosForm="ngForm">
+
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <table *ngIf="ArrCostos?.length != 0" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre Municipio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of NombresMunicipios">
+                                <td>{{item}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="MunicipiosModal.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div> 
 
 
 <div id="ContentPreloader" *ngIf="Cargando">

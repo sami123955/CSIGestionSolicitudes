@@ -8,16 +8,24 @@ import 'rxjs/add/operator/map';
 export class TipoServicioService {
     constructor(private _http: Http) { }
 
-    GuardarTipoServicio(ObjetoTipoServicio: any, UrlServicio: string) {
+    GuardarTipoServicio(ObjetoTipoServicio: any, Costos: any, UrlServicio: string) {
         
-        var params = '?Codigo=&Nombre='+this.ValidarCadena(ObjetoTipoServicio.Nombre)+'&Descripcion='+this.ValidarCadena(ObjetoTipoServicio.Descripcion)+'&Estado='+true;
+        //var params = '?Codigo=&Nombre='+this.ValidarCadena(ObjetoTipoServicio.Nombre)+'&Descripcion='+this.ValidarCadena(ObjetoTipoServicio.Descripcion)+'&Estado='+true;
+        
+        var Datos = new FormData;
+
+        Datos.append('Codigo', '');
+        Datos.append('Nombre', this.ValidarCadena(ObjetoTipoServicio.Nombre));
+        Datos.append('Descripcion', this.ValidarCadena(ObjetoTipoServicio.Descripcion));
+        Datos.append('Estado', true);
+        Datos.append('Costos', Costos);
 
         var headers = new Headers();
         
         var options = new RequestOptions({ headers: headers });
 
-        return this._http.post(UrlServicio + 'TipoServicio'+ params
-            , '', options)
+        return this._http.post(UrlServicio + 'TipoServicio'
+            , Datos, options)
             .map(res => res.json());
 
     }
