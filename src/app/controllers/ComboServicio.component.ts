@@ -75,7 +75,7 @@ export class ComboServicioComponent implements OnInit{
     ngOnInit() {
       //  this.Cargando = true;
         this.BuscarSucursales();
-        this.BuscarServicios();
+        //this.BuscarServicios();
         this.BuscarSubClientes();
         this.BuscarMunicipios();
         this.BuscarComboServicio();
@@ -97,16 +97,20 @@ export class ComboServicioComponent implements OnInit{
         
     }
 
-    BuscarServicios(){
-        try {
-           this._TipoServicioService.BuscarTipoServicio(this.DatosServidorModel.url).subscribe(
-            data => this.OpcionesServicios = this.ConstruirOpciones(data),
-            error => alertify.error('No se ha podido realizar la peticion')
-        ); 
-        } catch (error) {
-            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
-            console.log(DescripcionError);
-        }
+    BuscarServicios(CodigoSucursal, Municipios = []){
+
+        alert(CodigoSucursal);
+        alert(Municipios);
+
+        /* try {
+            this._TipoServicioService.BuscarTipoServicio(this.DatosServidorModel.url).subscribe(
+                data => this.OpcionesServicios = this.ConstruirOpciones(data),
+                error => alertify.error('No se ha podido realizar la peticion')
+            ); 
+            } catch (error) {
+                var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
+                console.log(DescripcionError);
+        }*/
         
     }
 
@@ -243,6 +247,12 @@ export class ComboServicioComponent implements OnInit{
     CargarTipoServicio(DetalleServicio){
         this.DatosServicio = DetalleServicio;
         
+    }
+
+    prueba(){
+
+        alert('asdf');
+
     }
 
 

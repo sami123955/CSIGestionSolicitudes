@@ -139,8 +139,10 @@ export class TipoServicioComponent implements OnInit {
     }
 
 
-    CargarCampos(Nombre, Descripcion, Codigo, Estado) {
+    CargarCampos(Nombre, Descripcion, Codigo, Estado, lstTipoServicioCosto) {
         this.model = new TipoServicio(Nombre, Descripcion, Codigo, Estado);
+
+        this.ArrCostos = lstTipoServicioCosto;
     }
 
     ActualizarTipoEmpresa() {
@@ -148,14 +150,19 @@ export class TipoServicioComponent implements OnInit {
 
         try {
 
-            this.Cargando = true;
+            if (this.ArrCostos.length == 0) {
+                alertify.error('Primero debe ingresar los costos.');
+            }
+            else {
+                this.Cargando = true;
 
-            this._TipoServicioService.ActualizarTipoServicio(this.model, this.DatosServidorModel.url)
-                .subscribe(
-                data => alertify.success('Actualizado Correctamente'),
-                error => alert(error),
-                () => location.reload()//this.BuscarTipoServicio()
-                );
+                this._TipoServicioService.ActualizarTipoServicio(this.model, this.ArrCostos, this.DatosServidorModel.url)
+                    .subscribe(
+                    data => alertify.success('Actualizado Correctamente'),
+                    error => alert(error),
+                    () => location.reload()//this.BuscarTipoServicio()
+                    );
+            }
 
         } catch (error) {
 
@@ -201,9 +208,9 @@ export class TipoServicioComponent implements OnInit {
                             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                         }
                     }
-                }); 
+                });
             }, 20);
-     
+
         } catch (error) {
 
             var DescripcionError = 'TipoServicio.component.ts--->AplicarDataTable--->' + '  Error:  ' + error;

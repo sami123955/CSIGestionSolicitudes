@@ -59,7 +59,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="CodigoSucursal">Sucursal</label>
-                        <select class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal" id="CodigoSucursal">
+                        <select class="form-control" required [(ngModel)]="model.CodigoSucursal" name="CodigoSucursal" id="CodigoSucursal" #CodSucursal (change)="BuscarServicios(CodSucursal.value, MunicipiosArr)">
                             <option value="" selected>Seleccionar sucursal...</option>
                             <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                         </select>
@@ -74,9 +74,9 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group"><!-- BuscarServicios(CodSucursal, MunicipiosArr) -->
                         <label for="Municipio">Municipios</label>
-                        <ss-multiselect-dropdown [options]="OpcionesMunicipio" id="Municipio" [settings]="ConfiguracionSelect" [(ngModel)]="model.Municipio" name="Municipio" required></ss-multiselect-dropdown>
+                        <ss-multiselect-dropdown [options]="OpcionesMunicipio" id="Municipio" [settings]="ConfiguracionSelect" [(ngModel)]="model.Municipio" name="Municipio" #MunicipiosArr (change)="prueba();" required></ss-multiselect-dropdown>
                     </div>
                 </div>
                 <div class="col-md-6">
