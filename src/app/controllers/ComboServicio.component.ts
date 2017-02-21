@@ -9,10 +9,10 @@ import { ComboServicioService } from '../services/ComboServicio.service';
 
 //Importar libreria externas
 declare var jQuery: any;
-declare var $:any;
-declare var alertify:any;
-declare var success:any;
-declare var error:any;
+declare var $: any;
+declare var alertify: any;
+declare var success: any;
+declare var error: any;
 declare var DataTable: any;
 
 @Component({
@@ -21,19 +21,19 @@ declare var DataTable: any;
     styleUrls: ['../../assets/css/Maestras.css'],
     providers: [SucursalService, TipoServicioService, SubclienteService, MunicipioService, ComboServicioService]
 })
-export class ComboServicioComponent implements OnInit{
+export class ComboServicioComponent implements OnInit {
 
 
-    constructor (
-                    private _SucursalService:SucursalService, 
-                    private _TipoServicioService:TipoServicioService,
-                    private _SubClienteService:SubclienteService,
-                    private _MunicipioService:MunicipioService,
-                    private _ComboServicioService:ComboServicioService
-                ) {}
+    constructor(
+        private _SucursalService: SucursalService,
+        private _TipoServicioService: TipoServicioService,
+        private _SubClienteService: SubclienteService,
+        private _MunicipioService: MunicipioService,
+        private _ComboServicioService: ComboServicioService
+    ) { }
 
     //Instanciamos la clase de ComboServicio
-    model = new ComboServicio('','','',[],'',[]);
+    model = new ComboServicio('', '', '', [], '', []);
     //Instanciamos la calse DatosServidor para que esta nos pueda proveer la url del servicios
     DatosServidorModel = new DatosServidor();
 
@@ -50,12 +50,12 @@ export class ComboServicioComponent implements OnInit{
     DatosSubCliente = '';
 
     //Variable que almacenara la informacion para el select de ComboServicio
-    DatosComboServicio='';
+    DatosComboServicio = '';
 
     //Variable que almacenara la configuracion para los select multipleas
     ConfiguracionSelect = {
         pullRight: true,
-        pullLeft:true,
+        pullLeft: true,
         enableSearch: true,
         checkedStyle: 'checkboxes',
         buttonClasses: 'btn btn-default col-md-12',
@@ -73,7 +73,7 @@ export class ComboServicioComponent implements OnInit{
     DatosServicio = '';
 
     ngOnInit() {
-      //  this.Cargando = true;
+        //  this.Cargando = true;
         this.BuscarSucursales();
         //this.BuscarServicios();
         this.BuscarSubClientes();
@@ -85,97 +85,103 @@ export class ComboServicioComponent implements OnInit{
     BuscarSucursales() {
         try {
 
-           this._SucursalService.BuscarSucursal(this.DatosServidorModel.url).subscribe(
-            data => this.DatosSucursal = data,
-            error => alertify.error('No se ha podido realizar la peticion')
-        ); 
-
-        } catch (error) {
-            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
-            console.log(DescripcionError);
-        }
-        
-    }
-
-    BuscarServicios(CodigoSucursal, Municipios = []){
-
-        alert(CodigoSucursal);
-        alert(Municipios);
-
-        /* try {
-            this._TipoServicioService.BuscarTipoServicio(this.DatosServidorModel.url).subscribe(
-                data => this.OpcionesServicios = this.ConstruirOpciones(data),
+            this._SucursalService.BuscarSucursal(this.DatosServidorModel.url).subscribe(
+                data => this.DatosSucursal = data,
                 error => alertify.error('No se ha podido realizar la peticion')
-            ); 
-            } catch (error) {
-                var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
-                console.log(DescripcionError);
-        }*/
-        
-    }
+            );
 
-    BuscarSubClientes(){
-        try {
-           this._SubClienteService.BuscarSubcliente(this.DatosServidorModel.url).subscribe(
-            data => this.DatosSubCliente = data,
-            error => alertify.error('No se ha podido realizar la peticion')
-        ); 
         } catch (error) {
-
-            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->' + '  Error:  ' + error;
             console.log(DescripcionError);
         }
-        
+
     }
 
-    BuscarComboServicio(){
-        try {
-          this.Cargando=true;
-        this._ComboServicioService.BuscarComboServicio(this.DatosServidorModel.url).subscribe(
-           data => this.DatosComboServicio = data,
-           //data => /*this.DatosComboServicio=*/console.log(JSON.stringify(data)),
-            
-             error => alert(error),
-            () => this.Cargando = false
-            
-        );  
-        } catch (error) {
+    BuscarServicios() {
 
-            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
+        try {
+
+            if ((this.model.CodigoSucursal != '') && (this.model.Municipio.length != 0)) {
+
+
+                this._TipoServicioService.ConsultarTipoServicioParametro(this.model.CodigoSucursal, this.model.Municipio, this.DatosServidorModel.url).subscribe(
+                    data => this.OpcionesServicios = this.ConstruirOpciones(data),
+                    error => alertify.error('No se ha podido realizar la peticion')
+                );
+
+
+            }
+
+
+        } catch (error) {
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->' + '  Error:  ' + error;
             console.log(DescripcionError);
         }
-        
+
     }
 
-    BuscarMunicipios(){
+    BuscarSubClientes() {
+        try {
+            this._SubClienteService.BuscarSubcliente(this.DatosServidorModel.url).subscribe(
+                data => this.DatosSubCliente = data,
+                error => alertify.error('No se ha podido realizar la peticion')
+            );
+        } catch (error) {
+
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+        }
+
+    }
+
+    BuscarComboServicio() {
+        try {
+            this.Cargando = true;
+            this._ComboServicioService.BuscarComboServicio(this.DatosServidorModel.url).subscribe(
+                data => this.DatosComboServicio = data,
+                //data => /*this.DatosComboServicio=*/console.log(JSON.stringify(data)),
+
+                error => alert(error),
+                () => this.Cargando = false
+
+            );
+        } catch (error) {
+
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+        }
+
+    }
+
+    BuscarMunicipios() {
         try {
 
             this._MunicipioService.BuscarMunicipio(this.DatosServidorModel.url).subscribe(
                 data => this.OpcionesMunicipio = this.ConstruirOpciones(data),
                 error => alertify.error(error)
             );
-            
+
         } catch (error) {
 
-            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->'+'  Error:  ' + error;
+            var DescripcionError = 'ComboServicio.component.ts--->BuscarDepartamento--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
     }
 
-    CargarDatosForm(CodigoSucursal,Nombre,CodigoSubcliente,Municipio,Costo,CodigoServicio,Codigo,Estado){
-            this.model=new ComboServicio(CodigoSucursal,Nombre,CodigoSubcliente,Municipio,Costo,CodigoServicio,Codigo,Estado);
+    CargarDatosForm(CodigoSucursal, Nombre, CodigoSubcliente, Municipio, Costo, CodigoServicio, Codigo, Estado) {
+        this.model = new ComboServicio(CodigoSucursal, Nombre, CodigoSubcliente, Municipio, Costo, CodigoServicio, Codigo, Estado);
     }
-    
+
 
     //Metodo que usaremos para crear las opciones tal y como el select multiple las espera
-    ConstruirOpciones(Dato){
+    ConstruirOpciones(Dato) {
 
         var Opciones = [];
 
-        for(let item of Dato.Data){
+        for (let item of Dato.Data) {
 
-            Opciones.push({id: item.Codigo, name: item.Nombre});
+            Opciones.push({ id: item.Codigo, name: item.Nombre });
 
         }
 
@@ -186,75 +192,67 @@ export class ComboServicioComponent implements OnInit{
     GuardarComboServicio() {
 
         try {
-            this.Cargando=true;
+            this.Cargando = true;
             this._ComboServicioService.GuardarComboServicio(this.model, this.DatosServidorModel.url).subscribe(
-            data => alertify.success('Registrado correctamente'),
-           // data => alert(JSON.stringify(data)),
-            error => alert(error),
-            () => location.reload()
-        );
-            
+                data => alertify.success('Registrado correctamente'),
+                // data => alert(JSON.stringify(data)),
+                error => alert(error),
+                () => location.reload()
+            );
+
         } catch (error) {
 
-            var DescripcionError = 'ComboServicio.component.ts--->GuardarComboServicio--->'+'  Error:  ' + error;
+            var DescripcionError = 'ComboServicio.component.ts--->GuardarComboServicio--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-          
+
         }
 
     }
 
-    AplicarDataTable(){
+    AplicarDataTable() {
         try {
-            
-             if(this.DataTable==false){
-        
-                 $('#ComboServicioTabla').dataTable({
-                     "bDestroy": true,
-                            "language": {
-                            "sProcessing":     "Procesando...",
-                            "sLengthMenu":     "Mostrar _MENU_ registros",
-                            "sZeroRecords":    "No se encontraron resultados",
-                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                            "sInfoPostFix":    "",
-                            "sSearch":         "Buscar:",
-                            "sUrl":            "",
-                            "sInfoThousands":  ",",
-                            "sLoadingRecords": "Cargando...",
-                            "oPaginate": {
-                                "sFirst":    "Primero",
-                                "sLast":     "Último",
-                                "sNext":     "Siguiente",
-                                "sPrevious": "Anterior"
-                            },
-                            "oAria": {
-                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                            }
+
+            if (this.DataTable == false) {
+
+                $('#ComboServicioTabla').dataTable({
+                    "bDestroy": true,
+                    "language": {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                         }
-                 });
-                 this.DataTable=true;
-             }
+                    }
+                });
+                this.DataTable = true;
+            }
         } catch (error) {
-            
-            var DescripcionError = 'ComboServicio.component.ts--->AplicarDataTable--->'+'  Error:  ' + error;
+
+            var DescripcionError = 'ComboServicio.component.ts--->AplicarDataTable--->' + '  Error:  ' + error;
             console.log(DescripcionError);
         }
     }
 
-    CargarTipoServicio(DetalleServicio){
+    CargarTipoServicio(DetalleServicio) {
         this.DatosServicio = DetalleServicio;
-        
-    }
-
-    prueba(){
-
-        alert('asdf');
 
     }
-
-
 
 }

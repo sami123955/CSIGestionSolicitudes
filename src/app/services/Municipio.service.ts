@@ -36,6 +36,12 @@ export class MunicipioService {
         return this._http.get(UrlServicio + 'Municipio?' + params).map(res => res.json());
     }
 
+    BuscarMunicipioSucursal(CodigoSucursal, UrlServicio){
+        var params = "CodigoSucursal="+CodigoSucursal;
+
+        return this._http.get(UrlServicio + 'SucursalMunicipio?' + params).map(res => res.json());
+    }
+
     ActualizarTipoServicio(ObjetoMunicipio: any, UrlServicio: string){
         var params = '?Codigo='+ObjetoMunicipio.Codigo+'&Nombre='+this.ValidarCadena(ObjetoMunicipio.Nombre)+'&CodigoDepartamento='+ObjetoMunicipio.CodigoDepartamento;
 

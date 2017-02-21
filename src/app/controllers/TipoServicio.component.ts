@@ -129,7 +129,6 @@ export class TipoServicioComponent implements OnInit {
         this.Cargando = true;
         this.BuscarTipoServicio();
         this.BuscarEmpresas();
-        this.BuscarMunicipios();
     }
 
     LimpiarCampos() {
@@ -140,7 +139,7 @@ export class TipoServicioComponent implements OnInit {
 
 
     CargarCampos(Nombre, Descripcion, Codigo, Estado, lstTipoServicioCosto) {
-        this.model = new TipoServicio(Nombre, Descripcion, Codigo, Estado);
+        this.model = new TipoServicio(Nombre, Descripcion, [], Codigo, Estado);
 
         this.ArrCostos = lstTipoServicioCosto;
     }
@@ -254,13 +253,40 @@ export class TipoServicioComponent implements OnInit {
 
     }
 
-    BuscarMunicipios() {
+    BuscarMunicipios(CodigoSucursal) {
         try {
 
-            this._MunicipioService.BuscarMunicipio(this.DatosServidorModel.url).subscribe(
+
+            //Consultamos los municipios disponibles
+            this._MunicipioService.BuscarMunicipioSucursal(CodigoSucursal.target.value.split('|')[0], this.DatosServidorModel.url).subscribe(
                 data => this.OpcionesMunicipios = this.ConstruirOpciones(data),
                 error => alert(error)
             );
+
+            //En caso tal de que haya costos previamente asignados vamos a eliminar manualmente los municipios ya asignados a una sucursal
+            if (this.ArrCostos.length == 0) {
+
+                //Iteramos dicho array para verificar la sucursal
+                for (let i of this.ArrCostos) {
+                    //Verificamos si el codigo sucursal que se ha elegido sea el mismo de la iteracion
+                    if (i.CodigoSucursal == CodigoSucursal.target.value.split('|')[0]) {
+                        
+                        //iteramos la variable ArrCostos para verificar si el actual codigo de sucursal tiene costos asignados
+                        for (let j of this.ArrCostos) {
+
+                            
+
+                        }
+                        //Iteramos las opciones con las que actualmente cuenta el select de municipios
+                        for(let j of this.OpcionesMunicipios){
+
+
+
+                        }
+                    }
+                }
+
+            }
 
         } catch (error) {
 

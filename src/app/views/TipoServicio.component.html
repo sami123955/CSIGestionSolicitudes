@@ -159,7 +159,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="Empresa">Sucursal</label>
-                    <select id="Empresa" class="form-control" [(ngModel)]="ObjetosCostos.CodigoSucursal" name="CodigoSucursal" required>
+                    <select id="Empresa" class="form-control" [(ngModel)]="ObjetosCostos.CodigoSucursal" (change)="BuscarMunicipios($event)" name="CodigoSucursal" required>
                         <option></option>
                         <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo+'|'+item.Nombre">{{item.Nombre}}</option>
                     </select>
@@ -237,7 +237,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="Empresa">Sucursal</label>
-                    <select id="Empresa" class="form-control" [(ngModel)]="ObjetosCostos.CodigoSucursal" name="CodigoSucursal" required>
+                    <select id="Empresa" class="form-control" [(ngModel)]="ObjetosCostos.CodigoSucursal" name="CodigoSucursal" (change)="BuscarMunicipios($event)" required>
                         <option></option>
                         <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo+'|'+item.Nombre">{{item.Nombre}}</option>
                     </select>

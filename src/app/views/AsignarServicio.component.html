@@ -1,0 +1,171 @@
+<h4 class="Titulo">Asignaci&oacute;n de solicitudes de servicios</h4>
+
+
+<div class="container">
+    <br>
+    <br>
+    <div class="col-md-11">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Solicitudes de servicio</h4>
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                    <div id="ConedorTablas">
+                        <table datatable class="table table-hover" id="FormatoTabla">
+                            <thead>
+                                <tr>
+                                    <th>Sucursal</th>
+                                    <th>Candidato</th>
+                                    <th>Fecha solicitud</th>
+                                    <th>Estado</th>
+                                    <th>Detalle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-default" (click)="CombosModal.show()">Detalle</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#FormatoModal">Guardar Asignaci&oacute;n</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" bsModal #CombosModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="CombosModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Combos de solicitud</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Descripci&oacute;n</th>
+                            <th>Subservicios</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>asf</td>
+                            <td>
+                                <button class="btn btn-default" (click)="CombosModal.hide();SubServiciosModal.show()">Ver</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="CombosModal.hide()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sub servicios -->
+<div class="modal fade" bsModal #SubServiciosModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}" aria-labelledby="myModalLabel" (onHide)="CombosModal.show()">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="SubServiciosModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Subservicios</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Descripci&oacute;n</th>
+                            <th>Estado</th>
+                            <th>Acci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>as</td>
+                            <td>as</td>
+                            <td>
+                                <button class="btn btn-default" (click)="SubServiciosModal.hide();AnalistasModal.show()">Asignar subservicio</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="SubServiciosModal.hide()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Analistas -->
+<div class="modal fade" bsModal #AnalistasModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}" (onHide)="SubServiciosModal.show()" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="AnalistasModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ocupaci&oacute;n Analistas</h4>
+            </div>
+            <div class="modal-body">
+
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="">Formato</label>
+                            <select name="" id="" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <br>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Descripci&oacute;n</th>
+                            <th>Estado</th>
+                            <th>Acci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>as</td>
+                            <td>as</td>
+                            <td>
+                                <button class="btn btn-default">Asignar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="AnalistasModal.hide()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="ContentPreloader" *ngIf="Cargando">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <h5 class="loadingText">Cargando...</h5>
+    </div>
+</div>

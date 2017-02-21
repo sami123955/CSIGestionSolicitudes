@@ -59,9 +59,14 @@ export class TipoServicioService {
 
     ConsultarTipoServicioParametro(CodigoSucursal: string, Municipios: any, UrlServicio: string){
 
-        var params = "Codigo=&Nombre=&Descripcion=&Estado=&CodigoSucursal="+CodigoSucursal+"&Municipios="+Municipios;
+        var params = "CodigoTipoServicio=&CodigoSucursal="+CodigoSucursal+"&CodigoMunicipios="+Municipios;
 
-        return this._http.get(UrlServicio + 'TipoServicio?' + params).map(res => res.json());
+        var headers = new Headers();
+        
+        var options = new RequestOptions({ headers: headers });
+        
+        return this._http.get(UrlServicio + 'TipoServicioSucursalMunicipio?' + params, options).map(res => res.json());
+
     }
 
 
