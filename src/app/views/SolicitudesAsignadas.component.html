@@ -1,0 +1,122 @@
+<h4 class="Titulo">Solicitudes Asignadas</h4>
+
+<div class="container">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+
+                <form #FormularioBusqueda="ngForm">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="">Estado de la solicitud</label>
+                            <select name="" id="" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="">Fecha Inicial</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="">Fecha Final</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                </form>
+                
+                <br>
+                <br>
+                
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Registros</h4>
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                    <table class="table table-hover" id="TipoServicioTabla">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Municipio</th>
+                                <th>Tipo servicio</th>
+                                <th>Estado</th>
+                                <th>Fecha Asignaci&oacute;n</th>
+                                <th>Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--
+                            <tr *ngIf="DatosTipoServicio.Data?.length == 0">
+                                <td colspan="4">No se encontraron registros.</td>
+                            </tr>
+                            <tr *ngFor="let item of DatosTipoServicio.Data; let last = last;">
+                                <td>{{item.Nombre}}</td>
+                                <td>{{item.Descripcion}}</td>
+                                <td *ngIf="item.Estado">
+                                    Activo
+                                </td>
+                                <td *ngIf="!item.Estado">
+                                    Inactivo
+                                </td>
+                                <td>
+                                    <button class="btn btn-default" (click)="CargarCampos(item.Nombre, item.Descripcion, item.Codigo, item.Estado, item.lstTipoServicioCosto);ModalActualizar.show()">Editar</button>
+                                </td>
+                            </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade TipoServicioModal" bsModal #TipoServicioModal="bs-modal" id="TipoServicioModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Servicio</h4>
+            </div>
+            <div class="modal-body">
+                <form #TipoServicioForm="ngForm">
+                    <!--
+            <div class="form-group">
+                <label for="Nombre">Nombre</label>
+                <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Descripci&oacute;n</label>
+                <textarea class="form-control textarea" rows="3" placeholder="Descripci&oacute;n" id="notes" [(ngModel)]="model.Descripcion" name="Descripcion" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-default" (click)="TipoServicioModal.hide();CostosModal.show()" type="button">Administrar costos</button>
+            </div>
+-->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal" (click)="lgModal.hide()">Cerrar</button>-->
+                <button type="button" class="btn btn-default" (click)="TipoServicioModal.hide()">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="GuardarTipoServicio();" [disabled]="!TipoServicioForm.form.valid"
+                    *ngIf="!loading">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="ContentPreloader" *ngIf="Cargando">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <h5 class="loadingText">Cargando...</h5>
+    </div>
+</div>

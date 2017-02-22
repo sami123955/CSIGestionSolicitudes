@@ -15,6 +15,9 @@ import { ComboServicioComponent } from './controllers/ComboServicio.component';
 import { MunicipioComponent } from './controllers/Municipio.component';
 import { SolicitudServicioComponent } from './controllers/SolicitudServicio.component';
 import { AsignarServicioComponent } from './controllers/AsignarServicio.component';
+import { SolicitudesAsignadasComponent } from './controllers/SolicitudesAsignadas.component';
+import { SolicitudesAsignadasCalidadComponent } from './controllers/SolicitudesAsignadasCalidad.component';
+
 
 
 const routes: Routes = [
@@ -32,7 +35,9 @@ const routes: Routes = [
   { path: 'comboServicio', component: ComboServicioComponent},
   { path: 'municipio', component: MunicipioComponent},
   { path: 'solicitudServicio', component: SolicitudServicioComponent},
-  { path: 'asignacionSolicitud', component: AsignarServicioComponent}
+  { path: 'asignacionSolicitud', component: AsignarServicioComponent},
+  { path: 'solicitudesAsignadas', component: SolicitudesAsignadasComponent},
+  { path: 'solicitudesAsignadasCalidad', component: SolicitudesAsignadasCalidadComponent},
 ];
 
 @NgModule({

@@ -78,7 +78,8 @@
 </div>
 
 <!-- Sub servicios -->
-<div class="modal fade" bsModal #SubServiciosModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}" aria-labelledby="myModalLabel" (onHide)="CombosModal.show()">
+<div class="modal fade" bsModal #SubServiciosModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}"
+    aria-labelledby="myModalLabel" (onHide)="CombosModal.show()">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -92,6 +93,7 @@
                             <th>Descripci&oacute;n</th>
                             <th>Estado</th>
                             <th>Acci&oacute;n</th>
+                            <th>Novedad</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,6 +102,9 @@
                             <td>as</td>
                             <td>
                                 <button class="btn btn-default" (click)="SubServiciosModal.hide();AnalistasModal.show()">Asignar subservicio</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-default" (click)="SubServiciosModal.hide();NovedadModal.show()">Novedades</button>
                             </td>
                         </tr>
                     </tbody>
@@ -114,7 +119,8 @@
 
 
 <!-- Analistas -->
-<div class="modal fade" bsModal #AnalistasModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}" (onHide)="SubServiciosModal.show()" aria-labelledby="myModalLabel">
+<div class="modal fade" bsModal #AnalistasModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}" (onHide)="SubServiciosModal.show()"
+    aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -138,8 +144,8 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Descripci&oacute;n</th>
-                            <th>Estado</th>
+                            <th>Nombre</th>
+                            <th>Asignaciones</th>
                             <th>Acci&oacute;n</th>
                         </tr>
                     </thead>
@@ -156,6 +162,63 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" (click)="AnalistasModal.hide()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Novedades -->
+<div class="modal fade" bsModal #NovedadModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}" (onHide)="SubServiciosModal.show()"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="NovedadModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Novedades </h4>
+            </div>
+            <div class="modal-body">
+
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="">Causante novedad</label>
+                            <select name="" id="" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Tiempo perdido</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Observaci&oacute;n</label>
+                            <textarea class="textarea form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <br>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Causante novedad</th>
+                            <th>Tiempo perdido</th>
+                            <th>Observaci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>as</td>
+                            <td>as</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="NovedadModal.hide()">Cerrar</button>
             </div>
         </div>
     </div>
