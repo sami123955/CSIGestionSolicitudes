@@ -52,6 +52,9 @@ export class SolicitudServicioComponent implements OnInit{
     //Variable de salida que alamcenara todos los datos
     FormDataSalida:any;
 
+
+    DatosSolicitudServicio = '';
+
         //Variable que almacenara la configuracion para los select multipleas
     ConfiguracionSelect = {
         pullRight: true,
@@ -74,6 +77,7 @@ export class SolicitudServicioComponent implements OnInit{
         this.BuscarMunicipios();
         this.BuscarSucursales();
         this.FormDataSalida = new FormData;
+        this.BuscarSolicitudesServicio();
 
     }
 
@@ -216,9 +220,19 @@ export class SolicitudServicioComponent implements OnInit{
     }
 
 
-    LlenarTabla(){
+    //Buscar solicitud servicio
+    BuscarSolicitudesServicio(){
 
-        var hola = [{},{}]
+        try {
+
+            this._SolicitudServicioService.BuscarSolitudServicio(this.DatosServidorModel.url).subscribe(
+                data => alert(JSON.stringify(data)),
+                error => alert(error)
+            );
+            
+        } catch (error) {
+            
+        }
 
 
     }

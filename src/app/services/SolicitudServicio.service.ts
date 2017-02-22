@@ -87,9 +87,9 @@ export class SolicitudServicioService {
 
     BuscarSolitudServicio(UrlServicio) {
 
-        var Parametros = '?Codigo=&Nombre=&Cedula=&CodigoUsuario=&FuchaInicio=&FechaFin=&CodigoEstado=&CodigoSucursal=';
+        var Parametros = '?Codigo=&Nombre=&Cedula=&CodigoUsuario=6&FuchaInicio=&FechaFin=&CodigoEstado=&CodigoSucursal=';
 
-        this._http.get('SolicitudServicio').map(res => res.json());
+        return this._http.get('SolicitudServicio' + Parametros).map(res => res.json());
 
     }
 

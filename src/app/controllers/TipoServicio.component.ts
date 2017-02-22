@@ -258,21 +258,34 @@ export class TipoServicioComponent implements OnInit {
 
 
             //Consultamos los municipios disponibles
-            this._MunicipioService.BuscarMunicipioSucursal(CodigoSucursal.target.value.split('|')[0], this.DatosServidorModel.url).subscribe(
+            this._MunicipioService.BuscarMunicipioSucursal(this.ObjetosCostos.CodigoSucursal.split('|')[0], this.DatosServidorModel.url).subscribe(
                 data => this.OpcionesMunicipios = this.ConstruirOpciones(data),
-                error => alert(error)
+                error => alert(error),
+                () => this.ValidarOpcionesRepetidas(CodigoSucursal)
             );
 
-            //En caso tal de que haya costos previamente asignados vamos a eliminar manualmente los municipios ya asignados a una sucursal
+            
+
+        } catch (error) {
+
+            var DescripcionError = 'TipoServicio.component.ts--->BuscarMunicipios--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+
+        }
+    }
+
+    ValidarOpcionesRepetidas(CodigoSucursal){
+
+        //En caso tal de que haya costos previamente asignados vamos a eliminar manualmente los municipios ya asignados a una sucursal
             if (this.ArrCostos.length != 0) {
 
-                 var prueba = [];
+                 var Salida = [];
 
                 //Iteramos dicho array para verificar la sucursal
                 for (let i of this.ArrCostos) {
 
                     //Verificamos si el codigo sucursal que se ha elegido sea el mismo de la iteracion
-                    if (i.CodigoSucursal.split('|')[0] == CodigoSucursal.target.value.split('|')[0]) {
+                    if (i.CodigoSucursal.split('|')[0] == CodigoSucursal/*.target.value*/.split('|')[0]) {
                         
                         
 
@@ -285,10 +298,18 @@ export class TipoServicioComponent implements OnInit {
                             for(let k of i.CodigosMunicipios){
                                 if(j.id.split('|')[0] == k){
 
-                                    
+                                    var DatosActuales = this.OpcionesMunicipios;
 
-                                    prueba = this.OpcionesMunicipios.splice(ContadorMunicipios,1);
-                                    
+                                    delete DatosActuales[ContadorMunicipios];
+
+                                    this.OpcionesMunicipios = [];
+
+                                    for(let l of DatosActuales){
+                                        if((l != undefined) && (l != '') && (l != null)){
+
+                                            this.OpcionesMunicipios.push(l);
+                                        }
+                                    }
                                     
                                 }
                             }
@@ -298,19 +319,8 @@ export class TipoServicioComponent implements OnInit {
                         }
                     }
                 }
-
-                this.OpcionesMunicipios = prueba;
-                alert(JSON.stringify(this.OpcionesMunicipios));
             }
 
-            
-
-        } catch (error) {
-
-            var DescripcionError = 'TipoServicio.component.ts--->BuscarMunicipios--->' + '  Error:  ' + error;
-            console.log(DescripcionError);
-
-        }
     }
 
     //Metodo que usaremos para crear las opciones tal y como el select multiple las espera
@@ -375,9 +385,10 @@ export class TipoServicioComponent implements OnInit {
     }
 
 
-    EliminarCosto(Posicion) {
-
+    EliminarCosto(Posicion, CodigoSucursal) {
+        
         this.ArrCostos.splice(Posicion,1);
+        this.BuscarMunicipios(this.ObjetosCostos.CodigoSucursal);
 
     }
 
