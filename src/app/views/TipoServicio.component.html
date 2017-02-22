@@ -225,7 +225,7 @@
         <h4 class="modal-title" id="myModalLabel">Costos de tipo de servicio</h4>
       </div>
       <div class="modal-body">
-        <form #CostoForm="ngForm">
+        <form #CostoRegistrarForm="ngForm">
 
             <div class="row">
                 <div class="col-md-6">
@@ -251,7 +251,7 @@
                     <input type="number" class="form-control" [(ngModel)]="ObjetosCostos.Costo" name="Costo" required>
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-primary BtnCrear" type="button" [disabled]="!CostoForm.form.valid" (click)="AgregarCosto()">Agregar</button>
+                    <button class="btn btn-primary BtnCrear" type="button" [disabled]="!CostoRegistrarForm.form.valid" (click)="AgregarCosto()">Agregar</button>
                 </div>
             </div>
         </form>

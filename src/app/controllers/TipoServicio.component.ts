@@ -264,29 +264,46 @@ export class TipoServicioComponent implements OnInit {
             );
 
             //En caso tal de que haya costos previamente asignados vamos a eliminar manualmente los municipios ya asignados a una sucursal
-            if (this.ArrCostos.length == 0) {
+            if (this.ArrCostos.length != 0) {
+
+                 var prueba = [];
 
                 //Iteramos dicho array para verificar la sucursal
                 for (let i of this.ArrCostos) {
+
                     //Verificamos si el codigo sucursal que se ha elegido sea el mismo de la iteracion
-                    if (i.CodigoSucursal == CodigoSucursal.target.value.split('|')[0]) {
+                    if (i.CodigoSucursal.split('|')[0] == CodigoSucursal.target.value.split('|')[0]) {
                         
-                        //iteramos la variable ArrCostos para verificar si el actual codigo de sucursal tiene costos asignados
-                        for (let j of this.ArrCostos) {
+                        
 
-                            
+                        var ContadorMunicipios = 0;
 
-                        }
                         //Iteramos las opciones con las que actualmente cuenta el select de municipios
                         for(let j of this.OpcionesMunicipios){
 
+                            //Iteramos municipios de la sucursal
+                            for(let k of i.CodigosMunicipios){
+                                if(j.id.split('|')[0] == k){
 
+                                    
+
+                                    prueba = this.OpcionesMunicipios.splice(ContadorMunicipios,1);
+                                    
+                                    
+                                }
+                            }
+
+                            ContadorMunicipios = ContadorMunicipios + 1;
 
                         }
                     }
                 }
 
+                this.OpcionesMunicipios = prueba;
+                alert(JSON.stringify(this.OpcionesMunicipios));
             }
+
+            
 
         } catch (error) {
 
@@ -333,7 +350,7 @@ export class TipoServicioComponent implements OnInit {
             //CodigoSucursal
             JsonCosto['CodigoSucursal'] = this.ObjetosCostos.CodigoSucursal.split('|')[0];
             //CodigoEmpresa
-            JsonCosto['NombreSucursal'] = this.ObjetosCostos.CodigoEmpresa.split('|')[1];
+            JsonCosto['NombreSucursal'] = this.ObjetosCostos.CodigoSucursal.split('|')[1];
             //Municipios
             JsonCosto['CodigosMunicipios'] = this.ObtenerValoresOpciones(this.ObjetosCostos.Municipios, 0);
             //Nombres Municipios
@@ -360,7 +377,7 @@ export class TipoServicioComponent implements OnInit {
 
     EliminarCosto(Posicion) {
 
-        this.ArrCostos.splice(Posicion);
+        this.ArrCostos.splice(Posicion,1);
 
     }
 
