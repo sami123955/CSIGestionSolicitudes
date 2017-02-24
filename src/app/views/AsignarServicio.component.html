@@ -34,7 +34,8 @@
                                     <td>{{CambiarFormatoFecha(item.FechaSolicitud)}}</td>
                                     <td>{{item.EstadoServicio}}</td>
                                     <td>
-                                        <button class="btn btn-default" (click)="CombosModal.show()">Detalle</button>
+                                        <button *ngIf="item.EstadoServicio != 'Abierto'" class="btn btn-default" disabled>Detalle</button>
+                                        <button *ngIf="item.EstadoServicio == 'Abierto'" class="btn btn-default" (click)="CargarCombosServicios(item.lstComboServicio);CombosModal.show()">Detalle</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -60,14 +61,16 @@
                     <thead>
                         <tr>
                             <th>Descripci&oacute;n</th>
+                            <th>Costo</th>
                             <th>Subservicios</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>asf</td>
+                        <tr *ngFor="let item of DatosComboServicios">
+                            <td>{{item.Nombre}}</td>
+                            <td>{{item.Costo}}</td>
                             <td>
-                                <button class="btn btn-default" (click)="CombosModal.hide();SubServiciosModal.show()">Ver</button>
+                                <button class="btn btn-default" (click)="CargarDetalleCombo(item.lstSolicitudDetalle);CombosModal.hide();SubServiciosModal.show()">Ver</button>
                             </td>
                         </tr>
                     </tbody>
@@ -94,17 +97,29 @@
                     <thead>
                         <tr>
                             <th>Descripci&oacute;n</th>
+                            <th>Costo</th>
                             <th>Estado</th>
-                            <th>Acci&oacute;n</th>
+                            <th>Asignar</th>
                             <th>Novedad</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>as</td>
-                            <td>as</td>
+                        <tr *ngFor="let item of DatosDetalleCombos">
+                            <td>{{item.Nombre}}</td>
+                            <td>{{item.Costo}}</td>
+
                             <td>
-                                <button class="btn btn-default" (click)="SubServiciosModal.hide();AnalistasModal.show()">Asignar subservicio</button>
+                                <span *ngIf="item.CodigoEstadoUnico == 1">Abierto</span>
+                                <span *ngIf="item.CodigoEstadoUnico == 2">Asignado</span>
+                                <span *ngIf="item.CodigoEstadoUnico == 3">Cancelado</span>
+                                <span *ngIf="item.CodigoEstadoUnico == 4">En Analista</span>
+                            </td>
+                            
+                            
+
+                            <td>
+                                <button class="btn btn-default" *ngIf="item.CodigoEstadoUnico != 1" disabled>Asignar</button>
+                                <button class="btn btn-default" *ngIf="item.CodigoEstadoUnico == 1" (click)="SubServiciosModal.hide();AnalistasModal.show()">Asignar</button>
                             </td>
                             <td>
                                 <button class="btn btn-default" (click)="SubServiciosModal.hide();NovedadModal.show()">Novedades</button>

@@ -21,6 +21,11 @@ export class AsignarServicioComponent implements OnInit {
     //Variable que almacenara los datos de la
     DatosSolicitudesServicio = '';
 
+    //Variable que almacenara los datos de combos servicios
+    DatosComboServicios = '';
+
+    //Variable que almacenara los datos de detalle
+    DatosDetalleCombos = '';
 
     ObjetoAsignarServicio = new AsignarServicio('6');
 
@@ -45,7 +50,7 @@ export class AsignarServicioComponent implements OnInit {
 
         try {
             this._SolicitudServicioService.BuscarSolitudServicio(this.DatosServidorModel.url, '6').subscribe(
-                data => /*this.DatosSolicitudesServicio = */console.log(JSON.stringify(data)),
+                data => this.DatosSolicitudesServicio = data,
                 error => alert(error),
                 () => this.Cargando = false
             );
@@ -65,6 +70,16 @@ export class AsignarServicioComponent implements OnInit {
         var FechaNueva = new Date(FechaActual).toLocaleDateString();
 
         return FechaNueva;
+    }
+
+    CargarCombosServicios(ListaCombos){
+
+        this.DatosComboServicios = ListaCombos;
+        
+    }
+
+    CargarDetalleCombo(ListaSolicitudDetalle){
+        this.DatosDetalleCombos = ListaSolicitudDetalle;
     }
 
 
