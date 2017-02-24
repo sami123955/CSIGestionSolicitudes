@@ -10,7 +10,7 @@ import { SolicitudServicioService } from '../services/SolicitudServicio.service'
 declare var alertify: any;
 declare var success: any;
 declare var error: any;
-declare var $:any;
+declare var $: any;
 
 @Component({
     selector: 'SolicitudServicio',
@@ -266,6 +266,8 @@ export class SolicitudServicioComponent implements OnInit {
 
         try {
 
+            this.Cargando = true;
+
             this._SolicitudServicioService.ActualizarSolicitudServicio(this.DatosServidorModel.url, this.SolicitudServicioObjeto, this.FormDataSalida).subscribe(
                 data => alertify.success('Actualizado correctamente'),
                 error => alertify.error('Ocurrio un error al momento de actualziar'),
@@ -284,37 +286,56 @@ export class SolicitudServicioComponent implements OnInit {
     AplicarDataTable() {
 
         try {
-
-            setTimeout(function () {
-                $('#SolicitudesServicioTabla').dataTable({
-                    "bDestroy": true,
-                    "language": {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            $(document).ready(function () {
+                setTimeout(function () {
+                    var Tabla = $('#SolicitudesServicioTabla').DataTable({
+                        "bDestroy": true,
+                        "language": {
+                            "sProcessing": "Procesando...",
+                            "sLengthMenu": "Mostrar _MENU_ registros",
+                            "sZeroRecords": "No se encontraron resultados",
+                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix": "",
+                            "sSearch": "Buscar:",
+                            "sUrl": "",
+                            "sInfoThousands": ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst": "Primero",
+                                "sLast": "Último",
+                                "sNext": "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
                         }
-                    }
-                });
-            }, 20);
+                    });
 
+                    $('#SolicitudesServicioTabla tfoot th').each(function () {
+                        var title = $(this).text();
+                        $(this).html('<input type="text" class="form-control" placeholder="Buscar ' + title + '" />');
+                    });
+
+
+                    Tabla.columns().every(function () {
+                        var that = this;
+
+                        $('input', this.footer()).on('keyup change', function () {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                    });
+
+                }, 20);
+            });
 
             this.Cargando = false
 
@@ -323,6 +344,25 @@ export class SolicitudServicioComponent implements OnInit {
             var DescripcionError = 'SolicitudServicio.component.ts--->AplicarDataTable--->' + '  Error:  ' + error;
             console.log(DescripcionError);
 
+        }
+
+    }
+
+
+    AnularSolicitud(Codigo){
+
+        try {
+
+            this._SolicitudServicioService.AnularSolicitud(this.DatosServidorModel.url, Codigo).subscribe(
+                data => alertify.success('Anulado correctamente'),
+                error => alertify.error('No se pudo anular'),
+                () => location.reload()
+            );
+
+            
+        } catch (error) {
+            var DescripcionError = 'SolicitudServicio.component.ts--->AnularSolicitud--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
         }
 
     }

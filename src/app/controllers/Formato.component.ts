@@ -4,26 +4,26 @@ import { FormatoService } from '../services/Formato.service';
 import { DatosServidor } from '../models/DatosServidor';
 
 
-declare var $:any;
-declare var alertify:any;
-declare var success:any;
-declare var error:any;
-declare var dataTable:any;
-declare var clear:any;
-declare var draw:any;
+declare var $: any;
+declare var alertify: any;
+declare var success: any;
+declare var error: any;
+declare var dataTable: any;
+declare var clear: any;
+declare var draw: any;
 
 //declare var DataTable:any;
 
 @Component({
     selector: 'Formato',
     templateUrl: '../views/Formato.component.html',
-    styleUrls:  ['../../assets/css/Maestras.css'],
+    styleUrls: ['../../assets/css/Maestras.css'],
     providers: [FormatoService]
 })
 export class FormatoComponent implements OnInit {
 
 
-    constructor (private _FormatoService:FormatoService) {}
+    constructor(private _FormatoService: FormatoService) { }
 
     model = new Formato('');
 
@@ -40,28 +40,28 @@ export class FormatoComponent implements OnInit {
     //Variable que usaremos para controlar si ya se aplico datatable
     DataTable = false;
 
-    ngOnInit(){
+    ngOnInit() {
         this.Cargando = true;
         this.model.Archivo = new FormData();
         this.BuscarFormato();
-    
+
     }
 
-    BuscarFormato(){
+    BuscarFormato() {
 
         try {
 
             this.DataTable = false;
 
             this._FormatoService.BuscarFormato(this.DatosServidorModel.url).subscribe(
-            data => this.DatosFormato = data,
-            error => alertify.error('No funciona'),
-            () => this.LimpiarFormulario()
+                data => this.DatosFormato = data,
+                error => alertify.error('No funciona'),
+                () => this.LimpiarFormulario()
 
             );
         } catch (error) {
-            
-            var DescripcionError = 'Formato.component.ts--->BuscarFormato--->'+'  Error:  ' + error;
+
+            var DescripcionError = 'Formato.component.ts--->BuscarFormato--->' + '  Error:  ' + error;
             console.log(DescripcionError);
 
         }
@@ -69,137 +69,170 @@ export class FormatoComponent implements OnInit {
 
     }
 
-    CargarArchivo(event){
+    CargarArchivo(event) {
 
         try {
-            
+
             let fileList: FileList = event.target.files;
 
-            if(fileList.length > 0) {
-                let file: File = fileList[0];   
+            if (fileList.length > 0) {
+                let file: File = fileList[0];
 
                 this.model.Archivo.has('Formato') ? this.model.Archivo.delete('Formato') : '';
-                
-                this.model.Archivo.append('Formato', file, file.name);             
+
+                this.model.Archivo.append('Formato', file, file.name);
             }
 
 
         } catch (error) {
 
-            var DescripcionError = 'Formato.component.ts--->CargarArchivo--->'+'  Error:  ' + error;
+            var DescripcionError = 'Formato.component.ts--->CargarArchivo--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
     }
 
-    
 
-    GuardarFormato(){
+
+    GuardarFormato() {
         try {
-            
-                this.Cargando = true;
 
-                this._FormatoService.GuardarFormato(this.model, this.DatosServidorModel.url)
+            this.Cargando = true;
+
+            this._FormatoService.GuardarFormato(this.model, this.DatosServidorModel.url)
                 .subscribe(
-                    data => alertify.success('Registrado Correctamente'),
-                    error => alert(error),
-                    () => location.reload()//this.BuscarFormato()
+                data => alertify.success('Registrado Correctamente'),
+                error => alert(error),
+                () => location.reload()/*this.BuscarFormato()*/
                 );
 
         } catch (error) {
 
-            var DescripcionError = 'Formato.component.ts--->GuardarFormato--->'+'  Error:  ' + error;
+            var DescripcionError = 'Formato.component.ts--->GuardarFormato--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
     }
 
 
-   LimpiarFormulario(){
+    LimpiarFormulario() {
 
-       try {
-           
-       } catch (error) {
-
-          var DescripcionError = 'Formato.component.ts--->GuardarFormato--->'+'  Error:  ' + error;
-          console.log(DescripcionError);
-           
-       }
-
-
-       this.model = new Formato('');
-
-       this.model.Archivo  = new FormData();
-       $('.FormatoModal').modal('hide');
-
-       this.Cargando = false;
-
-       setTimeout(function() {
-
-
-           $('#FormatoTabla').dataTable({
-                    "bDestroy": true,
-                    "language": {
-                            "sProcessing":     "Procesando...",
-                            "sLengthMenu":     "Mostrar _MENU_ registros",
-                            "sZeroRecords":    "No se encontraron resultados",
-                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                            "sInfoPostFix":    "",
-                            "sSearch":         "Buscar:",
-                            "sUrl":            "",
-                            "sInfoThousands":  ",",
-                            "sLoadingRecords": "Cargando...",
-                            "oPaginate": {
-                                "sFirst":    "Primero",
-                                "sLast":     "Último",
-                                "sNext":     "Siguiente",
-                                "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
-                    }
-                });
-
-       }, 20);
-   }
-
-
-   CargarCampos(FormatoRuta, Descripcion, Codigo, Estado){
-       
-       this.model = new Formato(Descripcion, '', FormatoRuta, Codigo, Estado);
-
-       this.model.Archivo = new FormData();
-
-   }
-
-   ActualizarFormato(){
-
-
-       try {
-            
-            this.Cargando = true;
-
-            this._FormatoService.ActualizarFormato(this.model, this.DatosServidorModel.url)
-            .subscribe(
-                data => alertify.success('Actualizado Correctamente'),
-                error => alert(error),
-                () => location.reload()
-            );
+        try {
 
         } catch (error) {
 
-            var DescripcionError = 'Formato.component.ts--->ActualizarFormato--->'+'  Error:  ' + error;
+            var DescripcionError = 'Formato.component.ts--->GuardarFormato--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
 
 
-   }
+        this.model = new Formato('');
+
+        this.model.Archivo = new FormData();
+        $('.FormatoModal').modal('hide');
+
+        this.Cargando = false;
+
+        setTimeout(function () {
+
+
+            var Tabla = $('#FormatoTabla').DataTable({
+                "bDestroy": true,
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+
+            Tabla.destroy();
+
+
+
+            Tabla = $('#FormatoTabla').DataTable({
+                "bDestroy": true,
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+
+
+        }, 20);
+    }
+
+
+    CargarCampos(FormatoRuta, Descripcion, Codigo, Estado) {
+
+        this.model = new Formato(Descripcion, '', FormatoRuta, Codigo, Estado);
+
+        this.model.Archivo = new FormData();
+
+    }
+
+    ActualizarFormato() {
+
+
+        try {
+
+            this.Cargando = true;
+
+            this._FormatoService.ActualizarFormato(this.model, this.DatosServidorModel.url)
+                .subscribe(
+                data => alertify.success('Actualizado Correctamente'),
+                error => alert(error),
+                () => location.reload()
+                );
+
+        } catch (error) {
+
+            var DescripcionError = 'Formato.component.ts--->ActualizarFormato--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+
+        }
+
+
+    }
 
 
 

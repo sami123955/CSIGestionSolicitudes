@@ -21,6 +21,14 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Candidato</th>
+                                <th>Fecha de solicitud</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </tfoot>
                         <tbody>
                             <tr *ngIf="DatosSolicitudServicio?.length == 0">
                                 <td colspan="3">No se encontraron registros.</td>
@@ -33,7 +41,7 @@
                                     <button class="btn btn-default" *ngIf="item.EstadoServicio != 'Abierto'" disabled>Editar</button>
                                     <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar" *ngIf="item.EstadoServicio == 'Abierto'"
                                         (click)="Editar = CargarDatos(item.codigo, item.Nombre, item.Cedula, item.Direccion, item.Telefono, item.Celular, item.Cargo, item.CodigoSucursal);ActualizarSolicitudModal.show()">Editar</button>
-                                    <button class="btn btn-default">Anular</button>
+                                    <button class="btn btn-default" (click)="AnularSolicitud(item.codigo)">Anular</button>
                                 </td>
                             </tr>
                         </tbody>

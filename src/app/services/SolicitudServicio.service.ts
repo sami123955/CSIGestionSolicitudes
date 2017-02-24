@@ -124,6 +124,22 @@ export class SolicitudServicioService {
 
     }
 
+
+    AnularSolicitud(UrlServicio, CodigoSolicitud){
+
+
+        var Datos = new FormData;
+        Datos.append('Codigo', CodigoSolicitud);
+        Datos.append('CancelarServicio', true);
+
+        var header = new Headers();
+
+        var options = new RequestOptions({headers: header});
+
+        return this._http.post(UrlServicio + 'SolicitudServicio', Datos, options).map(res => res.json());
+
+    }
+
     ValidarCadena(Cadena) {
 
         console.log(Cadena);
