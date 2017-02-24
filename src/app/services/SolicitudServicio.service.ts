@@ -49,7 +49,7 @@ export class SolicitudServicioService {
         FormDataSalida.append('CodigoMunicipio', ObjetoSolicitudServicio.CodigoMunicipio);
 
         FormDataSalida.has('CodigoUsuario') ?  FormDataSalida.delete('CodigoUsuario') : '';
-        FormDataSalida.append('CodigoUsuario', '13'/*ObjetoSolicitudServicio.CodigoUsuario*/);
+        FormDataSalida.append('CodigoUsuario', ObjetoSolicitudServicio.CodigoUsuario);
 
         FormDataSalida.has('CodigoSucursal') ?  FormDataSalida.delete('CodigoSucursal') : '';
         FormDataSalida.append('CodigoSucursal', ObjetoSolicitudServicio.CodigoSucursal);
@@ -61,14 +61,8 @@ export class SolicitudServicioService {
 
         var options = new RequestOptions({ headers: headers });
 
-        this._http.post(UrlServicio + 'SolicitudServicio', FormDataSalida, options).map(res => {
-                    let _res = res.json();
-                    return _res;
-                }).subscribe(data => this.ValidarResultado(data),
-                             error => alertify.error('No se ha podido registrar')/*{
-                    this.SolicitudServicio$.next(data.Data);
+        return this._http.post(UrlServicio + 'SolicitudServicio', FormDataSalida, options).map(res => res.json());
                     
-    }*/);
     }
 
 
@@ -85,9 +79,9 @@ export class SolicitudServicioService {
     }
 
 
-    BuscarSolitudServicio(UrlServicio) {
+    BuscarSolitudServicio(UrlServicio, CodigoUsuario) {
 
-        var Parametros = '?Codigo=&Nombre=&Cedula=&CodigoUsuario=13&FechaInicio=&FechaFin=&CodigoEstado=&CodigoSucursal=';
+        var Parametros = '?Codigo=&Nombre=&Cedula=&CodigoUsuario='+CodigoUsuario+'&FechaInicio=&FechaFin=&CodigoEstado=&CodigoSucursal=';
 
         return this._http.get(UrlServicio + 'SolicitudServicio' + Parametros).map(res => res.json());
 

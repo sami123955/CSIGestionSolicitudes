@@ -31,7 +31,7 @@ export class SolicitudServicioComponent implements OnInit {
     ) { }
 
 
-    SolicitudServicioObjeto = new SolicitudServicio('', '', '', '', '', '', '', '', '', []);
+    SolicitudServicioObjeto = new SolicitudServicio('', '', '', '', '', '', '', '13', '', []);
 
     //Variable que usaremos para almacenar los datos de combo de servicio
     DatosComboServicio = '';
@@ -211,8 +211,13 @@ export class SolicitudServicioComponent implements OnInit {
 
             }
             else {
-                this._SolicitudServicioService.CargandoPeticion = true;
-                this._SolicitudServicioService.GuardarSolicitudServicio(this.SolicitudServicioObjeto, this.FormDataSalida, this.DatosServidorModel.url);
+
+                this.Cargando = true;
+                this._SolicitudServicioService.GuardarSolicitudServicio(this.SolicitudServicioObjeto, this.FormDataSalida, this.DatosServidorModel.url).subscribe(
+                    data => alertify.success('Registrado correctamente'),
+                    error => alertify.error('Ocurrion un error al momento de registrar'),
+                    () => location.reload()
+                );
             }
 
         } catch (error) {
@@ -231,7 +236,7 @@ export class SolicitudServicioComponent implements OnInit {
 
             this.Cargando = true;
 
-            this._SolicitudServicioService.BuscarSolitudServicio(this.DatosServidorModel.url).subscribe(
+            this._SolicitudServicioService.BuscarSolitudServicio(this.DatosServidorModel.url, '13').subscribe(
                 data => this.DatosSolicitudServicio = /*alert(JSON.stringify(*/data/*))*/,
                 error => alert(error),
                 () => this.AplicarDataTable()
@@ -364,6 +369,14 @@ export class SolicitudServicioComponent implements OnInit {
             var DescripcionError = 'SolicitudServicio.component.ts--->AnularSolicitud--->' + '  Error:  ' + error;
             console.log(DescripcionError);
         }
+
+    }
+
+    LimpiarForm(){
+
+
+        this.SolicitudServicioObjeto = new SolicitudServicio('', '', '', '', '', '', '', '13', '', []);
+
 
     }
 

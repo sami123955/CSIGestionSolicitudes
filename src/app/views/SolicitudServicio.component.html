@@ -41,7 +41,8 @@
                                     <button class="btn btn-default" *ngIf="item.EstadoServicio != 'Abierto'" disabled>Editar</button>
                                     <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar" *ngIf="item.EstadoServicio == 'Abierto'"
                                         (click)="Editar = CargarDatos(item.codigo, item.Nombre, item.Cedula, item.Direccion, item.Telefono, item.Celular, item.Cargo, item.CodigoSucursal);ActualizarSolicitudModal.show()">Editar</button>
-                                    <button class="btn btn-default" (click)="AnularSolicitud(item.codigo)">Anular</button>
+                                    <button class="btn btn-default" *ngIf="item.EstadoServicio == 'Abierto'" (click)="AnularSolicitud(item.codigo)">Anular</button>
+                                    <button class="btn btn-default" *ngIf="item.EstadoServicio != 'Abierto'" disabled>Anular</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -168,7 +169,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" (click)="ActualizarSolicitudModal.hide();LimpiarForm()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Solitud de servicio</h4>
             </div>
             <div class="modal-body">
@@ -244,7 +245,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-default" (click)="ActualizarSolicitudModal.hide();LimpiarForm()">Cerrar</button>
                 <button type="button" class="btn btn-primary" (click)="ActualizarSolicitudServicio()" [disabled]="!ActualizarSolicitudForm.form.valid">Guardar</button>
             </div>
         </div>

@@ -25,11 +25,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                <tr *ngIf="DatosSolicitudesServicio.Data?.length == 0">
+                                    <td colspan="5">No se encontraron registros</td>
+                                </tr>
+                                <tr *ngFor="let item of DatosSolicitudesServicio.Data">
+                                    <td>{{item.NombreSucursal}}</td>
+                                    <td>{{item.Nombre}}</td>
+                                    <td>{{CambiarFormatoFecha(item.FechaSolicitud)}}</td>
+                                    <td>{{item.EstadoServicio}}</td>
                                     <td>
                                         <button class="btn btn-default" (click)="CombosModal.show()">Detalle</button>
                                     </td>

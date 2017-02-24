@@ -1,13 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AsignarServicio } from '../models/AsignarServicio';
+import { DatosServidor } from '../models/DatosServidor';
+import { SolicitudServicioService } from '../services/SolicitudServicio.service';
 
 @Component({
     selector: 'AsignarServicio',
     templateUrl: '../views/AsignarServicio.component.html',
     styleUrls: ['../../assets/css/Maestras.css'],
-    providers: []
+    providers: [SolicitudServicioService]
 })
 
-export class AsignarServicioComponent {
+export class AsignarServicioComponent implements OnInit {
+
+
+    constructor(
+        private _SolicitudServicioService: SolicitudServicioService
+    ) { }
+
+
+    //Variable que almacenara los datos de la
+    DatosSolicitudesServicio = '';
+
+
+    ObjetoAsignarServicio = new AsignarServicio('6');
+
+
+    //Clase que usaremos para obtener el valor de la url del servicio
+    DatosServidorModel = new DatosServidor();
+
+    //Controlar preloader
+    Cargando = false;
+
+
+
+    ngOnInit() {
+
+        this.BuscarSolicitudesServicio();
+
+    }
+
+    BuscarSolicitudesServicio() {
+
+        this.Cargando = true;
+
+        try {
+            this._SolicitudServicioService.BuscarSolitudServicio(this.DatosServidorModel.url, '6').subscribe(
+                data => /*this.DatosSolicitudesServicio = */console.log(JSON.stringify(data)),
+                error => alert(error),
+                () => this.Cargando = false
+            );
+        } catch (error) {
+
+            var DescripcionError = 'AsignarServicio.component.ts--->BuscarSolicitudesServicio--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+
+        }
+
+
+    }
+
+    CambiarFormatoFecha(FechaActual) {
+
+
+        var FechaNueva = new Date(FechaActual).toLocaleDateString();
+
+        return FechaNueva;
+    }
+
 
 
 }
