@@ -109,7 +109,6 @@ export class SolicitudServicioService {
         Datos.append('CodigoSucursal', SolicitudServicioObjeto.CodigoSucursal);
         Datos.append('CodigoMunicipio', '');
         Datos.append('CodigoUsuario', '13'/*SolicitudServicioObjeto.CodigoUsuario*/);
-        Datos.append('CodigoSucursal', '');
         Datos.append('lstServicioDetalle', '');
         Datos.append('HojaVidaFile', FormDataSalida.get('HojaVidaFile'));
         Datos.append('AutorizacionEDCFile', FormDataSalida.get('AutorizacionEDCFile'));
