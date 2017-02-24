@@ -93,6 +93,33 @@ export class SolicitudServicioService {
 
     }
 
+
+    ActualizarSolicitudServicio(UrlServicio: string, SolicitudServicioObjeto: any){
+
+
+        var Datos = new FormData;
+
+        Datos.append('Codigo', SolicitudServicioObjeto.Codigo);
+        Datos.append('Nombre', SolicitudServicioObjeto.Nombre);
+        Datos.append('Cedula', SolicitudServicioObjeto.Cedula);
+        Datos.append('Direccion', SolicitudServicioObjeto.Direccion);
+        Datos.append('Telefono', SolicitudServicioObjeto.Telefono);
+        Datos.append('Celular', SolicitudServicioObjeto.Celular);
+        Datos.append('Cargo', SolicitudServicioObjeto.Cargo);
+        Datos.append('CodigoMunicipio', '');
+        Datos.append('CodigoUsuario', '13'/*SolicitudServicioObjeto.CodigoUsuario*/);
+        Datos.append('CodigoSucursal', '');
+        Datos.append('lstServicioDetalle', '');
+
+        var header = new Headers();
+
+        var options = new RequestOptions({headers: header});
+
+
+        return this._http.post(UrlServicio + 'SolicitudServicio', Datos, options).map(res => res.json());
+
+    }
+
     ValidarCadena(Cadena) {
 
         console.log(Cadena);

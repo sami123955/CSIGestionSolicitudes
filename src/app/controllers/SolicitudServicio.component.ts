@@ -7,9 +7,10 @@ import { SolicitudServicio } from '../models/SolicitudServicio';
 import { SolicitudServicioService } from '../services/SolicitudServicio.service';
 
 
-declare var alertify:any;
-declare var success:any;
-declare var error:any;
+declare var alertify: any;
+declare var success: any;
+declare var error: any;
+declare var $:any;
 
 @Component({
     selector: 'SolicitudServicio',
@@ -18,19 +19,19 @@ declare var error:any;
     providers: [ComboServicioService, MunicipioService, SucursalService, SolicitudServicioService]
 })
 
-export class SolicitudServicioComponent implements OnInit{
+export class SolicitudServicioComponent implements OnInit {
 
 
     constructor(
-               
-                    private _ComboServicioService:ComboServicioService,
-                    private _MunicipioService:MunicipioService,
-                    private _SucursalService:SucursalService,
-                    private _SolicitudServicioService:SolicitudServicioService
-               ){}
+
+        private _ComboServicioService: ComboServicioService,
+        private _MunicipioService: MunicipioService,
+        private _SucursalService: SucursalService,
+        private _SolicitudServicioService: SolicitudServicioService
+    ) { }
 
 
-    SolicitudServicioObjeto = new SolicitudServicio('','','','','','','','','',[]);
+    SolicitudServicioObjeto = new SolicitudServicio('', '', '', '', '', '', '', '', '', []);
 
     //Variable que usaremos para almacenar los datos de combo de servicio
     DatosComboServicio = '';
@@ -50,18 +51,18 @@ export class SolicitudServicioComponent implements OnInit{
     DatosSucursal = '';
 
     //Variable de salida que alamcenara todos los datos
-    FormDataSalida:any;
+    FormDataSalida: any;
 
-
+    //Variable que usaremos para llenar la tabla
     DatosSolicitudServicio = '';
 
     //Variable usado para controlar preloader
     Cargando = false;
 
-        //Variable que almacenara la configuracion para los select multipleas
+    //Variable que almacenara la configuracion para los select multipleas
     ConfiguracionSelect = {
         pullRight: true,
-        pullLeft:true,
+        pullLeft: true,
         enableSearch: true,
         checkedStyle: 'checkboxes',
         buttonClasses: 'btn btn-default col-md-12',
@@ -74,9 +75,9 @@ export class SolicitudServicioComponent implements OnInit{
 
 
 
-    ngOnInit(){
-        
-        
+    ngOnInit() {
+
+
         this.BuscarMunicipios();
         this.BuscarSucursales();
         this.FormDataSalida = new FormData;
@@ -85,13 +86,13 @@ export class SolicitudServicioComponent implements OnInit{
     }
 
     //Metodo que usaremos para crear las opciones tal y como el select multiple las espera
-    ConstruirOpciones(Dato){
+    ConstruirOpciones(Dato) {
 
         var Opciones = [];
 
-        for(let item of Dato.Data){
+        for (let item of Dato.Data) {
 
-            Opciones.push({id: item.Codigo, name: item.Nombre});
+            Opciones.push({ id: item.Codigo, name: item.Nombre });
 
         }
 
@@ -100,25 +101,25 @@ export class SolicitudServicioComponent implements OnInit{
     }
 
 
-    BuscarComboServicio(){
+    BuscarComboServicio() {
 
         try {
-            
+
             this._ComboServicioService.BuscarComboServicioMunicipio(this.DatosServidorModel.url, this.SolicitudServicioObjeto.CodigoMunicipio).subscribe(
                 data => this.ObcionesComboServicio = this.ConstruirOpciones(data),
                 error => alert(error)
             );
-            
+
         } catch (error) {
-            
-            var DescripcionError = 'SolicitudServicio.component.ts--->BuscarComboServicio--->'+'  Error:  ' + error;
+
+            var DescripcionError = 'SolicitudServicio.component.ts--->BuscarComboServicio--->' + '  Error:  ' + error;
             console.log(DescripcionError);
 
         }
 
     }
 
-    BuscarMunicipios(){
+    BuscarMunicipios() {
 
         try {
             //
@@ -126,15 +127,15 @@ export class SolicitudServicioComponent implements OnInit{
                 data => this.DatosMunicipio = data,
                 error => alert(error)
             );
-            
+
         } catch (error) {
-            var DescripcionError = 'SolicitudServicio.component.ts--->BuscarMunicipios--->'+'  Error:  ' + error;
+            var DescripcionError = 'SolicitudServicio.component.ts--->BuscarMunicipios--->' + '  Error:  ' + error;
             console.log(DescripcionError);
         }
 
     }
 
-    BuscarSucursales(){
+    BuscarSucursales() {
 
         try {
 
@@ -142,49 +143,49 @@ export class SolicitudServicioComponent implements OnInit{
                 data => this.DatosSucursal = data,
                 error => alert(error)
             );
-            
+
         } catch (error) {
 
-            var DescripcionError = 'SolicitudServicio.component.ts--->BuscarSucursales--->'+'  Error:  ' + error;
+            var DescripcionError = 'SolicitudServicio.component.ts--->BuscarSucursales--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
 
     }
 
 
-     CargarArchivo(event, typeFile){
+    CargarArchivo(event, typeFile) {
 
 
         try {
 
             let fileList: FileList = event.target.files;
 
-            if(fileList.length > 0) {
-                let file: File = fileList[0];   
+            if (fileList.length > 0) {
+                let file: File = fileList[0];
 
-                switch(typeFile){
+                switch (typeFile) {
                     case 'HojaVidaFile':
-                    
+
                         this.FormDataSalida.has('HojaVidaFile') ? this.FormDataSalida.delete('HojaVidaFile') : '';
-                        
+
                         this.FormDataSalida.append('HojaVidaFile', file, file.name);
-                    break;
+                        break;
                     case 'AutorizacionEDCFile':
                         this.FormDataSalida.has('AutorizacionEDCFile') ? this.FormDataSalida.delete('AutorizacionEDCFile') : '';
-                        
+
                         this.FormDataSalida.append('AutorizacionEDCFile', file, file.name);
-                    break;
+                        break;
                     case 'AutorizacionReferenciacionFile':
                         this.FormDataSalida.has('AutorizacionReferenciacionFile') ? this.FormDataSalida.delete('AutorizacionReferenciacionFile') : '';
-                        
+
                         this.FormDataSalida.append('AutorizacionReferenciacionFile', file, file.name);
-                    break;
+                        break;
                     case 'AutorizacionCifinFile':
                         this.FormDataSalida.has('AutorizacionCifinFile') ? this.FormDataSalida.delete('AutorizacionCifinFile') : '';
-                        
+
                         this.FormDataSalida.append('AutorizacionCifinFile', file, file.name);
-                    break;
+                        break;
 
                 }
 
@@ -193,30 +194,30 @@ export class SolicitudServicioComponent implements OnInit{
 
         } catch (error) {
 
-            var DescripcionError = 'SolicitudServicio.component.ts--->CargarArchivo--->'+'  Error:  ' + error;
+            var DescripcionError = 'SolicitudServicio.component.ts--->CargarArchivo--->' + '  Error:  ' + error;
             console.log(DescripcionError);
-            
+
         }
     }
 
-    GuardarSolicitudServicio(){
+    GuardarSolicitudServicio() {
 
 
         try {
 
-            if((!this.FormDataSalida.has('HojaVidaFile')) || (!this.FormDataSalida.has('AutorizacionEDCFile')) || (!this.FormDataSalida.has('AutorizacionReferenciacionFile') || (!this.FormDataSalida.has('AutorizacionCifinFile')))){
-                
+            if ((!this.FormDataSalida.has('HojaVidaFile')) || (!this.FormDataSalida.has('AutorizacionEDCFile')) || (!this.FormDataSalida.has('AutorizacionReferenciacionFile') || (!this.FormDataSalida.has('AutorizacionCifinFile')))) {
+
                 alertify.error('Debe cargar todos los archivos');
 
             }
-            else{
-                    this._SolicitudServicioService.CargandoPeticion = true;
-                    this._SolicitudServicioService.GuardarSolicitudServicio(this.SolicitudServicioObjeto, this.FormDataSalida, this.DatosServidorModel.url);    
+            else {
+                this._SolicitudServicioService.CargandoPeticion = true;
+                this._SolicitudServicioService.GuardarSolicitudServicio(this.SolicitudServicioObjeto, this.FormDataSalida, this.DatosServidorModel.url);
             }
-            
+
         } catch (error) {
-            
-            var DescripcionError = 'SolicitudServicio.component.ts--->GuardarSolicitudServicio--->'+'  Error:  ' + error;
+
+            var DescripcionError = 'SolicitudServicio.component.ts--->GuardarSolicitudServicio--->' + '  Error:  ' + error;
             console.log(DescripcionError);
         }
 
@@ -224,25 +225,105 @@ export class SolicitudServicioComponent implements OnInit{
 
 
     //Buscar solicitud servicio
-    BuscarSolicitudesServicio(){
+    BuscarSolicitudesServicio() {
 
         try {
 
             this.Cargando = true;
 
             this._SolicitudServicioService.BuscarSolitudServicio(this.DatosServidorModel.url).subscribe(
-                data => alert(JSON.stringify(data)),
+                data => this.DatosSolicitudServicio = /*alert(JSON.stringify(*/data/*))*/,
                 error => alert(error),
-                () => this.Cargando = false
+                () => this.AplicarDataTable()
             );
-            
+
         } catch (error) {
-            
+
+            var DescripcionError = 'SolicitudServicio.component.ts--->BuscarSolicitudesServicio--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+
         }
 
 
     }
 
-    
+    CambiarFormatoFecha(FechaActual) {
+
+
+        var FechaNueva = new Date(FechaActual).toLocaleDateString();
+
+        return FechaNueva;
+    }
+
+    CargarDatos(codigo, Nombre, Cedula, Direccion, Telefono, Celular, Cargo) {
+
+        this.SolicitudServicioObjeto = new SolicitudServicio(Nombre, Cedula, Direccion, Telefono, Celular, Cargo, '', '', '', [], codigo);
+    }
+
+    ActualizarSolicitudServicio() {
+
+        try {
+
+            this._SolicitudServicioService.ActualizarSolicitudServicio(this.DatosServidorModel.url, this.SolicitudServicioObjeto).subscribe(
+                data => alertify.success('Actualizado correctamente'),
+                error => alertify.error('Ocurrio un error al momento de actualziar'),
+                () => location.reload()
+            );
+
+        } catch (error) {
+
+            var DescripcionError = 'SolicitudServicio.component.ts--->ActualizarSolicitudServicio--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+
+        }
+
+    }
+
+    AplicarDataTable() {
+
+        try {
+
+            setTimeout(function () {
+                $('#SolicitudesServicioTabla').dataTable({
+                    "bDestroy": true,
+                    "language": {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    }
+                });
+            }, 20);
+
+
+            this.Cargando = false
+
+        } catch (error) {
+
+            var DescripcionError = 'SolicitudServicio.component.ts--->AplicarDataTable--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+
+        }
+
+    }
+
 
 }

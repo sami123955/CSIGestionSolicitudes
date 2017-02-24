@@ -1,9 +1,9 @@
 <h4 class="Titulo">Administraci&oacute;n de solicitudes de servicios</h4>
 
 <div class="container">
-    
+
     <div class="col-md-11">
-    <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#MunicipioModal">Crear solicitud servicio</button>
+        <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#MunicipioModal">Crear solicitud servicio</button>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
@@ -12,174 +12,215 @@
                     </div>
                     <div class="panel-body">
                     </div>
-                    <table class="table table-hover" id="MunicipioTabla" >
+                    <table class="table table-hover" id="SolicitudesServicioTabla">
                         <thead>
                             <tr>
-                                <th>Municipio</th>
-                                <th>Departamento</th>
-                                <th>Editar</th>
+                                <th>Candidato</th>
+                                <th>Fecha de solicitud</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngIf="DatosSolicitudServicio?.length == 0">
                                 <td colspan="3">No se encontraron registros.</td>
                             </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
+                            <tr *ngFor="let item of DatosSolicitudServicio.Data">
+                                <td>{{item.Nombre}}</td>
+                                <td>{{CambiarFormatoFecha(item.FechaSolicitud)}}</td>
+                                <td>{{item.EstadoServicio}}</td>
                                 <td>
-                                    <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
+                                    <button class="btn btn-default" *ngIf="item.EstadoServicio != 'Abierto'" disabled>Editar</button>
+                                    <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar" *ngIf="item.EstadoServicio == 'Abierto'"
+                                        (click)="Editar = CargarDatos(item.codigo, item.Nombre, item.Cedula, item.Direccion, item.Telefono, item.Celular, item.Cargo);ActualizarSolicitudModal.show()">Editar</button>
+                                    <button class="btn btn-default">Anular</button>
                                 </td>
-                                <span></span>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>        
+    </div>
 </div>
 
 
-
 <div class="modal fade MunicipioModal" id="MunicipioModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Solitud de servicio</h4>
-      </div>
-      <div class="modal-body">
-        <form #SolicitudForm="ngForm">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Solitud de servicio</h4>
+            </div>
+            <div class="modal-body">
+                <form #SolicitudForm="ngForm">
 
-            <div class="row">
+                    <div class="row">
 
-                 <div class="col-md-6">
-                    <label for="Nombre">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="SolicitudServicioObjeto.Nombre" name="Nombre"  placeholder="Nombre" id="Nombre" required>
-                </div>
+                        <div class="col-md-6">
+                            <label for="Nombre">Nombre</label>
+                            <input type="text" class="form-control" [(ngModel)]="SolicitudServicioObjeto.Nombre" name="Nombre" placeholder="Nombre" id="Nombre"
+                                required>
+                        </div>
 
 
 
-                <div class="col-md-6">
-                    <label for="Cedula">C&eacute;dula</label>
-                    <input type="number" class="form-control" name="Cedula" [(ngModel)]="SolicitudServicioObjeto.Cedula" placeholder="Cedula" id="Cedula" required>
-                </div>
-                
-                <div class="col-md-6">
-                    <label for="Direccion">Direcci&oacute;n</label>
-                    <input type="text" class="form-control" name="Direccion" [(ngModel)]="SolicitudServicioObjeto.Direccion" placeholder="Direccion" id="Direccion" required>
-                </div>
+                        <div class="col-md-6">
+                            <label for="Cedula">C&eacute;dula</label>
+                            <input type="number" class="form-control" name="Cedula" [(ngModel)]="SolicitudServicioObjeto.Cedula" placeholder="Cedula"
+                                id="Cedula" required>
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="Telefono">Tel&eacute;fono</label>
-                    <input type="number" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Telefono" name="Telefono" placeholder="Telefono" id="Telefono">
-                </div>
+                        <div class="col-md-6">
+                            <label for="Direccion">Direcci&oacute;n</label>
+                            <input type="text" class="form-control" name="Direccion" [(ngModel)]="SolicitudServicioObjeto.Direccion" placeholder="Direccion"
+                                id="Direccion" required>
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="Celular">Celular</label>
-                    <input type="number" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Celular" name="Celular" placeholder="Celular" id="Celular">
-                </div>
+                        <div class="col-md-6">
+                            <label for="Telefono">Tel&eacute;fono</label>
+                            <input type="number" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Telefono" name="Telefono" placeholder="Telefono"
+                                id="Telefono">
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="Cargo">Cargo</label>
-                    <input type="text" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Cargo" name="Cargo" placeholder="Cargo" id="Cargo">
-                </div>
+                        <div class="col-md-6">
+                            <label for="Celular">Celular</label>
+                            <input type="number" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Celular" name="Celular" placeholder="Celular"
+                                id="Celular">
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="Nombre">Hoja de vida</label>
-                    <input type="file" class="form-control" (change)="CargarArchivo($event, 'HojaVidaFile')">
-                </div>
+                        <div class="col-md-6">
+                            <label for="Cargo">Cargo</label>
+                            <input type="text" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Cargo" name="Cargo" placeholder="Cargo"
+                                id="Cargo">
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="Nombre">Autorizaci&oacute;n EDC</label>
-                    <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionEDCFile')">
-                </div>
+                        <div class="col-md-6">
+                            <label for="Nombre">Hoja de vida</label>
+                            <input type="file" class="form-control" (change)="CargarArchivo($event, 'HojaVidaFile')">
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="Nombre">Autorizaci&oacute;n referenciaci&oacute;n</label>
-                    <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionReferenciacionFile')">
-                </div>
+                        <div class="col-md-6">
+                            <label for="Nombre">Autorizaci&oacute;n EDC</label>
+                            <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionEDCFile')">
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="Nombre">Autorizaci&oacute;n CIFIN</label>
-                    <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionCifinFile')">
-                </div>
+                        <div class="col-md-6">
+                            <label for="Nombre">Autorizaci&oacute;n referenciaci&oacute;n</label>
+                            <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionReferenciacionFile')">
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="Municipio">Municipio</label>
-                    <select name="Municipio" id="Municipio" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoMunicipio" (change)="BuscarComboServicio();" required>
+                        <div class="col-md-6">
+                            <label for="Nombre">Autorizaci&oacute;n CIFIN</label>
+                            <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionCifinFile')">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Municipio">Municipio</label>
+                            <select name="Municipio" id="Municipio" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoMunicipio" (change)="BuscarComboServicio();"
+                                required>
                         <option *ngFor="let item of DatosMunicipio.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                     </select>
-                </div>
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="Sucursal">Sucursal</label>
-                    <select name="Sucursal" id="Sucursal" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoSucursal" required>
+                        <div class="col-md-6">
+                            <label for="Sucursal">Sucursal</label>
+                            <select name="Sucursal" id="Sucursal" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoSucursal" required>
                         <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                     </select>
-                </div>
+                        </div>
 
-                <div class="col-md-6">
-                    <label for="SelectCombo">Combos de servicios</label>
-                    <ss-multiselect-dropdown required [options]="ObcionesComboServicio" id="SelectCombo" [(ngModel)]="SolicitudServicioObjeto.lstServicioDetalle" [settings]="ConfiguracionSelect" name="lstServicioDetalle" required></ss-multiselect-dropdown>    
-                </div>
+                        <div class="col-md-6">
+                            <label for="SelectCombo">Combos de servicios</label>
+                            <ss-multiselect-dropdown required [options]="ObcionesComboServicio" id="SelectCombo" [(ngModel)]="SolicitudServicioObjeto.lstServicioDetalle"
+                                [settings]="ConfiguracionSelect" name="lstServicioDetalle" required></ss-multiselect-dropdown>
+                        </div>
 
+                    </div>
+
+
+                </form>
             </div>
-
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="GuardarSolicitudServicio();" [disabled]="!SolicitudForm.form.valid" *ngIf="!loading">Guardar</button>
-        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
-      </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="GuardarSolicitudServicio();" [disabled]="!SolicitudForm.form.valid"
+                    *ngIf="!loading">Guardar</button>
+                <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>  
+</div>
 
 
 <!-- Modal Actualizar -->
 
 
-<!--
-<div class="modal fade TipoServicioModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tipos de servicios</h4>
-      </div>
-      <div class="modal-body">
-        <form #MunicipioForm="ngForm">
 
-             <div class="form-group">
-                <label for="Nombre">Nombre</label>
-                <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
+<div class="modal fade" bsModal #ActualizarSolicitudModal="bs-modal" id="ModalActualizar" tabindex="-1"
+    role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Solitud de servicio</h4>
             </div>
-            <div class="form-group">
-                <label for="CodigoDepartamento">Departamento</label>
-                <select id="" [(ngModel)]="model.CodigoDepartamento" name="CodigoDepartamento" class="form-control">
-                    <option *ngFor="let item of DatosDepartamento.Data" [value]="item.Codigo">{{item.Nombre}}</option>
-                </select>
-            </div>
+            <div class="modal-body">
+                <form #ActualizarSolicitudForm="ngForm">
 
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="ActualizarMunicipio()" [disabled]="!MunicipioForm.form.valid" *ngIf="!loading">Guardar</button>
-        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
-      </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label for="Nombre">Nombre</label>
+                            <input type="text" class="form-control" [(ngModel)]="SolicitudServicioObjeto.Nombre" name="Nombre" placeholder="Nombre" id="Nombre"
+                                required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Cedula">C&eacute;dula</label>
+                            <input type="number" class="form-control" name="Cedula" [(ngModel)]="SolicitudServicioObjeto.Cedula" placeholder="Cedula"
+                                id="Cedula" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Direccion">Direcci&oacute;n</label>
+                            <input type="text" class="form-control" name="Direccion" [(ngModel)]="SolicitudServicioObjeto.Direccion" placeholder="Direccion"
+                                id="Direccion" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Telefono">Tel&eacute;fono</label>
+                            <input type="number" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Telefono" name="Telefono" placeholder="Telefono"
+                                id="Telefono">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Celular">Celular</label>
+                            <input type="number" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Celular" name="Celular" placeholder="Celular"
+                                id="Celular">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Cargo">Cargo</label>
+                            <input type="text" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Cargo" name="Cargo" placeholder="Cargo"
+                                id="Cargo">
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="ActualizarSolicitudServicio()" [disabled]="!ActualizarSolicitudForm.form.valid">Guardar</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>  
--->
+</div>
+
 
 <div id="ContentPreloader" *ngIf="Cargando">
     <div id="loader-wrapper">
         <div id="loader"></div>
         <h5 class="loadingText">Cargando...</h5>
-    </div> 
+    </div>
 </div>
