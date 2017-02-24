@@ -255,16 +255,18 @@ export class SolicitudServicioComponent implements OnInit {
         return FechaNueva;
     }
 
-    CargarDatos(codigo, Nombre, Cedula, Direccion, Telefono, Celular, Cargo) {
+    CargarDatos(codigo, Nombre, Cedula, Direccion, Telefono, Celular, Cargo, CodigoSucursal) {
 
-        this.SolicitudServicioObjeto = new SolicitudServicio(Nombre, Cedula, Direccion, Telefono, Celular, Cargo, '', '', '', [], codigo);
+        this.SolicitudServicioObjeto = new SolicitudServicio(Nombre, Cedula, Direccion, Telefono, Celular, Cargo, '', '', CodigoSucursal, [], codigo);
+
+        this.FormDataSalida = new FormData;
     }
 
     ActualizarSolicitudServicio() {
 
         try {
 
-            this._SolicitudServicioService.ActualizarSolicitudServicio(this.DatosServidorModel.url, this.SolicitudServicioObjeto).subscribe(
+            this._SolicitudServicioService.ActualizarSolicitudServicio(this.DatosServidorModel.url, this.SolicitudServicioObjeto, this.FormDataSalida).subscribe(
                 data => alertify.success('Actualizado correctamente'),
                 error => alertify.error('Ocurrio un error al momento de actualziar'),
                 () => location.reload()

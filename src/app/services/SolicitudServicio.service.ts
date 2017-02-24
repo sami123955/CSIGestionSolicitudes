@@ -94,7 +94,7 @@ export class SolicitudServicioService {
     }
 
 
-    ActualizarSolicitudServicio(UrlServicio: string, SolicitudServicioObjeto: any){
+    ActualizarSolicitudServicio(UrlServicio: string, SolicitudServicioObjeto: any, FormDataSalida: any){
 
 
         var Datos = new FormData;
@@ -106,10 +106,15 @@ export class SolicitudServicioService {
         Datos.append('Telefono', SolicitudServicioObjeto.Telefono);
         Datos.append('Celular', SolicitudServicioObjeto.Celular);
         Datos.append('Cargo', SolicitudServicioObjeto.Cargo);
+        Datos.append('CodigoSucursal', SolicitudServicioObjeto.CodigoSucursal);
         Datos.append('CodigoMunicipio', '');
         Datos.append('CodigoUsuario', '13'/*SolicitudServicioObjeto.CodigoUsuario*/);
         Datos.append('CodigoSucursal', '');
         Datos.append('lstServicioDetalle', '');
+        Datos.append('HojaVidaFile', FormDataSalida.get('HojaVidaFile'));
+        Datos.append('AutorizacionEDCFile', FormDataSalida.get('AutorizacionEDCFile'));
+        Datos.append('AutorizacionReferenciacionFile', FormDataSalida.get('AutorizacionReferenciacionFile'));
+        Datos.append('AutorizacionCifinFile', FormDataSalida.get('AutorizacionCifinFile'));
 
         var header = new Headers();
 

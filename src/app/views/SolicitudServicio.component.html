@@ -32,7 +32,7 @@
                                 <td>
                                     <button class="btn btn-default" *ngIf="item.EstadoServicio != 'Abierto'" disabled>Editar</button>
                                     <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar" *ngIf="item.EstadoServicio == 'Abierto'"
-                                        (click)="Editar = CargarDatos(item.codigo, item.Nombre, item.Cedula, item.Direccion, item.Telefono, item.Celular, item.Cargo);ActualizarSolicitudModal.show()">Editar</button>
+                                        (click)="Editar = CargarDatos(item.codigo, item.Nombre, item.Cedula, item.Direccion, item.Telefono, item.Celular, item.Cargo, item.CodigoSucursal);ActualizarSolicitudModal.show()">Editar</button>
                                     <button class="btn btn-default">Anular</button>
                                 </td>
                             </tr>
@@ -156,8 +156,7 @@
 
 
 
-<div class="modal fade" bsModal #ActualizarSolicitudModal="bs-modal" id="ModalActualizar" tabindex="-1"
-    role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" bsModal #ActualizarSolicitudModal="bs-modal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -203,6 +202,33 @@
                             <label for="Cargo">Cargo</label>
                             <input type="text" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Cargo" name="Cargo" placeholder="Cargo"
                                 id="Cargo">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Sucursal">Sucursal</label>
+                            <select name="Sucursal" id="Sucursal" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoSucursal" required disabled>
+                                <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Nombre">Hoja de vida</label>
+                            <input type="file" class="form-control" (change)="CargarArchivo($event, 'HojaVidaFile')">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Nombre">Autorizaci&oacute;n EDC</label>
+                            <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionEDCFile')">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Nombre">Autorizaci&oacute;n referenciaci&oacute;n</label>
+                            <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionReferenciacionFile')">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Nombre">Autorizaci&oacute;n CIFIN</label>
+                            <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionCifinFile')">
                         </div>
 
                     </div>
