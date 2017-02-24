@@ -79,11 +79,11 @@
 
 <!-- Sub servicios -->
 <div class="modal fade" bsModal #SubServiciosModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}"
-    aria-labelledby="myModalLabel" (onHide)="CombosModal.show()">
+    aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" (click)="SubServiciosModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" (click)="SubServiciosModal.hide();CombosModal.show()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Subservicios</h4>
             </div>
             <div class="modal-body">
@@ -111,7 +111,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="SubServiciosModal.hide()">Cerrar</button>
+                <button type="button" class="btn btn-default" (click)="SubServiciosModal.hide();CombosModal.show()">Cerrar</button>
             </div>
         </div>
     </div>
@@ -192,7 +192,7 @@
                             <label for="">Tiempo perdido</label>
                             <input type="text" class="form-control">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label for="">Observaci&oacute;n</label>
                             <textarea class="textarea form-control"></textarea>
                         </div>

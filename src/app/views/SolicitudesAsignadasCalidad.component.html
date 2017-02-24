@@ -6,7 +6,7 @@
     <br>
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-11">
                 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -23,6 +23,7 @@
                                 <th>Fecha de solicitud</th>
                                 <th>Estado</th>
                                 <th>Revisor</th>
+                                <th>Novedades</th>
                                 <th>Detalle</th>
                             </tr>
                         </thead>
@@ -34,6 +35,9 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td>
+                                    <button class="btn btn-default" (click)="NovedadModal.show()">Administrar</button>
+                                </td>
                                 <td>
                                     <button class="btn btn-default" (click)="ModalCalidad.show()">Ver</button>
                                 </td>
@@ -48,7 +52,7 @@
 
 
 
-<div class="modal fade TipoServicioModal" bsModal #ModalCalidad="bs-modal" id="TipoServicioModal" tabindex="-1" role="dialog"
+<div class="modal fade" bsModal #ModalCalidad="bs-modal" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -120,6 +124,64 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Novedades -->
+<div class="modal fade" bsModal #NovedadModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="NovedadModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Novedades </h4>
+            </div>
+            <div class="modal-body">
+
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="">Causante novedad</label>
+                            <select name="" id="" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Tiempo perdido</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                            <label for="">Observaci&oacute;n</label>
+                            <textarea class="textarea form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <br>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Causante novedad</th>
+                            <th>Tiempo perdido</th>
+                            <th>Observaci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>as</td>
+                            <td>as</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="NovedadModal.hide()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 

@@ -55,6 +55,9 @@ export class SolicitudServicioComponent implements OnInit{
 
     DatosSolicitudServicio = '';
 
+    //Variable usado para controlar preloader
+    Cargando = false;
+
         //Variable que almacenara la configuracion para los select multipleas
     ConfiguracionSelect = {
         pullRight: true,
@@ -225,9 +228,12 @@ export class SolicitudServicioComponent implements OnInit{
 
         try {
 
+            this.Cargando = true;
+
             this._SolicitudServicioService.BuscarSolitudServicio(this.DatosServidorModel.url).subscribe(
                 data => alert(JSON.stringify(data)),
-                error => alert(error)
+                error => alert(error),
+                () => this.Cargando = false
             );
             
         } catch (error) {

@@ -49,7 +49,7 @@ export class SolicitudServicioService {
         FormDataSalida.append('CodigoMunicipio', ObjetoSolicitudServicio.CodigoMunicipio);
 
         FormDataSalida.has('CodigoUsuario') ?  FormDataSalida.delete('CodigoUsuario') : '';
-        FormDataSalida.append('CodigoUsuario', '6'/*ObjetoSolicitudServicio.CodigoUsuario*/);
+        FormDataSalida.append('CodigoUsuario', '13'/*ObjetoSolicitudServicio.CodigoUsuario*/);
 
         FormDataSalida.has('CodigoSucursal') ?  FormDataSalida.delete('CodigoSucursal') : '';
         FormDataSalida.append('CodigoSucursal', ObjetoSolicitudServicio.CodigoSucursal);
@@ -78,7 +78,7 @@ export class SolicitudServicioService {
             alertify.error(Respuesta.Mensaje);
         }
         else{
-            alertify.success(Respuesta.Mensaje);
+            alertify.success('Registro satisfactorio');
             this.CargandoPeticion = false;
         }
 
@@ -87,9 +87,9 @@ export class SolicitudServicioService {
 
     BuscarSolitudServicio(UrlServicio) {
 
-        var Parametros = '?Codigo=&Nombre=&Cedula=&CodigoUsuario=6&FuchaInicio=&FechaFin=&CodigoEstado=&CodigoSucursal=';
+        var Parametros = '?Codigo=&Nombre=&Cedula=&CodigoUsuario=13&FechaInicio=&FechaFin=&CodigoEstado=&CodigoSucursal=';
 
-        return this._http.get('SolicitudServicio' + Parametros).map(res => res.json());
+        return this._http.get(UrlServicio + 'SolicitudServicio' + Parametros).map(res => res.json());
 
     }
 
