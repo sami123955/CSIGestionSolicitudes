@@ -2,19 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { AsignarServicio } from '../models/AsignarServicio';
 import { DatosServidor } from '../models/DatosServidor';
 import { SolicitudServicioService } from '../services/SolicitudServicio.service';
+import { FormatoService } from '../services/Formato.service';
+import { AsignarServicioService } from '../services/AsignarServicio.service';
 
 @Component({
     selector: 'AsignarServicio',
     templateUrl: '../views/AsignarServicio.component.html',
     styleUrls: ['../../assets/css/Maestras.css'],
-    providers: [SolicitudServicioService]
+    providers: [SolicitudServicioService,FormatoService, AsignarServicioService]
 })
 
 export class AsignarServicioComponent implements OnInit {
 
 
     constructor(
-        private _SolicitudServicioService: SolicitudServicioService
+        private _SolicitudServicioService: SolicitudServicioService,
+        private _FormatoService: FormatoService,
+        private _AsignarServicioService:AsignarServicioService
     ) { }
 
 
@@ -36,12 +40,17 @@ export class AsignarServicioComponent implements OnInit {
     //Controlar preloader
     Cargando = false;
 
+    //variable que almacenara los datos de Formato
+    DatosFormato = '';
 
+    //Variable que almacenara los datos de los analistas
+    DatosAnalistas = '';
 
     ngOnInit() {
 
         this.BuscarSolicitudesServicio();
-
+        this.BuscarFormatos();
+        this.BuscarAnalistas();
     }
 
     BuscarSolicitudesServicio() {
@@ -80,6 +89,39 @@ export class AsignarServicioComponent implements OnInit {
 
     CargarDetalleCombo(ListaSolicitudDetalle){
         this.DatosDetalleCombos = ListaSolicitudDetalle;
+    }
+
+    BuscarFormatos(){
+
+        try {
+
+            this._FormatoService.BuscarFormato(this.DatosServidorModel.url).subscribe(
+                data => this.DatosFormato = data,
+                error => alert(error)
+            );
+            
+        } catch (error) {
+
+            var DescripcionError = 'AsignarServicio.component.ts--->BuscarFormatos--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+            
+        }
+
+    }
+
+    BuscarAnalistas(){
+
+        try {
+            //DatosAnalistas
+            this._AsignarServicioService.BuscarAnalistas(this.DatosServidorModel.url).subscribe(
+                data => alert(JSON.stringify(data)),
+                error => alert(error)
+            );
+        } catch (error) {
+            var DescripcionError = 'AsignarServicio.component.ts--->BuscarAnalistas--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+        }
+
     }
 
 

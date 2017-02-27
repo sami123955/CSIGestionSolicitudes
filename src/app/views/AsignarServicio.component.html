@@ -99,6 +99,8 @@
                             <th>Descripci&oacute;n</th>
                             <th>Costo</th>
                             <th>Estado</th>
+                            <th>Hace analista</th>
+                            <th>Hace calidad</th>
                             <th>Asignar</th>
                             <th>Novedad</th>
                         </tr>
@@ -114,9 +116,20 @@
                                 <span *ngIf="item.CodigoEstadoUnico == 3">Cancelado</span>
                                 <span *ngIf="item.CodigoEstadoUnico == 4">En Analista</span>
                             </td>
-                            
-                            
-
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                    <input type="checkbox">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                    <input type="checkbox">
+                                    </label>
+                                </div>
+                            </td>
                             <td>
                                 <button class="btn btn-default" *ngIf="item.CodigoEstadoUnico != 1" disabled>Asignar</button>
                                 <button class="btn btn-default" *ngIf="item.CodigoEstadoUnico == 1" (click)="SubServiciosModal.hide();AnalistasModal.show()">Asignar</button>
@@ -152,7 +165,7 @@
                         <div class="col-md-6">
                             <label for="">Formato</label>
                             <select name="" id="" class="form-control">
-                                <option value=""></option>
+                                <option *ngFor="let item of DatosFormato.Data" [value]="item.Codigo">{{item.Descripcion}}</option>
                             </select>
                         </div>
                     </div>
