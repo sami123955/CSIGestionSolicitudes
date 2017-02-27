@@ -1,9 +1,9 @@
 export class AsignarServicio{
 
     constructor (
-
-        CodigoUsuario :string
-
+        public CodigoDetalle:string,
+        public CodigoAnalista:string,
+        public CodigoFormato:string
     ) {}
 
 }

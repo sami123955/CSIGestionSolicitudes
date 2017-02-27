@@ -42,7 +42,7 @@
                         </table>
                     </div>
                 </div>
-                <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#FormatoModal">Guardar Asignaci&oacute;n</button>
+                <!--<button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#FormatoModal">Guardar Asignaci&oacute;n</button>-->
             </div>
         </div>
     </div>
@@ -132,7 +132,7 @@
                             </td>
                             <td>
                                 <button class="btn btn-default" *ngIf="item.CodigoEstadoUnico != 1" disabled>Asignar</button>
-                                <button class="btn btn-default" *ngIf="item.CodigoEstadoUnico == 1" (click)="SubServiciosModal.hide();AnalistasModal.show()">Asignar</button>
+                                <button class="btn btn-default" *ngIf="item.CodigoEstadoUnico == 1" (click)="SubServiciosModal.hide();AnalistasModal.show();ObjetoAsignarServicio.CodigoDetalle = item.Codigo;">Asignar</button>
                             </td>
                             <td>
                                 <button class="btn btn-default" (click)="SubServiciosModal.hide();NovedadModal.show()">Novedades</button>
@@ -164,7 +164,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="">Formato</label>
-                            <select name="" id="" class="form-control">
+                            <select [(ngModel)]="ObjetoAsignarServicio.CodigoFormato" name="CodigoFormato" id="" class="form-control">
                                 <option *ngFor="let item of DatosFormato.Data" [value]="item.Codigo">{{item.Descripcion}}</option>
                             </select>
                         </div>
@@ -181,11 +181,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>as</td>
-                            <td>as</td>
+                        <tr *ngFor="let item of DatosAnalistas.Data">
+                            <td>{{item.Nombre}}</td>
+                            <td>{{item.NumeroAsignaciones}}</td>
                             <td>
-                                <button class="btn btn-default">Asignar</button>
+                                <button class="btn btn-default" (click)="AsignarServicio(item.Codigo)">Asignar</button>
                             </td>
                         </tr>
                     </tbody>

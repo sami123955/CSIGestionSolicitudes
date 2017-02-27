@@ -5,6 +5,10 @@ import { SolicitudServicioService } from '../services/SolicitudServicio.service'
 import { FormatoService } from '../services/Formato.service';
 import { AsignarServicioService } from '../services/AsignarServicio.service';
 
+declare var alertify:any;
+declare var success:any;
+declare var error:any;
+
 @Component({
     selector: 'AsignarServicio',
     templateUrl: '../views/AsignarServicio.component.html',
@@ -31,7 +35,7 @@ export class AsignarServicioComponent implements OnInit {
     //Variable que almacenara los datos de detalle
     DatosDetalleCombos = '';
 
-    ObjetoAsignarServicio = new AsignarServicio('6');
+    ObjetoAsignarServicio = new AsignarServicio('', '6', '');
 
 
     //Clase que usaremos para obtener el valor de la url del servicio
@@ -112,15 +116,42 @@ export class AsignarServicioComponent implements OnInit {
     BuscarAnalistas(){
 
         try {
-            //DatosAnalistas
+            
             this._AsignarServicioService.BuscarAnalistas(this.DatosServidorModel.url).subscribe(
-                data => alert(JSON.stringify(data)),
+                data => this.DatosAnalistas = data,
                 error => alert(error)
             );
         } catch (error) {
             var DescripcionError = 'AsignarServicio.component.ts--->BuscarAnalistas--->' + '  Error:  ' + error;
             console.log(DescripcionError);
         }
+
+    }
+
+    AsignarServicio(CodigoAnalista){
+
+        try {
+
+            this.ObjetoAsignarServicio.CodigoAnalista = CodigoAnalista;
+
+            if(this.ObjetoAsignarServicio.CodigoFormato == ''){
+                alertify.error('Debe seleccionar el formato');
+            }
+            else {
+                this._AsignarServicioService.AsignarServicio(this.ObjetoAsignarServicio, this.DatosServidorModel.url).subscribe(
+                    data => alertify.success('Asignado correctamente'),
+                    error => /*alertify.error('Ocurrio un error en la asignacion')*/alert(error),
+                    () => this.BuscarSolicitudesServicio()
+                );
+            }
+            
+        } catch (error) {
+
+            var DescripcionError = 'AsignarServicio.component.ts--->AsignarServicio--->' + '  Error:  ' + error;
+            console.log(DescripcionError);
+            
+        }
+
 
     }
 
