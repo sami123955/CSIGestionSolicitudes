@@ -14,7 +14,7 @@
                     <div class="panel-body">
                     </div>
                     <div id="ConedorTablas">
-                        <table datatable class="table table-hover" id="FormatoTabla">
+                        <table datatable class="table table-hover" id="TablaSolicitudesServicio">
                             <thead>
                                 <tr>
                                     <th>Sucursal</th>
@@ -34,8 +34,9 @@
                                     <td>{{CambiarFormatoFecha(item.FechaSolicitud)}}</td>
                                     <td>{{item.EstadoServicio}}</td>
                                     <td>
-                                        <button *ngIf="item.EstadoServicio != 'Abierto'" class="btn btn-default" disabled>Detalle</button>
-                                        <button *ngIf="item.EstadoServicio == 'Abierto'" class="btn btn-default" (click)="CargarCombosServicios(item.lstComboServicio);CombosModal.show()">Detalle</button>
+                                        <!--<button *ngIf="item.EstadoServicio != 'Abierto'" class="btn btn-default" disabled>Detalle</button>
+                                        <button *ngIf="item.EstadoServicio == 'Abierto'" class="btn btn-default" (click)="CargarCombosServicios(item.lstComboServicio);CombosModal.show()">Detalle</button>-->
+                                        <button class="btn btn-default" (click)="CargarCombosServicios(item.lstComboServicio);CombosModal.show()">Detalle</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -66,6 +67,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr *ngIf="DatosComboServicios?.length == 0">
+                            <td>No se encontraron registros</td>
+                        </tr>
                         <tr *ngFor="let item of DatosComboServicios">
                             <td>{{item.Nombre}}</td>
                             <td>{{item.Costo}}</td>
@@ -86,7 +90,7 @@
 <!-- Sub servicios -->
 <div class="modal fade" bsModal #SubServiciosModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}"
     aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" (click)="SubServiciosModal.hide();CombosModal.show()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -106,6 +110,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr *ngIf="DatosDetalleCombos?.length == 0">
+                            <td>No se encontraron registros</td>
+                        </tr>
                         <tr *ngFor="let item of DatosDetalleCombos">
                             <td>{{item.Nombre}}</td>
                             <td>{{item.Costo}}</td>
@@ -119,14 +126,16 @@
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                    <input type="checkbox">
+                                        <input *ngIf="item.HaceAnalista == true"  checked type="checkbox" (click)="HaceCalidadHaceAnalista(item.Codigo, 'Analista', $event)" >
+                                        <input *ngIf="item.HaceAnalista != true"  type="checkbox" (click)="HaceCalidadHaceAnalista(item.Codigo, 'Analista', $event)">
                                     </label>
                                 </div>
                             </td>
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                    <input type="checkbox">
+                                        <input #pruebados *ngIf="item.HaceCalidad == true"  type="checkbox" checked (click)="HaceCalidadHaceAnalista(item.Codigo, 'Calidad', $event)">
+                                        <input #pruebatres *ngIf="item.HaceCalidad != true"  type="checkbox" (click)="HaceCalidadHaceAnalista(item.Codigo, 'Calidad', $event)">
                                     </label>
                                 </div>
                             </td>
@@ -257,7 +266,7 @@
 
 
 
-<div id="ContentPreloader" *ngIf="Cargando">
+<div id="ContentPreloader" *ngIf="Cargando == true">
     <div id="loader-wrapper">
         <div id="loader"></div>
         <h5 class="loadingText">Cargando...</h5>
