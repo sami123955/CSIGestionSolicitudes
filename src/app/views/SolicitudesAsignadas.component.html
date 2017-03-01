@@ -2,34 +2,43 @@
 
 <div class="container">
 
-    <div class="col-md-12">
+    <div class="col-md-11">
         <div class="row">
             <div class="col-md-12">
 
-                <form #FormularioBusqueda="ngForm">
+                <form #FormBusqueda="ngForm">
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Estado de la solicitud</label>
-                            <select name="" id="" class="form-control"></select>
+                            <select [(ngModel)]="ObjetoSolicitudesAsignadas.EstadoServicio" name="EstadoServicio" class="form-control">
+                                <option value="1">Abierto</option>
+                                <option value="2">Asignado</option>
+                                <option value="3">Cancelado</option>
+                                <option value="4">En Analista</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Fecha Inicial</label>
-                            <input type="date" class="form-control">
+                            <input type="date" name="FechaInicial" [(ngModel)]="ObjetoSolicitudesAsignadas.FechaInicial" class="form-control">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Fecha Final</label>
-                            <input type="date" class="form-control">
+                            <input type="date" [(ngModel)]="ObjetoSolicitudesAsignadas.FechaFinal" name="FechaFinal" class="form-control">
                         </div>
                     </div>
                 </form>
-                
+
+                <button class="btn btn-primary BtnCrear" [disabled]="!FormBusqueda.form.valid" (click)="BuscarServicios()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    Buscar
+                </button>
+
                 <br>
-                <br>
-                
+
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title">Registros</h4>
@@ -48,16 +57,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                           <tr> 
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td>
-                                   <button class="btn btn-default" (click)="NovedadModal.show()">Novedades</button>
-                               </td>
-                           </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <button class="btn btn-default" (click)="NovedadModal.show()">Novedades</button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

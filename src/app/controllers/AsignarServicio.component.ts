@@ -269,6 +269,7 @@ export class AsignarServicioComponent implements OnInit {
 
 
         try {
+            this.Cargando = true;
 
             this._AsignarServicioService.HaceCalidadHaceAnalista(this.DatosServidorModel.url, CodigoDetalle, TipoPeticion, event.target.checked).subscribe(
                 data => '',
