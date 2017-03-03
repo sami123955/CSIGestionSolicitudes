@@ -1,4 +1,4 @@
-<h4 class="Titulo">Solicitudes Asignadas</h4>
+<h4 class="Titulo">SOLICITUDES ASIGNADAS</h4>
 
 <div class="container">
 
@@ -10,24 +10,24 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Estado de la solicitud</label>
-                            <select [(ngModel)]="ObjetoSolicitudesAsignadas.EstadoServicio" name="EstadoServicio" class="form-control">
+                            <select [(ngModel)]="ObjetoSolicitudesAsignadas.EstadoServicio" name="EstadoServicio" class="form-control" required>
                                 <option value="1">Abierto</option>
-                                <option value="2">Asignado</option>
+                                <option value="2">En proceso</option>
                                 <option value="3">Cancelado</option>
-                                <option value="4">En Analista</option>
+                                <option value="4">Asignado</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Fecha Inicial</label>
-                            <input type="date" name="FechaInicial" [(ngModel)]="ObjetoSolicitudesAsignadas.FechaInicial" class="form-control">
+                            <input type="date" name="FechaInicial" [(ngModel)]="ObjetoSolicitudesAsignadas.FechaInicial" class="form-control" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Fecha Final</label>
-                            <input type="date" [(ngModel)]="ObjetoSolicitudesAsignadas.FechaFinal" name="FechaFinal" class="form-control">
+                            <input type="date" [(ngModel)]="ObjetoSolicitudesAsignadas.FechaFinal" name="FechaFinal" class="form-control" required>
                         </div>
                     </div>
                 </form>
@@ -45,26 +45,67 @@
                     </div>
                     <div class="panel-body">
                     </div>
-                    <table class="table table-hover" id="TipoServicioTabla">
+                    <table class="table table-hover" id="TablaSolicitudes">
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Municipio</th>
-                                <th>Tipo servicio</th>
+                                <th>Hoja de vida</th>
+                                <th>Autorizaci&oacute;n trat de datos</th>
+                                <th>Adjunto opcional</th>
+                                <th>Adjunto opcional</th>
                                 <th>Estado</th>
                                 <th>Fecha Asignaci&oacute;n</th>
-                                <th>Detalle</th>
+                                <th style="width: 20%">Detalle</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr *ngFor="let item of DatosSolicitudesServicio.Data">
+                                <td>{{item.Nombre}}</td>
                                 <td>
-                                    <button class="btn btn-default" (click)="NovedadModal.show()">Novedades</button>
+                                    
+                                    <a [href]="item.HojaVida"> <button class="btn btn-default">
+                                        ver
+                                    </button></a>
+                                </td>
+                                <td>
+                                    <a [href]="item.AutorizacionEDC">
+                                        <button class="btn btn-default">
+                                            ver
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <span *ngIf="item.AutorizacionReferenciacion == ''">Archivo no cargado</span>
+                                    <a *ngIf="item.AutorizacionReferenciacion != ''" [href]="item.AutorizacionReferenciacion">
+                                        <button class="btn btn-default">
+                                            ver
+                                        </button>
+                                    </a>
+
+                                </td>
+                                <td>
+                                    <span *ngIf="item.AutorizacionCifin == ''">Archivo no cargado</span>
+                                    <a *ngIf="item.AutorizacionCifin != ''" [href]="item.AutorizacionCifin">
+                                        <button class="btn btn-default">
+                                            ver
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>{{item.EstadoServicio}}</td>
+                                <td>{{CambiarFormatoFecha(item.FechaSolicitud)}}</td>
+                                <td>
+                                    <button class="btn btn-default" (click)="SetearDetalleSolicitud(item.lstSolicitudDetale);DetalleSolicitudModal.show()" tooltip="Detalle Solicitud">
+                                        <span class="glyphicon glyphicon-th-list"></span>
+                                    </button>
+                                    <button *ngIf="item.EstadoServicio == 'En Proceso'" class="btn btn-default" tooltip="Aceptar servicio">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </button>
+                                    <button *ngIf="item.EstadoServicio == 'En Proceso'" class="btn btn-default" tooltip="Rechazar servicio" (click)="SetearDetalleSolicitud(item.lstSolicitudDetale);RechazarServicioModal.show()">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                    <button *ngIf="item.EstadoServicio == 'Asignado'" class="btn btn-default" tooltip="Publicar informe">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -77,38 +118,37 @@
 
 
 
-<div class="modal fade TipoServicioModal" bsModal #TipoServicioModal="bs-modal" id="TipoServicioModal" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" bsModal #DetalleSolicitudModal="bs-modal" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Servicio</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="DetalleSolicitudModal.hide()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Subservicios</h4>
             </div>
             <div class="modal-body">
-                <form #TipoServicioForm="ngForm">
-                    <!--
-            <div class="form-group">
-                <label for="Nombre">Nombre</label>
-                <input type="text" class="form-control" required [(ngModel)]="model.Nombre" name="Nombre" placeholder="Nombre" id="Nombre">
-            </div>
-
-            <div class="form-group">
-                <label for="notes">Descripci&oacute;n</label>
-                <textarea class="form-control textarea" rows="3" placeholder="Descripci&oacute;n" id="notes" [(ngModel)]="model.Descripcion" name="Descripcion" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <button class="btn btn-default" (click)="TipoServicioModal.hide();CostosModal.show()" type="button">Administrar costos</button>
-            </div>
--->
-                </form>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Formato</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of DatosDetellaSolicitud">
+                            <td>{{item.Nombre}}</td>
+                            <td>
+                                <a [href]="item.Formato">
+                                    <button class="btn btn-default">Ver</button>
+                                </a>
+                            </td>
+                            <td>{{item.NombreEstado}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal" (click)="lgModal.hide()">Cerrar</button>-->
-                <button type="button" class="btn btn-default" (click)="TipoServicioModal.hide()">Cerrar</button>
-                <button type="button" class="btn btn-primary" (click)="GuardarTipoServicio();" [disabled]="!TipoServicioForm.form.valid"
-                    *ngIf="!loading">Guardar</button>
+                <button type="button" class="btn btn-default" (click)="DetalleSolicitudModal.hide()">Cerrar</button>
             </div>
         </div>
     </div>
@@ -167,6 +207,34 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" (click)="NovedadModal.hide()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" bsModal #RechazarServicioModal="bs-modal" tabindex="-1" role="dialog" [config]="{backdrop: 'static'}" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="RechazarServicioModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Rechazar servicio</h4>
+            </div>
+            <div class="modal-body">
+
+                <form #FormularioRechazar="ngForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="">Raz&oacute;n</label>
+                            <textarea class="textarea form-control" [(ngModel)]="ObjetoSolicitudesAsignadas.Razon" name="Razon" required></textarea>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="RechazarServicioModal.hide()">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="RechazarServicio()" [disabled]="!FormularioRechazar.form.valid">Guardar</button>
             </div>
         </div>
     </div>

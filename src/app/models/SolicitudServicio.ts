@@ -9,11 +9,12 @@ export class SolicitudServicio {
         public Telefono:string,
         public Celular:string,
         public Cargo:string,
+        public lstCorreos:any,
         public CodigoMunicipio:string,
         public CodigoUsuario:string,
         public CodigoSucursal:string,
         public lstServicioDetalle:any,
-        public Codigo?:string
+        public Codigo?:string,
 
     ){}
 

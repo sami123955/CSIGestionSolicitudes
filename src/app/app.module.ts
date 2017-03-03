@@ -33,6 +33,7 @@ import { SolicitudServicioComponent } from './controllers/SolicitudServicio.comp
 import { AsignarServicioComponent } from './controllers/AsignarServicio.component';
 import { SolicitudesAsignadasComponent } from './controllers/SolicitudesAsignadas.component';
 import { SolicitudesAsignadasCalidadComponent } from './controllers/SolicitudesAsignadasCalidad.component';
+import { TooltipModule } from 'ng2-bootstrap/tooltip';
 
 @NgModule({
   imports:      [ 
@@ -41,7 +42,8 @@ import { SolicitudesAsignadasCalidadComponent } from './controllers/SolicitudesA
                   HttpModule,
                   FormsModule,
                   MultiselectDropdownModule,
-                  ModalModule.forRoot()
+                  ModalModule.forRoot(),
+                  TooltipModule.forRoot()
                 ],
   declarations: [ 
                   AppComponent,

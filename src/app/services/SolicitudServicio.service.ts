@@ -56,6 +56,9 @@ export class SolicitudServicioService {
 
         FormDataSalida.has('lstServicioDetalle') ?  FormDataSalida.delete('lstServicioDetalle') : '';
         FormDataSalida.append('lstServicioDetalle', ObjetoSolicitudServicio.lstServicioDetalle);
+
+        FormDataSalida.has('lstCorreos') ?  FormDataSalida.delete('lstCorreos') : '';
+        FormDataSalida.append('lstCorreos', ObjetoSolicitudServicio.lstCorreos.join(','));
         
         var headers = new Headers();
 
@@ -94,12 +97,12 @@ export class SolicitudServicioService {
         var Datos = new FormData;
 
         Datos.append('Codigo', SolicitudServicioObjeto.Codigo);
-        Datos.append('Nombre', SolicitudServicioObjeto.Nombre);
+        Datos.append('Nombre', this.ValidarCadena(SolicitudServicioObjeto.Nombre));
         Datos.append('Cedula', SolicitudServicioObjeto.Cedula);
-        Datos.append('Direccion', SolicitudServicioObjeto.Direccion);
+        Datos.append('Direccion', this.ValidarCadena(SolicitudServicioObjeto.Direccion));
         Datos.append('Telefono', SolicitudServicioObjeto.Telefono);
         Datos.append('Celular', SolicitudServicioObjeto.Celular);
-        Datos.append('Cargo', SolicitudServicioObjeto.Cargo);
+        Datos.append('Cargo', this.ValidarCadena(SolicitudServicioObjeto.Cargo));
         Datos.append('CodigoSucursal', SolicitudServicioObjeto.CodigoSucursal);
         Datos.append('CodigoMunicipio', '');
         Datos.append('CodigoUsuario', '13'/*SolicitudServicioObjeto.CodigoUsuario*/);
@@ -108,6 +111,7 @@ export class SolicitudServicioService {
         Datos.append('AutorizacionEDCFile', FormDataSalida.get('AutorizacionEDCFile'));
         Datos.append('AutorizacionReferenciacionFile', FormDataSalida.get('AutorizacionReferenciacionFile'));
         Datos.append('AutorizacionCifinFile', FormDataSalida.get('AutorizacionCifinFile'));
+        Datos.append('lstCorreos', SolicitudServicioObjeto.lstCorreos.join(','));
 
         var header = new Headers();
 

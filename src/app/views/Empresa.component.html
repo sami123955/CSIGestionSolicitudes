@@ -1,9 +1,9 @@
-<h4 class="Titulo">Administraci&oacute;n de Empresas</h4>
+<h4 class="Titulo">ADMINISTRACI&Oacute;N DE EMPRESAS</h4>
 
 <div class="container">
-    
+
     <div class="col-md-11">
-    <button class="btn btn-primary BtnCrear" (click)="LimpiarDatos()" id="BtnCrearEmpresa" data-toggle="modal" data-target="#EmpresaModal">Crear Empresa</button>
+        <button class="btn btn-primary BtnCrear" (click)="LimpiarDatos();EmpresaModal.show()" id="BtnCrearEmpresa">Crear Empresa</button>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
@@ -11,255 +11,272 @@
                         <h4 class="panel-title">Registros</h4>
                     </div>
                     <div class="panel-body">
-                    </div>
-                    <table class="table table-hover" id="EmpresaTabla" >
-                        <thead>
-                            <tr>
-                                <th>NIT</th>
-                                <th>Raz&oacute;n Social</th>
-                                <th>Rut</th>
-                                <th>Cam Comercio</th>
-                                <th>Contrato</th>
-                                <th>Estado</th>
-                                <th>Editar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngIf="DatosConsulta.Data?.length == 0">
-                                <td colspan="7">No se encontraron registros</td>
-                            </tr>
-                            <tr *ngFor="let item of DatosConsulta.Data; let last = last;">
-                                <td>{{item.Nit}}</td>
-                                <td>{{item.RazonSocial}}</td>
-                                <td>
-                                    <a [href]="item.RutaRut"><button class="btn btn-default" >Ver</button></a>
-                                </td>
-                                <td>
-                                    <a [href]="item.RutaCamaraComercio"><button class="btn btn-default" >Ver</button></a>
-                                </td>
-                                <td>
-                                    <a [href]="item.lstContrato[0].Contrato"><button class="btn btn-default" >Ver</button></a>
-                                </td>
-                                <td *ngIf="item.Estado">
-                                    Activo
-                                </td>
-                                <td *ngIf="!item.Estado">
-                                    Inactivo
-                                </td>
-                                <td>
-                                    <button class="btn btn-default" (click)="CargarDatosForm(item.Nit, item.RazonSocial, item.Direccion, item.DireccionRecepcion, item.Representante, item.lstContacto[0].Contacto, item.lstContacto[0].EmailContacto, item.Telefono, item.EmailEmpresa, item.Observaciones, item.Codigo, item.Estado, item.RutaRut, item.RutaCamaraComercio, item.lstContrato[0].Contrato)" data-toggle="modal" data-target="#ModalActualizar">Editar</button>
-                                </td>
 
-                                <span *ngIf="last == true">{{AplicarDataTable()}}</span>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table class="table table-hover Tabla" id="EmpresaTabla">
+                            <thead>
+                                <tr>
+                                    <th>NIT</th>
+                                    <th>Raz&oacute;n Social</th>
+                                    <th>Rut</th>
+                                    <th>Cam Comercio</th>
+                                    <th>Contrato</th>
+                                    <th>Estado</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="DatosConsulta.Data?.length == 0">
+                                    <td colspan="7">No se encontraron registros</td>
+                                </tr>
+                                <tr *ngFor="let item of DatosConsulta.Data; let last = last;">
+                                    <td>{{item.Nit}}</td>
+                                    <td>{{item.RazonSocial}}</td>
+                                    <td>
+                                        <a [href]="item.RutaRut"><button class="btn btn-default" >Ver</button></a>
+                                    </td>
+                                    <td>
+                                        <a [href]="item.RutaCamaraComercio"><button class="btn btn-default" >Ver</button></a>
+                                    </td>
+                                    <td>
+                                        <a [href]="item.lstContrato[0].Contrato"><button class="btn btn-default" >Ver</button></a>
+                                    </td>
+                                    <td *ngIf="item.Estado">
+                                        Activo
+                                    </td>
+                                    <td *ngIf="!item.Estado">
+                                        Inactivo
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default" (click)="CargarDatosForm(item.Nit, item.RazonSocial, item.Direccion, item.DireccionRecepcion, item.Representante, item.lstContacto[0].Contacto, item.lstContacto[0].EmailContacto, item.Telefono, item.EmailEmpresa, item.Observaciones, item.Codigo, item.Estado, item.RutaRut, item.RutaCamaraComercio, item.lstContrato[0].Contrato);ModalActualizar.show()">Editar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>        
+    </div>
 </div>
 
 
 
-<div class="modal fade EmpresaModal" id="EmpresaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Empresa</h4>
-      </div>
-      <div class="modal-body">
-        <form #EmpresaForm="ngForm">
-
-            <div class="form-group">
-                <label for="Nit">NIT</label>
-                <input type="number" class="form-control" required [(ngModel)]="model.Nit" name="Nit" placeholder="NIT" id="Nit">
+<div class="modal fade EmpresaModal" bsModal #EmpresaModal="bs-modal" id="EmpresaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Empresa</h4>
             </div>
+            <div class="modal-body">
+                <form #EmpresaForm="ngForm">
 
-            <div class="form-group">
-                <label for="RazonSocial">Raz&oacute;n social</label>
-                <input type="text" class="form-control" id="RazonSocial" required [(ngModel)]="model.RazonSocial" name="RazonSocial"  placeholder="Raz&oacute;n Social">
+                    <div class="form-group">
+                        <label for="Nit">NIT</label>
+                        <input type="number" class="form-control" required [(ngModel)]="model.Nit" name="Nit" placeholder="NIT" id="Nit">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="RazonSocial">Raz&oacute;n social</label>
+                        <input type="text" class="form-control" id="RazonSocial" required [(ngModel)]="model.RazonSocial" name="RazonSocial" placeholder="Raz&oacute;n Social">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Direccion">Direcci&oacute;n</label>
+                        <input type="text" class="form-control" id="Direccion" placeholder="Direcci&oacute;n" required [(ngModel)]="model.Direccion"
+                            name="Direccion">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DireccionRecepcion">Direcci&oacute;n de recepci&oacute;n</label>
+                        <input type="text" class="form-control" id="DireccionRecepcion" placeholder="Direcci&oacute;n de recepci&oacute;n" required
+                            [(ngModel)]="model.DireccionRecepcion" name="DireccionRecepcion">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Representante">Representante</label>
+                        <input type="text" class="form-control" id="Representante" placeholder="Representante" required [(ngModel)]="model.Representante"
+                            name="Representante">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Telefono">Tel&eacute;fono</label>
+                        <input type="number" class="form-control" id="Telefono" placeholder="Tel&eacute;fono" required [(ngModel)]="model.Telefono"
+                            name="Telefono">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="EmailEmpresa">Correo electr&oacute;nico</label>
+                        <input type="text" class="form-control" id="EmailEmpresa" placeholder="Correo electr&oacute;nico" required [(ngModel)]="model.EmailEmpresa"
+                            name="EmailEmpresa">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="Contacto">Contacto</label>
+                        <input type="text" class="form-control" id="Contacto" placeholder="Contacto" required [(ngModel)]="model.Contacto" name="Contacto">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="EmailContacto">Correo electr&oacute;nico de contacto</label>
+                        <input type="text" class="form-control" id="EmailContacto" placeholder="Correo electr&oacute;nico de contacto" required [(ngModel)]="model.EmailContacto"
+                            name="EmailContacto">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="rut">RUT</label>
+                        <input type="file" class="form-control" id="RutaRuta" (change)="CargarArchivo($event, 'Rut')" #RutaRuta>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="camaraComercio">C&aacute;mara de comercio</label>
+                        <input type="file" class="form-control" id="RutaCamaraComercio" (change)="CargarArchivo($event, 'camaraComercio')" #RutaCamaraComercio>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Contrato">Contrato</label>
+                        <input type="file" class="form-control" id="Contrato" (change)="CargarArchivo($event, 'Contrato')" #Contrato>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="notes">Observaciones</label>
+                        <textarea class="form-control textarea" rows="3" placeholder="Observaciones" id="notes" [(ngModel)]="model.Observaciones"
+                            name="Observaciones"></textarea>
+                    </div>
+
+                </form>
             </div>
-
-            <div class="form-group">
-                <label for="Direccion">Direcci&oacute;n</label>
-                <input type="text" class="form-control" id="Direccion" placeholder="Direcci&oacute;n" required [(ngModel)]="model.Direccion" name="Direccion">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="GuardarEmpresa(RutaRut, RutaCamaraComercio, Contrato);" [disabled]="!EmpresaForm.form.valid"
+                    *ngIf="!loading">Guardar</button>
+                <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
             </div>
-
-            <div class="form-group">
-                <label for="DireccionRecepcion">Direcci&oacute;n de recepci&oacute;n</label>
-                <input type="text" class="form-control" id="DireccionRecepcion" placeholder="Direcci&oacute;n de recepci&oacute;n" required [(ngModel)]="model.DireccionRecepcion" name="DireccionRecepcion">
-            </div>
-
-            <div class="form-group">
-                <label for="Representante">Representante</label>
-                <input type="text" class="form-control" id="Representante" placeholder="Representante" required [(ngModel)]="model.Representante" name="Representante">
-            </div>
-
-            <div class="form-group">
-                <label for="Telefono">Tel&eacute;fono</label>
-                <input type="number" class="form-control" id="Telefono" placeholder="Tel&eacute;fono"  required [(ngModel)]="model.Telefono" name="Telefono">
-            </div>
-
-            <div class="form-group">
-                <label for="EmailEmpresa">Correo electr&oacute;nico</label>
-                <input type="text" class="form-control" id="EmailEmpresa" placeholder="Correo electr&oacute;nico" required [(ngModel)]="model.EmailEmpresa" name="EmailEmpresa">
-            </div>
-
-
-            <div class="form-group">
-                <label for="Contacto">Contacto</label>
-                <input type="text" class="form-control" id="Contacto" placeholder="Contacto" required [(ngModel)]="model.Contacto" name="Contacto">
-            </div>
-
-            <div class="form-group">
-                <label for="EmailContacto">Correo electr&oacute;nico de contacto</label>
-                <input type="text" class="form-control" id="EmailContacto" placeholder="Correo electr&oacute;nico de contacto" required [(ngModel)]="model.EmailContacto" name="EmailContacto">
-            </div>
-
-
-            <div class="form-group">
-                <label for="rut">RUT</label>
-                <input type="file" class="form-control" id="RutaRuta" (change)="CargarArchivo($event, 'Rut')" #RutaRuta>
-            </div>
-
-            <div class="form-group">
-                <label for="camaraComercio">C&aacute;mara de comercio</label>
-                <input type="file" class="form-control" id="RutaCamaraComercio" (change)="CargarArchivo($event, 'camaraComercio')" #RutaCamaraComercio>
-            </div>
-
-            <div class="form-group">
-                <label for="Contrato">Contrato</label>
-                <input type="file" class="form-control" id="Contrato" (change)="CargarArchivo($event, 'Contrato')" #Contrato>
-            </div>
-
-            
-
-            <div class="form-group">
-                <label for="notes">Observaciones</label>
-                <textarea class="form-control textarea" rows="3" placeholder="Observaciones" id="notes" [(ngModel)]="model.Observaciones" name="Observaciones"></textarea>
-            </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="GuardarEmpresa(RutaRut, RutaCamaraComercio, Contrato);" [disabled]="!EmpresaForm.form.valid" *ngIf="!loading">Guardar</button>
-        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
-      </div>
+        </div>
     </div>
-  </div>
-</div>  
+</div>
 
 
 
 <!-- Modal Actualizar -->
 
-<div class="modal fade EmpresaModal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Empresa</h4>
-      </div>
-      <div class="modal-body">
-        <form #EmpresaForm="ngForm">
-
-            <div class="form-group">
-                <label for="Nit">NIT</label>
-                <input type="number" class="form-control" required [(ngModel)]="model.Nit" name="Nit" placeholder="NIT" id="Nit" disabled>
+<div class="modal fade EmpresaModal" bsModal #ModalActualizar="bs-modal" id="ModalActualizar" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Empresa</h4>
             </div>
+            <div class="modal-body">
+                <form #EmpresaForm="ngForm">
 
-            <div class="form-group">
-                <label for="RazonSocial">Raz&oacute;n social</label>
-                <input type="text" class="form-control" id="RazonSocial" required [(ngModel)]="model.RazonSocial" name="RazonSocial"  placeholder="Raz&oacute;n Social">
-            </div>
+                    <div class="form-group">
+                        <label for="Nit">NIT</label>
+                        <input type="number" class="form-control" required [(ngModel)]="model.Nit" name="Nit" placeholder="NIT" id="Nit" disabled>
+                    </div>
 
-            <div class="form-group">
-                <label for="Direccion">Direcci&oacute;n</label>
-                <input type="text" class="form-control" id="Direccion" placeholder="Direcci&oacute;n" required [(ngModel)]="model.Direccion" name="Direccion">
-            </div>
+                    <div class="form-group">
+                        <label for="RazonSocial">Raz&oacute;n social</label>
+                        <input type="text" class="form-control" id="RazonSocial" required [(ngModel)]="model.RazonSocial" name="RazonSocial" placeholder="Raz&oacute;n Social">
+                    </div>
 
-            <div class="form-group">
-                <label for="DireccionRecepcion">Direcci&oacute;n de recepci&oacute;n</label>
-                <input type="text" class="form-control" id="DireccionRecepcion" placeholder="Direcci&oacute;n de recepci&oacute;n" required [(ngModel)]="model.DireccionRecepcion" name="DireccionRecepcion">
-            </div>
+                    <div class="form-group">
+                        <label for="Direccion">Direcci&oacute;n</label>
+                        <input type="text" class="form-control" id="Direccion" placeholder="Direcci&oacute;n" required [(ngModel)]="model.Direccion"
+                            name="Direccion">
+                    </div>
 
-            <div class="form-group">
-                <label for="Representante">Representante</label>
-                <input type="text" class="form-control" id="Representante" placeholder="Representante" required [(ngModel)]="model.Representante" name="Representante">
-            </div>
+                    <div class="form-group">
+                        <label for="DireccionRecepcion">Direcci&oacute;n de recepci&oacute;n</label>
+                        <input type="text" class="form-control" id="DireccionRecepcion" placeholder="Direcci&oacute;n de recepci&oacute;n" required
+                            [(ngModel)]="model.DireccionRecepcion" name="DireccionRecepcion">
+                    </div>
 
-            <div class="form-group">
-                <label for="Telefono">Tel&eacute;fono</label>
-                <input type="number" class="form-control" id="Telefono" placeholder="Tel&eacute;fono"  required [(ngModel)]="model.Telefono" name="Telefono">
-            </div>
+                    <div class="form-group">
+                        <label for="Representante">Representante</label>
+                        <input type="text" class="form-control" id="Representante" placeholder="Representante" required [(ngModel)]="model.Representante"
+                            name="Representante">
+                    </div>
 
-            <div class="form-group">
-                <label for="EmailEmpresa">Correo electr&oacute;nico</label>
-                <input type="text" class="form-control" id="EmailEmpresa" placeholder="Correo electr&oacute;nico" required [(ngModel)]="model.EmailEmpresa" name="EmailEmpresa">
-            </div>
+                    <div class="form-group">
+                        <label for="Telefono">Tel&eacute;fono</label>
+                        <input type="number" class="form-control" id="Telefono" placeholder="Tel&eacute;fono" required [(ngModel)]="model.Telefono"
+                            name="Telefono">
+                    </div>
 
-
-            <div class="form-group">
-                <label for="Contacto">Contacto</label>
-                <input type="text" class="form-control" id="Contacto" placeholder="Contacto" required [(ngModel)]="model.Contacto" name="Contacto">
-            </div>
-
-            <div class="form-group">
-                <label for="EmailContacto">Correo electr&oacute;nico de contacto</label>
-                <input type="text" class="form-control" id="EmailContacto" placeholder="Correo electr&oacute;nico de contacto" required [(ngModel)]="model.EmailContacto" name="EmailContacto">
-            </div>
+                    <div class="form-group">
+                        <label for="EmailEmpresa">Correo electr&oacute;nico</label>
+                        <input type="text" class="form-control" id="EmailEmpresa" placeholder="Correo electr&oacute;nico" required [(ngModel)]="model.EmailEmpresa"
+                            name="EmailEmpresa">
+                    </div>
 
 
-            <div class="form-group">
-                <label for="rut">RUT</label>
-                <input type="file" class="form-control" id="RutaRuta" (change)="CargarArchivo($event, 'Rut')" #RutaRuta>
-            </div>
+                    <div class="form-group">
+                        <label for="Contacto">Contacto</label>
+                        <input type="text" class="form-control" id="Contacto" placeholder="Contacto" required [(ngModel)]="model.Contacto" name="Contacto">
+                    </div>
 
-            <div class="form-group">
-                <label for="camaraComercio">C&aacute;mara de comercio</label>
-                <input type="file" class="form-control" id="RutaCamaraComercio" (change)="CargarArchivo($event, 'camaraComercio')" #RutaCamaraComercio>
-            </div>
+                    <div class="form-group">
+                        <label for="EmailContacto">Correo electr&oacute;nico de contacto</label>
+                        <input type="text" class="form-control" id="EmailContacto" placeholder="Correo electr&oacute;nico de contacto" required [(ngModel)]="model.EmailContacto"
+                            name="EmailContacto">
+                    </div>
 
-            <div class="form-group">
-                <label for="Contrato">Contrato</label>
-                <input type="file" class="form-control" id="Contrato" (change)="CargarArchivo($event, 'Contrato')" #Contrato>
-            </div>
-            <div class="form-group">
-                <label for="notes">Observaciones</label>
-                <textarea class="form-control textarea" rows="3" placeholder="Observaciones" id="notes" [(ngModel)]="model.Observaciones" name="Observaciones"></textarea>
-            </div>
 
-            <div class="radio">
-                <label>
+                    <div class="form-group">
+                        <label for="rut">RUT</label>
+                        <input type="file" class="form-control" id="RutaRuta" (change)="CargarArchivo($event, 'Rut')" #RutaRuta>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="camaraComercio">C&aacute;mara de comercio</label>
+                        <input type="file" class="form-control" id="RutaCamaraComercio" (change)="CargarArchivo($event, 'camaraComercio')" #RutaCamaraComercio>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Contrato">Contrato</label>
+                        <input type="file" class="form-control" id="Contrato" (change)="CargarArchivo($event, 'Contrato')" #Contrato>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Observaciones</label>
+                        <textarea class="form-control textarea" rows="3" placeholder="Observaciones" id="notes" [(ngModel)]="model.Observaciones"
+                            name="Observaciones"></textarea>
+                    </div>
+
+                    <div class="radio">
+                        <label>
                     <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="true">
                     Activo
                 </label>
-            </div>
-            <div class="radio">
-                <label>
+                    </div>
+                    <div class="radio">
+                        <label>
                     <input type="radio" name="Estado" [(ngModel)]="model.Estado" [value]="false">
                     Inactivo
                 </label>
-            </div>
+                    </div>
 
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="ActualizarEmpresa()" [disabled]="!EmpresaForm.form.valid" *ngIf="!loading">Guardar</button>
-        <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
-      </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="ActualizarEmpresa()" [disabled]="!EmpresaForm.form.valid" *ngIf="!loading">Guardar</button>
+                <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>  
+</div>
 
 
 <div id="ContentPreloader" *ngIf="loading">
     <div id="loader-wrapper">
         <div id="loader"></div>
         <h5 class="loadingText">Cargando...</h5>
-    </div> 
+    </div>
 </div>

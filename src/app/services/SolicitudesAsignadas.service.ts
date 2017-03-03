@@ -27,5 +27,16 @@ export class SolicitudAsignadasService {
 
     }
 
+    RechazarServicio(UrlServicio, Razon, CodigoServicio){
+
+        var Datos = new FormData;
+
+        var Header = new Headers();
+
+        var Opciones = new RequestOptions({headers: Header});
+
+        return this._http.post(UrlServicio + '', Datos, Opciones).map(res => res.json());
+    }
+
 
 }

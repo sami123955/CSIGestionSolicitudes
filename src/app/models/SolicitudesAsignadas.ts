@@ -4,7 +4,8 @@ export class SolicitudesAsignadas {
         public EstadoServicio:string,
         public FechaInicial:string,
         public FechaFinal:string,
-        public CodigoUsuario:string
+        public CodigoUsuario:string,
+        public Razon: string
     ){}
 
 }

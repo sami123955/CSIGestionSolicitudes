@@ -5,6 +5,7 @@ import { MunicipioService } from '../services/Municipio.service';
 import { SucursalService } from '../services/Sucursal.service';
 import { SolicitudServicio } from '../models/SolicitudServicio';
 import { SolicitudServicioService } from '../services/SolicitudServicio.service';
+import { CorreoSolicitud } from '../models/CorreoSolicitud';
 
 
 declare var alertify: any;
@@ -31,7 +32,8 @@ export class SolicitudServicioComponent implements OnInit {
     ) { }
 
 
-    SolicitudServicioObjeto = new SolicitudServicio('', '', '', '', '', '', '', '13', '', []);
+    SolicitudServicioObjeto = new SolicitudServicio('', '', '', '', '', '', [], '', '13', '', []);
+    ObjetoCorreos = new CorreoSolicitud('');
 
     //Variable que usaremos para almacenar los datos de combo de servicio
     DatosComboServicio = '';
@@ -205,19 +207,27 @@ export class SolicitudServicioComponent implements OnInit {
 
         try {
 
-            if ((!this.FormDataSalida.has('HojaVidaFile')) || (!this.FormDataSalida.has('AutorizacionEDCFile')) || (!this.FormDataSalida.has('AutorizacionReferenciacionFile') || (!this.FormDataSalida.has('AutorizacionCifinFile')))) {
+            if ((!this.FormDataSalida.has('HojaVidaFile')) || (!this.FormDataSalida.has('AutorizacionEDCFile'))) {
 
-                alertify.error('Debe cargar todos los archivos');
+                alertify.error('Debe cargar la hoja de vida y la autorizacion');
 
             }
             else {
 
-                this.Cargando = true;
-                this._SolicitudServicioService.GuardarSolicitudServicio(this.SolicitudServicioObjeto, this.FormDataSalida, this.DatosServidorModel.url).subscribe(
-                    data => alertify.success('Registrado correctamente'),
-                    error => alertify.error('Ocurrion un error al momento de registrar'),
-                    () => location.reload()
-                );
+                if (this.SolicitudServicioObjeto.lstCorreos.length == 0) {
+                    alertify.error('Debe ingresar por lo menos un correo');
+                }
+                else {
+
+
+                    this.Cargando = true;
+                    this._SolicitudServicioService.GuardarSolicitudServicio(this.SolicitudServicioObjeto, this.FormDataSalida, this.DatosServidorModel.url).subscribe(
+                        data => alertify.success('Registrado correctamente'),
+                        error => alertify.error('Ocurrio un error al momento de registrar'),
+                        () => location.reload()
+                    );
+                }
+
             }
 
         } catch (error) {
@@ -260,9 +270,9 @@ export class SolicitudServicioComponent implements OnInit {
         return FechaNueva;
     }
 
-    CargarDatos(codigo, Nombre, Cedula, Direccion, Telefono, Celular, Cargo, CodigoSucursal) {
+    CargarDatos(codigo, Nombre, Cedula, Direccion, Telefono, Celular, Cargo, CodigoSucursal, lstCorreos, CodigoMunicipio) {
 
-        this.SolicitudServicioObjeto = new SolicitudServicio(Nombre, Cedula, Direccion, Telefono, Celular, Cargo, '', '', CodigoSucursal, [], codigo);
+        this.SolicitudServicioObjeto = new SolicitudServicio(Nombre, Cedula, Direccion, Telefono, Celular, Cargo, lstCorreos, CodigoMunicipio, '13', CodigoSucursal, [], codigo);
 
         this.FormDataSalida = new FormData;
     }
@@ -271,13 +281,18 @@ export class SolicitudServicioComponent implements OnInit {
 
         try {
 
-            this.Cargando = true;
+            if (this.SolicitudServicioObjeto.lstCorreos.length == 0) {
+                alertify.error('Debe ingresar por lo menos un correo');
+            }
+            else {
+                this.Cargando = true;
 
-            this._SolicitudServicioService.ActualizarSolicitudServicio(this.DatosServidorModel.url, this.SolicitudServicioObjeto, this.FormDataSalida).subscribe(
-                data => alertify.success('Actualizado correctamente'),
-                error => alertify.error('Ocurrio un error al momento de actualziar'),
-                () => location.reload()
-            );
+                this._SolicitudServicioService.ActualizarSolicitudServicio(this.DatosServidorModel.url, this.SolicitudServicioObjeto, this.FormDataSalida).subscribe(
+                    data => alertify.success('Actualizado correctamente'),
+                    error => alertify.error('Ocurrio un error al momento de actualziar'),
+                    () => location.reload()
+                );
+            }
 
         } catch (error) {
 
@@ -354,7 +369,7 @@ export class SolicitudServicioComponent implements OnInit {
     }
 
 
-    AnularSolicitud(Codigo){
+    AnularSolicitud(Codigo) {
 
         try {
 
@@ -364,7 +379,7 @@ export class SolicitudServicioComponent implements OnInit {
                 () => location.reload()
             );
 
-            
+
         } catch (error) {
             var DescripcionError = 'SolicitudServicio.component.ts--->AnularSolicitud--->' + '  Error:  ' + error;
             console.log(DescripcionError);
@@ -372,13 +387,31 @@ export class SolicitudServicioComponent implements OnInit {
 
     }
 
-    LimpiarForm(){
+    LimpiarForm() {
+        this.SolicitudServicioObjeto = new SolicitudServicio('', '', '', '', '', '', [], '', '13', '', []);
+    }
 
+    AgregarCorreo(Correo) {
+        //Validar formato correo
+        var FormatoCorreo = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-        this.SolicitudServicioObjeto = new SolicitudServicio('', '', '', '', '', '', '', '13', '', []);
+        if (!FormatoCorreo.test(Correo)) {
+            alertify.error('La direccion de correo es incorrecta');
+        }
+        else {
 
+            if (this.SolicitudServicioObjeto.lstCorreos.includes(Correo)) {
+                alertify.error('Ese correo ya ha sido asignado');
+            }
+            else {
+                this.SolicitudServicioObjeto.lstCorreos.push(Correo);
+            }
+        }
 
     }
 
+    EliminarCorreo(Posicion) {
+        this.SolicitudServicioObjeto.lstCorreos.splice(Posicion, 1);
+    }
 
 }

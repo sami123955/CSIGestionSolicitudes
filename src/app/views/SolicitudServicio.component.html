@@ -3,7 +3,7 @@
 <div class="container">
 
     <div class="col-md-11">
-        <button class="btn btn-primary BtnCrear" data-toggle="modal" data-target="#MunicipioModal">Crear solicitud servicio</button>
+        <button class="btn btn-primary BtnCrear" (click)="LimpiarForm();RegistrarSolicitudModal.show()">Crear solicitud servicio</button>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
@@ -39,8 +39,8 @@
                                 <td>{{item.EstadoServicio}}</td>
                                 <td>
                                     <button class="btn btn-default" *ngIf="item.EstadoServicio != 'Abierto'" disabled>Editar</button>
-                                    <button class="btn btn-default" data-toggle="modal" data-target="#ModalActualizar" *ngIf="item.EstadoServicio == 'Abierto'"
-                                        (click)="Editar = CargarDatos(item.codigo, item.Nombre, item.Cedula, item.Direccion, item.Telefono, item.Celular, item.Cargo, item.CodigoSucursal);ActualizarSolicitudModal.show()">Editar</button>
+                                    <button class="btn btn-default" *ngIf="item.EstadoServicio == 'Abierto'"
+                                        (click)="Editar = CargarDatos(item.codigo, item.Nombre, item.Cedula, item.Direccion, item.Telefono, item.Celular, item.Cargo, item.CodigoSucursal, item.lstCorreos, item.CodigoMunicipio);ActualizarSolicitudModal.show()">Editar</button>
                                     <button class="btn btn-default" *ngIf="item.EstadoServicio == 'Abierto'" (click)="AnularSolicitud(item.codigo)">Anular</button>
                                     <button class="btn btn-default" *ngIf="item.EstadoServicio != 'Abierto'" disabled>Anular</button>
                                 </td>
@@ -54,11 +54,11 @@
 </div>
 
 
-<div class="modal fade MunicipioModal" id="MunicipioModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" bsModal #RegistrarSolicitudModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" (click)="RegistrarSolicitudModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Solitud de servicio</h4>
             </div>
             <div class="modal-body">
@@ -71,15 +71,14 @@
                             <input type="text" class="form-control" [(ngModel)]="SolicitudServicioObjeto.Nombre" name="Nombre" placeholder="Nombre" id="Nombre"
                                 required>
                         </div>
-
-
-
                         <div class="col-md-6">
                             <label for="Cedula">C&eacute;dula</label>
                             <input type="number" class="form-control" name="Cedula" [(ngModel)]="SolicitudServicioObjeto.Cedula" placeholder="Cedula"
                                 id="Cedula" required>
                         </div>
 
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="Direccion">Direcci&oacute;n</label>
                             <input type="text" class="form-control" name="Direccion" [(ngModel)]="SolicitudServicioObjeto.Direccion" placeholder="Direccion"
@@ -91,7 +90,8 @@
                             <input type="number" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Telefono" name="Telefono" placeholder="Telefono"
                                 id="Telefono">
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="Celular">Celular</label>
                             <input type="number" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Celular" name="Celular" placeholder="Celular"
@@ -103,46 +103,64 @@
                             <input type="text" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Cargo" name="Cargo" placeholder="Cargo"
                                 id="Cargo">
                         </div>
+                    </div>
 
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="Nombre">Hoja de vida</label>
                             <input type="file" class="form-control" (change)="CargarArchivo($event, 'HojaVidaFile')">
                         </div>
 
                         <div class="col-md-6">
-                            <label for="Nombre">Autorizaci&oacute;n EDC</label>
+                            <label for="Nombre">Autorizaci&oacute;n tratamiento de datos</label>
                             <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionEDCFile')">
                         </div>
+                    </div>
 
+
+                    <div class="row">
                         <div class="col-md-6">
-                            <label for="Nombre">Autorizaci&oacute;n referenciaci&oacute;n</label>
+                            <label for="Nombre">Adjunto opcional</label>
                             <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionReferenciacionFile')">
                         </div>
 
                         <div class="col-md-6">
-                            <label for="Nombre">Autorizaci&oacute;n CIFIN</label>
+                            <label for="Nombre">Adjunto opcional</label>
                             <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionCifinFile')">
                         </div>
+                    </div>
 
+
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="Municipio">Municipio</label>
                             <select name="Municipio" id="Municipio" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoMunicipio" (change)="BuscarComboServicio();"
                                 required>
-                        <option *ngFor="let item of DatosMunicipio.Data" [value]="item.Codigo">{{item.Nombre}}</option>
-                    </select>
+                                <option *ngFor="let item of DatosMunicipio.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                            </select>
                         </div>
 
                         <div class="col-md-6">
                             <label for="Sucursal">Sucursal</label>
                             <select name="Sucursal" id="Sucursal" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoSucursal" required>
-                        <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo">{{item.Nombre}}</option>
-                    </select>
+                                <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo">{{item.Nombre}}</option>
+                            </select>
                         </div>
+                    </div>
 
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="SelectCombo">Combos de servicios</label>
                             <ss-multiselect-dropdown required [options]="ObcionesComboServicio" id="SelectCombo" [(ngModel)]="SolicitudServicioObjeto.lstServicioDetalle"
                                 [settings]="ConfiguracionSelect" name="lstServicioDetalle" required></ss-multiselect-dropdown>
+                        </div>
+
+
+
+                        <div class="col-md-6">
+                            <br>
+
+                            <button type="button" class="btn btn-default" (click)="RegistrarSolicitudModal.hide();RegistrarCorreosModal.show()">Registrar correos</button>
                         </div>
 
                     </div>
@@ -151,7 +169,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-default" (click)="RegistrarSolicitudModal.hide();">Cerrar</button>
                 <button type="button" class="btn btn-primary" (click)="GuardarSolicitudServicio();" [disabled]="!SolicitudForm.form.valid"
                     *ngIf="!loading">Guardar</button>
                 <button type="button" class="btn btn-primary" *ngIf="loading" disabled>Guardando...</button>
@@ -163,43 +181,43 @@
 
 <!-- Modal Actualizar -->
 
-
-
-<div class="modal fade" bsModal #ActualizarSolicitudModal="bs-modal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" bsModal #ActualizarSolicitudModal="bs-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" (click)="ActualizarSolicitudModal.hide();LimpiarForm()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Solitud de servicio</h4>
+                <button type="button" class="close" (click)="ActualizarSolicitudModal.hide();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Actualizar solicitud de servicio</h4>
             </div>
             <div class="modal-body">
                 <form #ActualizarSolicitudForm="ngForm">
 
                     <div class="row">
-
                         <div class="col-md-6">
                             <label for="Nombre">Nombre</label>
                             <input type="text" class="form-control" [(ngModel)]="SolicitudServicioObjeto.Nombre" name="Nombre" placeholder="Nombre" id="Nombre"
                                 required>
                         </div>
-
                         <div class="col-md-6">
                             <label for="Cedula">C&eacute;dula</label>
                             <input type="number" class="form-control" name="Cedula" [(ngModel)]="SolicitudServicioObjeto.Cedula" placeholder="Cedula"
                                 id="Cedula" required>
                         </div>
+                    </div>
 
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="Direccion">Direcci&oacute;n</label>
                             <input type="text" class="form-control" name="Direccion" [(ngModel)]="SolicitudServicioObjeto.Direccion" placeholder="Direccion"
                                 id="Direccion" required>
                         </div>
-
                         <div class="col-md-6">
                             <label for="Telefono">Tel&eacute;fono</label>
                             <input type="number" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Telefono" name="Telefono" placeholder="Telefono"
                                 id="Telefono">
                         </div>
+                    </div>
+
+                    <div class="row">
 
                         <div class="col-md-6">
                             <label for="Celular">Celular</label>
@@ -212,10 +230,12 @@
                             <input type="text" class="form-control" required [(ngModel)]="SolicitudServicioObjeto.Cargo" name="Cargo" placeholder="Cargo"
                                 id="Cargo">
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="Sucursal">Sucursal</label>
-                            <select name="Sucursal" id="Sucursal" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoSucursal" required disabled>
+                            <select name="Sucursal" id="Sucursal" class="form-control" [(ngModel)]="SolicitudServicioObjeto.CodigoSucursal" required
+                                disabled>
                                 <option *ngFor="let item of DatosSucursal.Data" [value]="item.Codigo">{{item.Nombre}}</option>
                             </select>
                         </div>
@@ -225,28 +245,152 @@
                             <input type="file" class="form-control" (change)="CargarArchivo($event, 'HojaVidaFile')">
                         </div>
 
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
-                            <label for="Nombre">Autorizaci&oacute;n EDC</label>
+                            <label for="Nombre">Autorizaci&oacute;n de tratamiento de datos</label>
                             <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionEDCFile')">
                         </div>
 
                         <div class="col-md-6">
-                            <label for="Nombre">Autorizaci&oacute;n referenciaci&oacute;n</label>
+                            <label for="Nombre">Adjunto opcional</label>
                             <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionReferenciacionFile')">
                         </div>
+                    </div>
 
+
+                    <div class="row">
                         <div class="col-md-6">
-                            <label for="Nombre">Autorizaci&oacute;n CIFIN</label>
+                            <label for="Nombre">Adjunto opcional</label>
                             <input type="file" class="form-control" (change)="CargarArchivo($event, 'AutorizacionCifinFile')">
                         </div>
 
+                        <div class="col-md-6">
+                            <br>
+                            <button class="btn btn-default" (click)="ActualizarSolicitudModal.hide();ActualizarCorreosModal.show()">Registrar correos</button>
+                        </div>
                     </div>
 
                 </form>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="ActualizarSolicitudModal.hide();LimpiarForm()">Cerrar</button>
-                <button type="button" class="btn btn-primary" (click)="ActualizarSolicitudServicio()" [disabled]="!ActualizarSolicitudForm.form.valid">Guardar</button>
+                <button type="button" class="btn btn-default" (click)="ActualizarSolicitudModal.hide();">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="ActualizarSolicitudServicio();" [disabled]="!ActualizarSolicitudForm.form.valid"
+                    *ngIf="!loading">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #RegistrarCorreosModal="bs-modal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    [config]="{backdrop: 'static'}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="RegistrarCorreosModal.hide();ActualizarSolicitudModal.show();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Asignar Correos</h4>
+            </div>
+            <div class="modal-body">
+                <form #CorreosForm="ngForm">
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" [(ngModel)]="ObjetoCorreos.Correo" name="Correo" #Correo required>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary BtnCrear" [disabled]="!CorreosForm.form.valid" (click)="AgregarCorreo(Correo.value)"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+                        </div>
+
+                    </div>
+                </form>
+                <br>
+                <div class="row">
+                    <div class="col-md-11 center-align">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Correos electr&oacute;nicos</th>
+                                    <th>Remover</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="SolicitudServicioObjeto.lstCorreos?.length == 0">
+                                    <td>No se encontraron resultados</td>
+                                    <td></td>
+                                </tr>
+                                <tr *ngFor="let item of SolicitudServicioObjeto.lstCorreos;let i = index;">
+                                    <td>{{item}}</td>
+                                    <td>
+                                        <button class="btn btn-default" (click)="EliminarCorreo(i)">Remover</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="RegistrarCorreosModal.hide();ActualizarSolicitudModal.show();">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" bsModal #ActualizarCorreosModal="bs-modal" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    [config]="{backdrop: 'static'}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="ActualizarCorreosModal.hide();ActualizarSolicitudModal.show();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Asignar Correos</h4>
+            </div>
+            <div class="modal-body">
+                <form #CorreosForm="ngForm">
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" [(ngModel)]="ObjetoCorreos.Correo" name="Correo" #Correo required>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary BtnCrear" [disabled]="!CorreosForm.form.valid" (click)="AgregarCorreo(Correo.value)"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+                        </div>
+
+                    </div>
+                </form>
+                <br>
+                <div class="row">
+                    <div class="col-md-11 center-align">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Correos electr&oacute;nicos</th>
+                                    <th>Remover</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="SolicitudServicioObjeto.lstCorreos?.length == 0">
+                                    <td>No se encontraron resultados</td>
+                                    <td></td>
+                                </tr>
+                                <tr *ngFor="let item of SolicitudServicioObjeto.lstCorreos;let i = index;">
+                                    <td>{{item}}</td>
+                                    <td>
+                                        <button class="btn btn-default" (click)="EliminarCorreo(i)">Remover</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="ActualizarCorreosModal.hide();ActualizarSolicitudModal.show();">Cerrar</button>
             </div>
         </div>
     </div>

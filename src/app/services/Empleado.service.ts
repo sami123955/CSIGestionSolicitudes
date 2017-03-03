@@ -73,7 +73,7 @@ export class EmpleadoService {
 
         var Parametros = '?Codigo=&Nombre=&CodigoUsuario=';
 
-        Observable.interval(20000).subscribe(i=>{
+        /*Observable.interval(20000).subscribe(i=>{
             //return 
             this._http.get(UrlServicio + 'Empleado' + Parametros).map(res => {
                 let _res = res.json();
@@ -81,7 +81,9 @@ export class EmpleadoService {
             }).subscribe(data => {
                 this.empleados$.next(data.Data);
             });
-        })
+        })*/
+
+        return this._http.get(UrlServicio + 'Empleado' + Parametros).map(res => res = res.json());
 
 
     }

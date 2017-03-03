@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Empleado } from '../models/Empleado';
 import { DatosServidor } from '../models/DatosServidor';
 import { EmpleadoService } from '../services/Empleado.service';
 import { SucursalService } from '../services/Sucursal.service';
+import { ModalDirective } from 'ng2-bootstrap/modal';
 
 import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
@@ -21,6 +22,9 @@ declare var alertify: any;
 })
 
 export class EmpleadoComponent implements OnInit {
+
+    @ViewChild('EmpleadoModal') public EmpleadoModal: ModalDirective;
+    @ViewChild('EmpleadoActualizarModal') public EmpleadoActualizarModal: ModalDirective;
 
     empleados$: Observable<any>;
 
@@ -62,6 +66,8 @@ export class EmpleadoComponent implements OnInit {
     //Variable que usaremos para verificar si se aplico datatable
     DataTable = false;
 
+    Cargando = false;
+
     ngOnInit() {
         this.BuscarSucursales();
         this.BuscarEmpleado();
@@ -99,6 +105,7 @@ export class EmpleadoComponent implements OnInit {
                 subscribe(
                 data => this.ValidarPeticion(data),
                 error => alert(error),
+                () => this.TerminarPeticion('Registrar')
             );
 
         } catch (error) {
@@ -119,7 +126,6 @@ export class EmpleadoComponent implements OnInit {
         }
         else {
             alertify.success('Registro satisfactorio');
-            location.reload();
         }
 
     }
@@ -134,7 +140,11 @@ export class EmpleadoComponent implements OnInit {
 
         try {
 
-            this._EmpleadoService.BuscarEmpleado(this.DatosServidorModel.url);           
+            this._EmpleadoService.BuscarEmpleado(this.DatosServidorModel.url).subscribe(
+                data => this.DatosEmpleado = data,
+                error => alert(error),
+                () => this.AplicarDataTable()
+            );
 
         } catch (error) {
 
@@ -157,47 +167,90 @@ export class EmpleadoComponent implements OnInit {
 
         try {
 
+            this.Cargando = false;
+
             if (this.DataTable == false) {
 
-                $('#EmpleadoSucursal').dataTable({
-                    "bDestroy": true,
-                    "language": {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                setTimeout(function () {
+
+                    $('#EmpleadoSucursal').dataTable({
+                        "bDestroy": true,
+                        "language": {
+                            "sProcessing": "Procesando...",
+                            "sLengthMenu": "Mostrar _MENU_ registros",
+                            "sZeroRecords": "No se encontraron resultados",
+                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix": "",
+                            "sSearch": "Buscar:",
+                            "sUrl": "",
+                            "sInfoThousands": ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst": "Primero",
+                                "sLast": "Último",
+                                "sNext": "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
                         }
-                    }
-                });
+                    });
+
+                }, 20);
 
                 this.DataTable = true;
+            }
+            else {
+                $(document).ready(function () {
+
+                    $('#EmpleadoSucursal').dataTable().fnDestroy();
+
+                    setTimeout(function () {
+
+                        $('#EmpleadoSucursal').DataTable({
+                            "language": {
+                                "sProcessing": "Procesando...",
+                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                "sZeroRecords": "No se encontraron resultados",
+                                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Buscar:",
+                                "sUrl": "",
+                                "sInfoThousands": ",",
+                                "sLoadingRecords": "Cargando...",
+                                "oPaginate": {
+                                    "sFirst": "Primero",
+                                    "sLast": "Último",
+                                    "sNext": "Siguiente",
+                                    "sPrevious": "Anterior"
+                                },
+                                "oAria": {
+                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                }
+                            }
+                        });
+
+                    }, 20);
+
+
+                });
             }
 
         } catch (error) {
 
-            var DescripcionError = 'Empleado.component.ts--->AplicarDataTable--->' + '  Error:  ' + error;
+            var DescripcionError = 'Empresa.component.ts--->AplicarDataTable--->' + '  Error:  ' + error;
             console.log(DescripcionError);
 
         }
-
-
 
     }
 
@@ -227,7 +280,7 @@ export class EmpleadoComponent implements OnInit {
             this._EmpleadoService.ActualizarEmpleado(this.model, this.DatosServidorModel.url).subscribe(
                 data => alertify.success('Actualizado correctamente'),
                 error => alert(error),
-                () => location.reload()
+                () => this.TerminarPeticion('Actualizar')
             );
         } catch (error) {
             var DescripcionError = 'Empleado.component.ts--->ActualizarEmpleado--->' + '  Error:  ' + error;
@@ -236,6 +289,27 @@ export class EmpleadoComponent implements OnInit {
 
     }
 
+    TerminarPeticion(NombreModal){
+        
+        this.BuscarEmpleado();
+        this.OcultarModal(NombreModal);
+
+    }
+
+    /*METODO PARA CERRAR modal*/
+    OcultarModal(NombreModal) {
+        switch (NombreModal) {
+            case 'Registrar':
+                this.EmpleadoModal.hide();
+                break;
+
+            case 'Actualizar':
+                alert('Oculta');
+                this.EmpleadoActualizarModal.hide();
+                break;
+        }
+
+    }
 
 
 
